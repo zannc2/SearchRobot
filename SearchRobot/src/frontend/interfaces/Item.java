@@ -1,45 +1,57 @@
 package frontend.interfaces;
 
+import helper.Position;
+
 import java.awt.Graphics;
+import java.util.List;
 import java.util.Vector;
 
 public interface Item {
 	
 	/**
-	 * Draws an implementation of this interface, i.e., a real shape, into the
-	 * given Graphics context.
-	 * 
-	 * @param g
-	 *            A Graphics context.
+	 * Draws the Item in the Graphics
+	 * @param g A Graphics context
 	 */
 	public abstract void draw(Graphics g);
 
 	/**
-	 * Returns the bounding box of the shape.
-	 * @return 
-	 * 
-	 * @return The bounding box.
+	 * Set new Position of the Item
+	 * @param position new Positin
 	 */
 	public abstract void setPosition(Position position);
-
+	
 	/**
-	 * Sets the bounding box of the shape. The shape has to adjust its size and
-	 * position when this method is called, and registered shape listeners have
-	 * to be notified.
-	 * 
-	 * @param r
-	 *            The new size of the bounding box.
-	 */
-	public void setBoundingBox(BoundingBox r);
-
-	/**
-	 * Moves an implementation of this interface along the vector (deltaX,
-	 * deltaY).
-	 * 
-	 * @param delta
-	 *            The vector along which the shape is moved.
+	 * Move the Item with delta
+	 * @param delta moved delta
 	 */
 	public abstract void move(Vector delta);
+	
+	/**
+	 * Tests weather the Position is contained in the Item.
+	 * @param p Position
+	 * @return if it is contained it returns true
+	 */
+	public boolean contains(Position p);
+	
+	/**
+	 * returns a List of ItemHandler
+	 * A ItemHandler is used to manipulate the Item. 
+	 * @return List of ItemHandler
+	 */
+	public List<ItemHandler> getItemHandler();
+	
+	/**
+	 * Add a ItemChangedListener to the Item. Whenever the Item changes, 
+	 * he informs the ItemChangedListener
+	 * @param listener
+	 */
+	public void addItemChangedListener(ItemChangedListener listener);
 
+	/**
+	 * Remove a ItemChangedListener
+	 * @param listener
+	 * @return
+	 */
+	public boolean removeItemChangedListener(ItemChangedListener listener);
 
 }

@@ -1,4 +1,4 @@
-package frontend.classes;
+package frontend.classes.items;
 
 import frontend.interfaces.Item;
 
