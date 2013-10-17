@@ -8,6 +8,10 @@ import java.util.Vector;
 
 public interface Item {
 	
+	public enum ItemType{
+		LINE, CIRCLE
+	}
+	
 	/**
 	 * Draws the Item in the Graphics
 	 * @param g A Graphics context
