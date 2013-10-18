@@ -2,12 +2,12 @@ package frontend.classes.items;
 
 import helper.Position;
 import helper.Size;
+import helper.Vector;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 import frontend.interfaces.Item;
 import frontend.interfaces.ItemChangedListener;
@@ -19,8 +19,8 @@ public class Circle implements Item {
 	private Position position;
 	private Size size;
 	
-	private List<ItemHandler> itemHandler;
-	private List<ItemChangedListener> listeners;
+	private List<ItemHandler> itemHandler = new ArrayList<ItemHandler>();
+	private List<ItemChangedListener> listeners = new ArrayList<ItemChangedListener>();
 
 	public Circle(Position p) {
 		this.position = p;
@@ -38,12 +38,6 @@ public class Circle implements Item {
 	@Override
 	public void setPosition(Position position) {
 		this.position = position;
-	}
-
-	@Override
-	public void move(Vector delta) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -65,6 +59,32 @@ public class Circle implements Item {
 	@Override
 	public boolean removeItemChangedListener(ItemChangedListener listener) {
 		return this.listeners.remove(listener);
+	}
+
+	@Override
+	public void move(Vector delta) {
+		/* origin cordinates*/
+		int x = this.position.getOriginX();
+		int y = this.position.getOriginY();
+		
+		/* Move */
+		x = x + delta.getXComponent();
+		y = y + delta.getYComponent();
+		
+		
+		this.position = new Position(x, y);
+		
+		//TODO
+//		notifyShapeChangedListeners();
+
+		//TODO
+		/* set handles */
+//		Coord c = new Coord(this.bb.getX0(), this.bb.getY0());
+//		shapeHandles.get(0).setPosition(c);
+//
+//		Coord end = new Coord(this.bb.getX0() + this.bb.getWidth(), 
+//				this.bb.getY0() + this.bb.getHeight());
+//		shapeHandles.get(1).setPosition(end);
 	}
 
 }

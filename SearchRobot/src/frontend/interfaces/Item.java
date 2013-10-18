@@ -1,10 +1,10 @@
 package frontend.interfaces;
 
 import helper.Position;
+import helper.Vector;
 
 import java.awt.Graphics;
 import java.util.List;
-import java.util.Vector;
 
 public interface Item {
 	
