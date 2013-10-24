@@ -1,7 +1,7 @@
-package helper.test;
+package helper;
 
-import helper.Position;
-import junit.framework.Assert;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -13,8 +13,8 @@ public class PositionTest {
 		int y = 5;
 		Position pos = new Position(x, y);
 		
-		Assert.assertEquals(x, pos.getOriginX());
-		Assert.assertEquals(y, pos.getOriginY());
+		assertEquals(x, pos.getOriginX());
+		assertEquals(y, pos.getOriginY());
 	}
 	
 	@Test
@@ -23,7 +23,6 @@ public class PositionTest {
 		int y = 5;
 		Position posA = new Position(x, y);
 		Position posB = new Position(x, y);
-		Assert.assertTrue(posA.equals(posB));
+		assertTrue(posA.equals(posB));
 	}
-
 }
