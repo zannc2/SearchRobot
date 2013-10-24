@@ -6,10 +6,6 @@ import helper.Size;
 import java.awt.Cursor;
 import java.awt.Graphics;
 
-import jdt.framework.Coord;
-import jdt.framework.KeyModifier;
-import jdt.framework.View;
-
 public interface ItemHandler {
 	
 	/**

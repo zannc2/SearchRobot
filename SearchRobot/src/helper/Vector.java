@@ -1,6 +1,5 @@
 package helper;
 
-import jdt.framework.Vector;
 
 public class Vector {
 	private int xComponent;
