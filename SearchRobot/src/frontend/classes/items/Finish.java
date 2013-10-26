@@ -1,6 +1,7 @@
 package frontend.classes.items;
 
 import helper.Position;
+import helper.Size;
 import helper.Vector;
 
 import java.awt.Graphics;
@@ -52,6 +53,24 @@ public class Finish implements Item {
 	public boolean removeItemChangedListener(ItemChangedListener listener) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public Position getPosition() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setSize(Size size) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Size getSize() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

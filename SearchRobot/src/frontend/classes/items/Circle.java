@@ -87,4 +87,22 @@ public class Circle implements Item {
 //		shapeHandles.get(1).setPosition(end);
 	}
 
+	@Override
+	public Position getPosition() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setSize(Size size) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Size getSize() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

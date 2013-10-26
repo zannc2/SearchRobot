@@ -1,6 +1,7 @@
 package frontend.interfaces;
 
 import helper.Position;
+import helper.Size;
 import helper.Vector;
 
 import java.awt.Graphics;
@@ -23,6 +24,24 @@ public interface Item {
 	 * @param position new Positin
 	 */
 	public abstract void setPosition(Position position);
+	
+	/**
+	 * returns the Position of the Item
+	 * @return
+	 */
+	public abstract Position getPosition();
+	
+	/**
+	 * set the size of the Item
+	 * @param size
+	 */
+	public abstract void setSize(Size size);
+	
+	/**
+	 * returns the Size of the Item
+	 * @return
+	 */
+	public abstract Size getSize();
 	
 	/**
 	 * Move the Item with delta
