@@ -1,8 +1,13 @@
 package frontend.classes.items;
 
 import helper.Position;
+import helper.Size;
+import helper.Vector;
 
+import java.io.File;
 import java.util.List;
+
+import org.junit.internal.runners.model.EachTestNotifier;
 
 import frontend.interfaces.Item;
 import frontend.interfaces.Item.ItemType;
@@ -31,6 +36,39 @@ public class FrontendEntityManager {
 	
 	public boolean removeItem(Item item){
 		return this.items.remove(item);
+	}
+	
+	public boolean addToField(Item item) {
+		return false;
+	}
+	
+	public Position getRobotPosition() {
+		return null;
+	}
+	
+	public Vector getRobotDirection() {
+		return null;
+	}
+	
+	public Size getFieldSize() {
+		return null;
+	}
+	
+	public boolean deleteAllItems() {
+		boolean value = true;
+		for(Item i:items) {
+			if(value && !removeItem(i)) value = false;
+		}
+		return value;
+	}
+	
+	//TODO
+	public boolean createField(File f) {
+		return false;
+	}
+	
+	public List<Item> getItems() {
+		return this.items;
 	}
 
 }
