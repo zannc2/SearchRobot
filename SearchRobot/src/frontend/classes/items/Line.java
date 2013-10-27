@@ -1,21 +1,27 @@
 package frontend.classes.items;
 
+import frontend.interfaces.ItemHandler;
 import helper.Position;
 import helper.Size;
 import helper.Vector;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Line extends AbstractItem {
 	private Position position;
 	private Size size;
 	
+	private List<ItemHandler> itemHandler = new ArrayList<ItemHandler>();
 	
 	public Line(Position p) {
 		this.position = p;
-		this.size = new Size(4, 4);
+		this.size = new Size(10, 10);
+		
+		//TODO create hanlder
 	}
 
 	@Override
@@ -75,7 +81,12 @@ public class Line extends AbstractItem {
 		return isCloseToLine(p, 2);
 	}
 	
-	//TODO
+	/**
+	 * calculations if Position is in line
+	 * @param p Position
+	 * @param epsilon 
+	 * @return
+	 */
 	private boolean isCloseToLine(Position p, int epsilon) {
 		boolean rval = false;
 		Position a = this.position;
@@ -100,6 +111,11 @@ public class Line extends AbstractItem {
 			rval = distance <= epsilon;
 		}
 		return rval;
+	}
+
+	@Override
+	public List<ItemHandler> getItemHandler() {
+		return this.itemHandler;
 	}
 
 }

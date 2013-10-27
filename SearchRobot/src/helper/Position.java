@@ -1,5 +1,7 @@
 package helper;
 
+import java.awt.Point;
+
 
 public class Position {
 	private int originX;
@@ -19,8 +21,11 @@ public class Position {
 	public int getOriginY() {
 		return originY;
 	}
+	
+	public Point getAWTPoint() {
+		return new Point(this.originX, this.originY);
+	}
 
-	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -36,7 +41,6 @@ public class Position {
 		return true;
 	}
 
-	@Override
 	public String toString() {
 		return "Coord[" + this.originX + "," + this.originY + "]";
 	}

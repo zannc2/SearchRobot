@@ -28,7 +28,6 @@ public class LineTest {
 
 		@Override
 		public void itemChanged(ItemChangedEvent e) {
-			System.out.println("item Changed");
 			test = true;
 		}
 		

@@ -1,30 +1,27 @@
 package frontend.classes.items;
 
+import frontend.interfaces.ItemHandler;
 import helper.Position;
 import helper.Size;
 import helper.Vector;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 import java.util.List;
 
-import frontend.interfaces.Item;
-import frontend.interfaces.ItemChangedListener;
-import frontend.interfaces.ItemHandler;
 
-
-public class Circle implements Item {
+public class Circle extends AbstractItem {
 	
 	private Position position;
 	private Size size;
 	
 	private List<ItemHandler> itemHandler = new ArrayList<ItemHandler>();
-	private List<ItemChangedListener> listeners = new ArrayList<ItemChangedListener>();
 
 	public Circle(Position p) {
 		this.position = p;
-		
+		this.size = new Size(10, 10);
 		//TODO greate Handler
 	}
 	
@@ -42,23 +39,13 @@ public class Circle implements Item {
 
 	@Override
 	public boolean contains(Position p) {
-		// TODO Auto-generated method stub
-		return false;
+		return new Ellipse2D.Double(this.position.getOriginX(), this.position.getOriginX(),
+				this.size.getWidth(), this.size.getHeight()).contains(p.getAWTPoint());
 	}
 
 	@Override
 	public List<ItemHandler> getItemHandler() {
-		return this.itemHandler;	//TODO return just a copy
-	}
-
-	@Override
-	public void addItemChangedListener(ItemChangedListener listener) {
-		this.listeners.add(listener);
-	}
-
-	@Override
-	public boolean removeItemChangedListener(ItemChangedListener listener) {
-		return this.listeners.remove(listener);
+		return this.itemHandler;	
 	}
 
 	@Override
@@ -73,9 +60,8 @@ public class Circle implements Item {
 		
 		
 		this.position = new Position(x, y);
-		
-		//TODO
-//		notifyShapeChangedListeners();
+
+		notifyItemChangedListeners();
 
 		//TODO
 		/* set handles */
@@ -89,20 +75,35 @@ public class Circle implements Item {
 
 	@Override
 	public Position getPosition() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.position;
 	}
 
 	@Override
 	public void setSize(Size size) {
-		// TODO Auto-generated method stub
-		
+		//Circle can not be oval -> size.height = size_weight
+		if(this.size.getWidth() == size.getWidth()) {
+			this.size = new Size(size.getHeight(), size.getHeight());
+		}
+		else if(this.size.getHeight() == size.getHeight()) {
+			this.size = new Size(size.getWidth(), size.getWidth());
+		}
+		else {
+			int heightDif = Math.abs(this.size.getHeight() - size.getHeight());
+			System.out.println("heightDif: " + heightDif);
+			int widthDif = Math.abs(this.size.getWidth() - size.getWidth());
+			System.out.println("widthDif: " + widthDif);
+			if(heightDif > widthDif){
+				this.size = new Size(size.getHeight(), size.getHeight());
+			}
+			else {
+				this.size = new Size(size.getWidth(), size.getWidth());
+			}
+		}
 	}
 
 	@Override
 	public Size getSize() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.size;
 	}
 
 }
