@@ -28,7 +28,7 @@ public class Circle extends AbstractItem {
 	@Override
 	public void draw(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
-		g2.drawOval(this.position.getOriginX(), this.position.getOriginY(), 
+		g2.fillOval(this.position.getOriginX(), this.position.getOriginY(), 
 				this.size.getWidth(), this.size.getHeight());
 	}
 
