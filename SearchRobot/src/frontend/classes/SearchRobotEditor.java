@@ -1,5 +1,8 @@
 package frontend.classes;
 
+import helper.Position;
+import helper.Vector;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -29,8 +32,12 @@ import javax.swing.JToolBar;
 import frontend.classes.items.CircleTool;
 import frontend.classes.items.FinishTool;
 import frontend.classes.items.LineTool;
+import frontend.classes.items.RemoveTool;
+import frontend.classes.items.Robot;
 import frontend.classes.items.RobotTool;
+import frontend.classes.items.SelectionTool;
 import frontend.classes.view.ViewImpl;
+import frontend.interfaces.Item;
 import frontend.interfaces.Tool;
 
 public class SearchRobotEditor {
@@ -38,7 +45,7 @@ public class SearchRobotEditor {
 	/** The name of the Programm */
 	private static final String PROGRAM_TITLE = "Search Robot";
 
-	private JButton addRobot, addFinish, addLine, addCircle, startButton;
+	private JButton addRobot, addFinish, addLine, addCircle, startButton, selection, remove;
 	private JMenuBar menuBar;
 	private JMenu fileMenu, editMenu, helpMenu;
 	private JMenuItem openMenuItem, saveMenuItem, exitMenuItem, colorMenuItem, helpMenuItem;
@@ -60,7 +67,7 @@ public class SearchRobotEditor {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		frame.setLayout(new BorderLayout());
-		frame.setResizable(false);
+		//frame.setResizable(false);
 
 		view = new ViewImpl();
 
@@ -146,7 +153,7 @@ public class SearchRobotEditor {
 
 
 		/******************* Draw Area *******************/
-		scrollPane = new JScrollPane(view);
+		scrollPane = new JScrollPane(view, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
 
 		gc.gridx = 0;
@@ -160,7 +167,7 @@ public class SearchRobotEditor {
 		gc.gridy = 1;
 		gc.weightx = 1;
 		gc.weighty = 1;
-		gc.fill = GridBagConstraints.BOTH;
+		gc.fill = GridBagConstraints.NONE;
 		mainPanel.add(scrollPane, gc);
 
 		frame.getContentPane().add(mainPanel, BorderLayout.CENTER);
@@ -171,6 +178,18 @@ public class SearchRobotEditor {
 
 
 	private void addButtons(JToolBar toolBar) {
+
+		// Button Selection
+		selection = makeNavigationButton("selection", "Auswählen", "Auswählen", new Dimension(40, 40));
+		toolBar.add(selection);
+		tools.add(new SelectionTool(view));
+
+		// Button Remove
+		remove = makeNavigationButton("remove", "Löschen", "Löschen", new Dimension(40, 40));
+		toolBar.add(remove);
+		tools.add(new RemoveTool(view));
+		
+		toolBar.addSeparator(new Dimension(10,0));
 
 		// Button Robot
 		addRobot = makeNavigationButton("robot", "Start setzen", "Start", new Dimension(40, 40));
@@ -228,26 +247,36 @@ public class SearchRobotEditor {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if(e.getSource() == addRobot)
+			if(e.getSource() == selection)
+			{
+				System.out.println("Selection Button");
+				view.setTool(tools.get(0));
+			}
+			else if(e.getSource() == remove)
+			{
+				System.out.println("Remove Button");
+				view.setTool(tools.get(1));
+			}
+			else if(e.getSource() == addRobot)
 			{
 				System.out.println("Roboter Button");
-				view.setTool(tools.get(0));
+				view.setTool(tools.get(2));
 			}
 			else if(e.getSource() == addFinish)
 			{
 				System.out.println("Ziel Button");
-				view.setTool(tools.get(1));
+				view.setTool(tools.get(3));
 				view.repaint();
 			}
 			else if(e.getSource() == addLine)
 			{
-				view.setTool(tools.get(2));
+				view.setTool(tools.get(4));
 				System.out.println("Linie Tool Button");
 			}
 			else if(e.getSource() == addCircle)
 			{
 				System.out.println("Kreis Tool Button");
-				view.setTool(tools.get(3));
+				view.setTool(tools.get(5));
 			}
 			else if (e.getSource() == startButton)
 			{
@@ -267,7 +296,24 @@ public class SearchRobotEditor {
 					addLine.setEnabled(false);
 					addCircle.setEnabled(false);
 					isStarted = true;
-					startButton.setIcon(new ImageIcon(getClass().getResource("abort.png")));					
+					startButton.setIcon(new ImageIcon(getClass().getResource("abort.png")));	
+					
+					List<Item> l = view.getItems();
+					
+					for(int i = 0; i < l.size(); i++)
+					{
+						if(l.get(i) instanceof Robot)
+						{
+							Item item = l.get(i);
+							Position p = item.getPosition();
+							
+							while(p.getOriginX() < (800-10))
+							{
+								item.move(new Vector(new Position(1, 0)));
+								view.repaint();
+							}
+						}
+					}
 				}
 			}
 			else

@@ -1,6 +1,7 @@
 package frontend.classes.view;
 
 import helper.Position;
+import helper.Vector;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -8,10 +9,12 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.swing.JPanel;
 
+import frontend.classes.items.Robot;
 import frontend.interfaces.Item;
 import frontend.interfaces.Tool;
 import frontend.interfaces.View;
@@ -41,8 +44,7 @@ public class ViewImpl extends JPanel implements View{
 	
 
 	@Override
-    public void paintComponent(Graphics g) {
-		
+    public void paintComponent(Graphics g) {		
 		System.out.println("Draw");
 		for (Item i : this.items) {
 			i.draw(g);
@@ -87,7 +89,7 @@ public class ViewImpl extends JPanel implements View{
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			// TODO Auto-generated method stub
+			
 			
 		}
 
@@ -99,27 +101,37 @@ public class ViewImpl extends JPanel implements View{
 
 		@Override
 		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
+			for (Item i : getItems()) {
+				if(i instanceof Robot)
+					i.move(new Vector(1, 0));
+			}
+			repaint();
 			
 		}
 
 		@Override
 		public void mousePressed(MouseEvent e) {
 			getTool().mouseDown(new Position(e.getX(), e.getY()));
-			System.out.println("Mouse Down");
 		}
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			getTool().mouseUp(new Position(e.getX(), e.getY()));
-			System.out.println("Mouse Up");
 		}
 	
 	}
 
 	@Override
 	public boolean removeItem(Item i) {
-		// TODO Auto-generated method stub
-		return false;
+		return items.remove(i);
 	}
+
+
+	public List<Item> getItems() {
+		return Collections.unmodifiableList(items);
+	}
+	
+	
 }
+
+

@@ -44,6 +44,7 @@ public class Circle extends AbstractItem {
 	public boolean contains(Position p) {
 		return new Ellipse2D.Double(this.position.getOriginX(), this.position.getOriginX(),
 				this.size.getWidth(), this.size.getHeight()).contains(p.getAWTPoint());
+		
 	}
 
 	@Override
