@@ -61,6 +61,7 @@ public class Line extends AbstractItem {
 	@Override
 	public void setPosition(Position position) {
 		this.position = position;
+		notifyItemChangedListeners();
 	}
 
 	@Override
@@ -71,6 +72,7 @@ public class Line extends AbstractItem {
 	@Override
 	public void setSize(Size size) {
 		this.size = size;
+		notifyItemChangedListeners();
 	}
 
 	@Override

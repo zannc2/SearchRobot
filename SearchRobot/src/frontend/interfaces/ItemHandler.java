@@ -47,10 +47,11 @@ public interface ItemHandler {
 	/*
 	 * Missing interactions
 	 * public boolean contains(Coord c);
-	 * public void startInteraction(Coord c, KeyModifier k, View v);
-	 * public void dragInteraction(Coord c, KeyModifier k, View v);
-	 * public void stopInteraction(Coord c, KeyModifier k, View v);
-	 * 
 	 */
+//	public void startInteraction(Position p);
+	public void dragInteraction(Position p);
+	public void stopInteraction(Position p);
+	
+	
 
 }
