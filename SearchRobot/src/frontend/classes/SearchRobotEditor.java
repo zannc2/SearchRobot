@@ -1,8 +1,5 @@
 package frontend.classes;
 
-import helper.Position;
-import helper.Vector;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -16,7 +13,7 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JColorChooser;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -30,11 +27,9 @@ import frontend.classes.items.CircleTool;
 import frontend.classes.items.FinishTool;
 import frontend.classes.items.LineTool;
 import frontend.classes.items.RemoveTool;
-import frontend.classes.items.Robot;
 import frontend.classes.items.RobotTool;
 import frontend.classes.items.SelectionTool;
 import frontend.classes.view.ViewImpl;
-import frontend.interfaces.Item;
 import frontend.interfaces.Tool;
 
 public class SearchRobotEditor {
@@ -51,6 +46,7 @@ public class SearchRobotEditor {
 	private JToolBar toolBar;
 	private ActionListener buttonEvent;
 	private JScrollPane scrollPane;
+	private Help help;
 	private List<Tool> tools = new ArrayList<Tool>();
 	private JFrame frame;
 	private boolean isStarted;
@@ -64,7 +60,7 @@ public class SearchRobotEditor {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		frame.setLayout(new BorderLayout());
-		//frame.setResizable(false);
+		frame.setResizable(false);
 
 		view = new ViewImpl();
 
@@ -92,7 +88,6 @@ public class SearchRobotEditor {
 
 			}
 		});
-		//TODO: Add action listener	
 
 		saveMenuItem = new JMenuItem("Speichern");
 		fileMenu.add(saveMenuItem);
@@ -114,6 +109,8 @@ public class SearchRobotEditor {
 
 		colorMenuItem = new JMenuItem("Hintergrundfarbe ändern");
 		editMenu.add(colorMenuItem);
+		
+		/* funktioniert nicht mehr :-(
 		colorMenuItem.addActionListener(new ActionListener() {
 
 			@Override
@@ -121,6 +118,7 @@ public class SearchRobotEditor {
 				frame.setBackground(JColorChooser.showDialog(null,  "Wähle die Farbe", view.getBackground()));
 			}
 		});
+		*/
 		//TODO: Add Menu Items
 
 
@@ -130,6 +128,19 @@ public class SearchRobotEditor {
 
 		helpMenuItem = new JMenuItem("Hilfe");
 		helpMenu.add(helpMenuItem);
+		helpMenuItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				help = new Help(frame);
+				help.setLocationRelativeTo(frame);
+				help.setVisible(true);
+				
+				// TODO: help class design
+			}
+		});
+
+		
 		//TODO: Add action listener
 
 		frame.setJMenuBar(menuBar);
@@ -279,29 +290,32 @@ public class SearchRobotEditor {
 			{
 				if(isStarted)
 				{
+					selection.setEnabled(true);
+					remove.setEnabled(true);
 					addRobot.setEnabled(true);
 					addFinish.setEnabled(true);
 					addLine.setEnabled(true);
 					addCircle.setEnabled(true);
 					isStarted = false;
 					startButton.setIcon(new ImageIcon(getClass().getResource("resources/search.png")));
+					System.out.println("Suche beendet");
+					// TODO: suche starten
 				}
 				else
 				{
+					selection.setEnabled(false);
+					remove.setEnabled(false);
 					addRobot.setEnabled(false);
 					addFinish.setEnabled(false);
 					addLine.setEnabled(false);
 					addCircle.setEnabled(false);
 					isStarted = true;
 					startButton.setIcon(new ImageIcon(getClass().getResource("resources/abort.png")));
+					System.out.println("Suche gestartet");
+					// TODO: Suche abbrechen
 				}
 			}
-			else
-			{
-				System.err.println("Wrong ButtonEvent");
-			}
 		}
-
 	}
 
 

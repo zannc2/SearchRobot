@@ -39,7 +39,6 @@ public class Finish extends AbstractItem {
 		g2.fillRect(this.position.getOriginX()+this.size.getWidth()/2, 
 				this.position.getOriginY()+this.size.getHeight()/2, 
 				this.size.getWidth()/2, this.size.getHeight()/2);
-		System.out.println("Finish Gezeichnet");
 	}
 
 	@Override

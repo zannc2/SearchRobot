@@ -29,7 +29,7 @@ public class LineTool implements Tool {
 		int actualY = i.getPosition().getOriginY();
 		
 		i.setSize(new Size(p.getOriginX() - actualX, p.getOriginY() -  actualY));
-		//System.out.println("X-Pos: " + actualX + " YPos: " + actualY + " height: " + i.getSize().getHeight() + "Width: " + i.getSize().getWidth());
+		System.out.println("X-Pos: " + actualX + " YPos: " + actualY + " height: " + i.getSize().getHeight() + "Width: " + i.getSize().getWidth());
 	}
 
 	@Override
