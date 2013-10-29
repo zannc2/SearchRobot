@@ -15,6 +15,7 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import frontend.classes.items.Robot;
+import frontend.classes.items.SelectionTool;
 import frontend.interfaces.Item;
 import frontend.interfaces.Tool;
 import frontend.interfaces.View;
@@ -22,7 +23,7 @@ import frontend.interfaces.View;
 public class ViewImpl extends JPanel implements View{
 
 	private List<Item> items = new ArrayList<Item>();
-	private Tool tool = null;
+	private Tool tool = new SelectionTool(this);
 	
 	/**
 	 * 
@@ -45,7 +46,7 @@ public class ViewImpl extends JPanel implements View{
 
 	@Override
     public void paintComponent(Graphics g) {		
-		System.out.println("Draw");
+		//System.out.println("Draw");
 		for (Item i : this.items) {
 			i.draw(g);
 		}
@@ -66,9 +67,7 @@ public class ViewImpl extends JPanel implements View{
 	@Override
 	public Tool getTool()
 	{
-		if(tool != null)
-			return this.tool;
-		return null;
+		return this.tool;
 	}
 	
 	private class ViewMouseMotionListener implements MouseMotionListener {
@@ -76,12 +75,11 @@ public class ViewImpl extends JPanel implements View{
 		@Override
 		public void mouseDragged(MouseEvent e) {
 			getTool().mouseDrag(new Position(e.getX(), e.getY()));
-			System.out.println("Mouse dragged");
 		}
 
 		@Override
 		public void mouseMoved(MouseEvent arg0) {
-			// TODO Auto-generated method stub
+			
 		}
 	}
 	
@@ -95,18 +93,20 @@ public class ViewImpl extends JPanel implements View{
 
 		@Override
 		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
+			for (Item i : getItems()) {
+				if(i instanceof Robot)
+					i.move(new Vector(2, 1));
+			}
+			repaint();
 		}
 
 		@Override
 		public void mouseExited(MouseEvent e) {
 			for (Item i : getItems()) {
 				if(i instanceof Robot)
-					i.move(new Vector(1, 0));
+					i.move(new Vector(2, 1));
 			}
 			repaint();
-			
 		}
 
 		@Override

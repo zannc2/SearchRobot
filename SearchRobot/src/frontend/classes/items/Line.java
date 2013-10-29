@@ -31,7 +31,7 @@ public class Line extends AbstractItem {
 		g2.setStroke(new BasicStroke(3));
 		g2.drawLine(this.position.getOriginX(), this.position.getOriginY(), 
 				this.position.getOriginX() + this.size.getWidth(), this.position.getOriginY() + this.size.getHeight());
-		System.out.println("X-Pos: " + this.position.getOriginX() + " YPos: " + this.position.getOriginY() + " height: " + this.getSize().getHeight() + "Width: " + this.getSize().getWidth());
+		//System.out.println("X-Pos: " + this.position.getOriginX() + " YPos: " + this.position.getOriginY() + " height: " + this.getSize().getHeight() + "Width: " + this.getSize().getWidth());
 	}
 
 	@Override

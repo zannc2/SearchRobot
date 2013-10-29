@@ -18,7 +18,6 @@ public class FinishTool implements Tool {
 	public void mouseDown(Position p) {
 		this.i = new Finish(p);
 		getView().addItem(this.i);
-		System.out.println("Finish Created and added to View");
 	}
 
 	@Override

@@ -46,7 +46,7 @@ public class SearchRobotEditor {
 	private JToolBar toolBar;
 	private ActionListener buttonEvent;
 	private JScrollPane scrollPane;
-	private JDialog help;
+	private Help help;
 	private List<Tool> tools = new ArrayList<Tool>();
 	private JFrame frame;
 	private boolean isStarted;
@@ -60,7 +60,7 @@ public class SearchRobotEditor {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		frame.setLayout(new BorderLayout());
-		//frame.setResizable(false);
+		frame.setResizable(false);
 
 		view = new ViewImpl();
 
@@ -88,7 +88,6 @@ public class SearchRobotEditor {
 
 			}
 		});
-		//TODO: Add action listener	
 
 		saveMenuItem = new JMenuItem("Speichern");
 		fileMenu.add(saveMenuItem);
@@ -111,7 +110,7 @@ public class SearchRobotEditor {
 		colorMenuItem = new JMenuItem("Hintergrundfarbe ändern");
 		editMenu.add(colorMenuItem);
 		
-		/* worsk not :-(
+		/* funktioniert nicht mehr :-(
 		colorMenuItem.addActionListener(new ActionListener() {
 
 			@Override
@@ -133,14 +132,11 @@ public class SearchRobotEditor {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				help = new JDialog();
-				help.setTitle("Hilfe");
-				help.setSize(400, 300);
-				help.setModal(true);
-				help.setAlwaysOnTop(false);
+				help = new Help(frame);
 				help.setLocationRelativeTo(frame);
 				help.setVisible(true);
-				// TODO: create help class (extends jpanel) and add to help dialog
+				
+				// TODO: help class design
 			}
 		});
 
@@ -302,7 +298,7 @@ public class SearchRobotEditor {
 					addCircle.setEnabled(true);
 					isStarted = false;
 					startButton.setIcon(new ImageIcon(getClass().getResource("resources/search.png")));
-					
+					System.out.println("Suche beendet");
 					// TODO: suche starten
 				}
 				else
@@ -315,7 +311,7 @@ public class SearchRobotEditor {
 					addCircle.setEnabled(false);
 					isStarted = true;
 					startButton.setIcon(new ImageIcon(getClass().getResource("resources/abort.png")));
-					
+					System.out.println("Suche gestartet");
 					// TODO: Suche abbrechen
 				}
 			}
