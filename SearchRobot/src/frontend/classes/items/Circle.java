@@ -32,12 +32,13 @@ public class Circle extends AbstractItem {
 		g2.setStroke(new BasicStroke(1));
 		g2.fillOval(this.position.getOriginX(), this.position.getOriginY(), 
 				this.size.getWidth(), this.size.getHeight());
-		System.out.println("Zeichne Kreis");
+		System.out.println("Zeichne Kreis, size: " + this.size);
 	}
 
 	@Override
 	public void setPosition(Position position) {
 		this.position = position;
+		notifyItemChangedListeners();
 	}
 
 	@Override
@@ -103,7 +104,15 @@ public class Circle extends AbstractItem {
 				this.size = new Size(size.getWidth(), size.getWidth());
 			}
 		}
-		this.size = new Size(size.getWidth(), size.getHeight());
+//		this.size = new Size(size.getWidth(), size.getHeight());
+//		if(this.size.getHeight() < 0) {
+//			this.position = new Position(this.position.getOriginX() + this.size.getWidth(),
+//					this.position.getOriginY() + this.size.getHeight());
+//			this.size = new Size(-this.size.getWidth(), -this.size.getHeight());
+//		}
+		System.out.println("Circle set size: " + this.size);
+
+		notifyItemChangedListeners();
 	}
 
 	@Override

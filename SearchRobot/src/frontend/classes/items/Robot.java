@@ -43,6 +43,7 @@ public class Robot extends AbstractItem{
 	@Override
 	public void setPosition(Position position) {
 		this.position = position;
+		notifyItemChangedListeners();
 	}
 
 	@Override
@@ -53,6 +54,7 @@ public class Robot extends AbstractItem{
 	@Override
 	public void setSize(Size size) {
 		this.size = size;
+		notifyItemChangedListeners();
 	}
 
 	@Override

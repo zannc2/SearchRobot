@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import frontend.classes.items.Robot;
 import frontend.classes.items.SelectionTool;
 import frontend.interfaces.Item;
+import frontend.interfaces.ItemChangedListener;
 import frontend.interfaces.Tool;
 import frontend.interfaces.View;
 
@@ -40,6 +41,7 @@ public class ViewImpl extends JPanel implements View{
 		this.addMouseMotionListener(new ViewMouseMotionListener());
 		this.addMouseListener(new ViewMouseListener());
 		
+		
 		setOpaque(false);
 	}
 	
@@ -56,8 +58,15 @@ public class ViewImpl extends JPanel implements View{
 	@Override
 	public void addItem(Item item) {
 		this.items.add(item);
+		item.addItemChangedListener(l);
+		notifyView();
 	}
 	
+	private void notifyView() {
+		repaint();
+	}
+
+
 	@Override
 	public void setTool(Tool t)
 	{
@@ -68,6 +77,18 @@ public class ViewImpl extends JPanel implements View{
 	public Tool getTool()
 	{
 		return this.tool;
+	}
+	
+	private ViewItemChangedListener l = new ViewItemChangedListener();
+	
+	private class ViewItemChangedListener implements ItemChangedListener {
+
+		@Override
+		public void itemChanged(ItemChangedEvent e) {
+			System.out.println("ViewItemChangedListener");
+			repaint();
+		}
+		
 	}
 	
 	private class ViewMouseMotionListener implements MouseMotionListener {
@@ -93,20 +114,20 @@ public class ViewImpl extends JPanel implements View{
 
 		@Override
 		public void mouseEntered(MouseEvent e) {
-			for (Item i : getItems()) {
-				if(i instanceof Robot)
-					i.move(new Vector(2, 1));
-			}
-			repaint();
+//			for (Item i : getItems()) {
+//				if(i instanceof Robot)
+//					i.move(new Vector(2, 1));
+//			}
+//			repaint();
 		}
 
 		@Override
 		public void mouseExited(MouseEvent e) {
-			for (Item i : getItems()) {
-				if(i instanceof Robot)
-					i.move(new Vector(2, 1));
-			}
-			repaint();
+//			for (Item i : getItems()) {
+//				if(i instanceof Robot)
+//					i.move(new Vector(2, 1));
+//			}
+//			repaint();
 		}
 
 		@Override

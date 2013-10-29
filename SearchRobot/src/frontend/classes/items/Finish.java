@@ -21,6 +21,8 @@ public class Finish extends AbstractItem {
 	public Finish(Position p) {
 		this.position = p;
 		
+
+		notifyItemChangedListeners();
 		//TODO create handler
 	}
 
@@ -44,6 +46,7 @@ public class Finish extends AbstractItem {
 	@Override
 	public void setPosition(Position position) {
 		this.position = position;
+		notifyItemChangedListeners();
 	}
 
 	@Override
@@ -114,6 +117,7 @@ public class Finish extends AbstractItem {
 	@Override
 	public void setSize(Size size) {
 		this.size = size;
+		notifyItemChangedListeners();
 	}
 
 	@Override

@@ -34,7 +34,7 @@ public class CircleTest {
 	 */
 	@Test
 	public void testGet() {
-		Size s = new Size(10, 10);
+		Size s = new Size(1, 1);
 		assertEquals(c.getSize(), s);
 		s = new Size(10, 20);
 		c.setSize(s);

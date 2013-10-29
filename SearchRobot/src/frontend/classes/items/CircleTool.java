@@ -24,23 +24,38 @@ public class CircleTool implements Tool {
 
 	@Override
 	public void mouseDrag(Position p) {
-		int newX = i.getPosition().getOriginX();
-		int newY = i.getPosition().getOriginY();
-		
+//		int newX = i.getPosition().getOriginX();
+//		int newY = i.getPosition().getOriginY();
+//		
+//
+//		int xsize = p.getOriginX()-i.getPosition().getOriginX();
+//		int ysize = p.getOriginY()-i.getPosition().getOriginY();
+//		
+//		if(xsize <0) {
+//			newX = newX + xsize;
+//			xsize = -xsize;
+//		}
+//		
+//		if(ysize < 0) {
+//			newY = newY + ysize;
+//			ysize = -ysize;
+//		}
+//		
+//		if(xsize > ysize)
+//		{
+//			i.setSize(new Size(xsize, xsize));
+//		}
+//		else
+//		{
+//			i.setSize(new Size(ysize, ysize));
+//		}
+//		
+//		i.setPosition(new Position(newX, newY));
 
-		int xsize = Math.abs(p.getOriginX()-i.getPosition().getOriginX());
-		int ysize = Math.abs(p.getOriginY()-i.getPosition().getOriginY());
+		int actualX = i.getPosition().getOriginX();
+		int actualY = i.getPosition().getOriginY();
 		
-		if(xsize > ysize)
-		{
-			i.setSize(new Size(xsize, xsize));
-		}
-		else
-		{
-			i.setSize(new Size(ysize, ysize));
-		}
-		
-		i.setPosition(new Position(newX, newY));
+		i.setSize(new Size(p.getOriginX() - actualX, p.getOriginY() -  actualY));
 		
 		//System.out.println("X-Pos: " + i.getPosition().getOriginX() + " YPos: " + i.getPosition().getOriginY() + " height: " + i.getSize().getHeight() + "Width: " + i.getSize().getWidth());
 	}
