@@ -16,6 +16,7 @@ public class RemoveTool implements Tool {
 		this.view = view;
 	}
 
+	@Override
 	public void mouseDown(Position p) 
 	{
 		List<Item> l = getView().getItems();
@@ -31,12 +32,14 @@ public class RemoveTool implements Tool {
 		
 	}
 
+	@Override
 	public void mouseDrag(Position p) {
-
+		// not needed
 	}
 
+	@Override
 	public void mouseUp(Position p) {
-
+		// not needed
 	}
 
 	public View getView() {

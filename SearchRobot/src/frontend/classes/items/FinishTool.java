@@ -14,19 +14,24 @@ public class FinishTool implements Tool {
 		this.v = v;
 	}
 
+	@Override
 	public void mouseDown(Position p) {
 		this.i = new Finish(p);
 		getView().addItem(this.i);
 		System.out.println("Finish Created and added to View");
 	}
 
+	@Override
 	public void mouseDrag(Position p) {
-
+		// TODO Auto-generated method stub
+		
 	}
 
+	@Override
 	public void mouseUp(Position p) {
-
-	}	
+		// TODO Auto-generated method stub
+		
+	}
 	
 	private View getView() {
 		return this.v;

@@ -7,7 +7,6 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -20,13 +19,11 @@ import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
 
 import frontend.classes.items.CircleTool;
@@ -223,7 +220,7 @@ public class SearchRobotEditor {
 			String altText,
 			Dimension size) {
 		//Look for the image.
-		String imgLocation = imageName
+		String imgLocation = "resources/" + imageName
 				+ ".png";
 		URL imageURL = getClass().getResource(imgLocation);
 
@@ -287,7 +284,7 @@ public class SearchRobotEditor {
 					addLine.setEnabled(true);
 					addCircle.setEnabled(true);
 					isStarted = false;
-					startButton.setIcon(new ImageIcon(getClass().getResource("search.png")));
+					startButton.setIcon(new ImageIcon(getClass().getResource("resources/search.png")));
 				}
 				else
 				{
@@ -296,24 +293,7 @@ public class SearchRobotEditor {
 					addLine.setEnabled(false);
 					addCircle.setEnabled(false);
 					isStarted = true;
-					startButton.setIcon(new ImageIcon(getClass().getResource("abort.png")));	
-					
-					List<Item> l = view.getItems();
-					
-					for(int i = 0; i < l.size(); i++)
-					{
-						if(l.get(i) instanceof Robot)
-						{
-							Item item = l.get(i);
-							Position p = item.getPosition();
-							
-							while(p.getOriginX() < (800-10))
-							{
-								item.move(new Vector(new Position(1, 0)));
-								view.repaint();
-							}
-						}
-					}
+					startButton.setIcon(new ImageIcon(getClass().getResource("resources/abort.png")));
 				}
 			}
 			else

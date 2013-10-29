@@ -14,16 +14,19 @@ public class RobotTool implements Tool {
 		this.v = v;
 	}
 
+	@Override
 	public void mouseDown(Position p) {
 		this.i = new Robot(p);
 		getView().addItem(this.i);
 		System.out.println("Robot Created and added to View");
 	}
 
+	@Override
 	public void mouseDrag(Position p) {
 
 	}
 
+	@Override
 	public void mouseUp(Position p) {
 
 	}	

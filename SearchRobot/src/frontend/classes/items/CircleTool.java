@@ -15,12 +15,14 @@ public class CircleTool implements Tool {
 		this.v = v;
 	}
 
+	@Override
 	public void mouseDown(Position p) {
 		this.i = new Circle(p);
 		getView().addItem(this.i);
 		//System.out.println("Circle Created and added to View");
 	}
 
+	@Override
 	public void mouseDrag(Position p) {
 		int newX = i.getPosition().getOriginX();
 		int newY = i.getPosition().getOriginY();
@@ -43,8 +45,8 @@ public class CircleTool implements Tool {
 		//System.out.println("X-Pos: " + i.getPosition().getOriginX() + " YPos: " + i.getPosition().getOriginY() + " height: " + i.getSize().getHeight() + "Width: " + i.getSize().getWidth());
 	}
 
+	@Override
 	public void mouseUp(Position p) {
-		
 		mouseDrag(p);
 	}	
 	
