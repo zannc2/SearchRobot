@@ -5,6 +5,7 @@ import helper.Position;
 import helper.Size;
 import helper.Vector;
 
+import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class Finish extends AbstractItem {
 	@Override
 	public void draw(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
+		g2.setStroke(new BasicStroke(1));
 		g2.fillRect(this.position.getOriginX(), this.position.getOriginY(), 
 				this.size.getWidth()/2, this.size.getHeight()/2);
 		g2.drawRect(this.position.getOriginX()+this.size.getWidth()/2, 
@@ -37,6 +39,7 @@ public class Finish extends AbstractItem {
 		g2.fillRect(this.position.getOriginX()+this.size.getWidth()/2, 
 				this.position.getOriginY()+this.size.getHeight()/2, 
 				this.size.getWidth()/2, this.size.getHeight()/2);
+		System.out.println("Finish Gezeichnet");
 	}
 
 	@Override

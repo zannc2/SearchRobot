@@ -5,6 +5,7 @@ import helper.Position;
 import helper.Size;
 import helper.Vector;
 
+import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
@@ -21,15 +22,17 @@ public class Circle extends AbstractItem {
 
 	public Circle(Position p) {
 		this.position = p;
-		this.size = new Size(10, 10);
+		this.size = new Size(1, 1);
 		//TODO greate Handler
 	}
 	
 	@Override
 	public void draw(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
+		g2.setStroke(new BasicStroke(1));
 		g2.fillOval(this.position.getOriginX(), this.position.getOriginY(), 
 				this.size.getWidth(), this.size.getHeight());
+		System.out.println("Zeichne Kreis");
 	}
 
 	@Override
@@ -99,6 +102,7 @@ public class Circle extends AbstractItem {
 				this.size = new Size(size.getWidth(), size.getWidth());
 			}
 		}
+		this.size = new Size(size.getWidth(), size.getHeight());
 	}
 
 	@Override

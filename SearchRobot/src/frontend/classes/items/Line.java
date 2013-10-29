@@ -5,8 +5,11 @@ import helper.Position;
 import helper.Size;
 import helper.Vector;
 
+import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Shape;
+import java.awt.Stroke;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,8 +30,10 @@ public class Line extends AbstractItem {
 	@Override
 	public void draw(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
+		g2.setStroke(new BasicStroke(3));
 		g2.drawLine(this.position.getOriginX(), this.position.getOriginY(), 
-				this.size.getWidth(), this.size.getHeight());
+				this.position.getOriginX() + this.size.getWidth(), this.position.getOriginY() + this.size.getHeight());
+		System.out.println("X-Pos: " + this.position.getOriginX() + " YPos: " + this.position.getOriginY() + " height: " + this.getSize().getHeight() + "Width: " + this.getSize().getWidth());
 	}
 
 	@Override

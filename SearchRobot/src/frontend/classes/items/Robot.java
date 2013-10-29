@@ -5,6 +5,7 @@ import helper.Position;
 import helper.Size;
 import helper.Vector;
 
+import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class Robot extends AbstractItem{
 	@Override
 	public void draw(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
+		g2.setStroke(new BasicStroke(1));
 		int[] xPoints = {this.position.getOriginX()+this.size.getWidth()/2,
 		                 this.position.getOriginX()+this.size.getWidth(),
 		                 this.position.getOriginX()+this.size.getWidth()/2};
