@@ -30,8 +30,10 @@ public class Circle extends AbstractItem {
 	public void draw(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setStroke(new BasicStroke(1));
-		g2.fillOval(this.position.getOriginX(), this.position.getOriginY(), 
-				this.size.getWidth(), this.size.getHeight());
+//		g2.fillOval(this.position.getOriginX(), this.position.getOriginY(), 
+//				this.size.getWidth(), this.size.getHeight());
+		g2.fill(new Ellipse2D.Double(this.position.getOriginX(), this.position.getOriginY(), 
+				this.size.getWidth(), this.size.getHeight()));
 		System.out.println("Zeichne Kreis, size: " + this.size);
 	}
 
@@ -85,31 +87,31 @@ public class Circle extends AbstractItem {
 
 	@Override
 	public void setSize(Size size) {
+		System.out.println("Circle set Size, new size: " + size + " old size: " + this.size);
 		//Circle can not be oval -> size.height = size_weight
-		if(this.size.getWidth() == size.getWidth()) {
-			this.size = new Size(size.getHeight(), size.getHeight());
-		}
-		else if(this.size.getHeight() == size.getHeight()) {
-			this.size = new Size(size.getWidth(), size.getWidth());
-		}
-		else {
-			int heightDif = Math.abs(this.size.getHeight() - size.getHeight());
-			System.out.println("heightDif: " + heightDif);
-			int widthDif = Math.abs(this.size.getWidth() - size.getWidth());
-			System.out.println("widthDif: " + widthDif);
-			if(heightDif > widthDif){
-				this.size = new Size(size.getHeight(), size.getHeight());
-			}
-			else {
-				this.size = new Size(size.getWidth(), size.getWidth());
-			}
-		}
-//		this.size = new Size(size.getWidth(), size.getHeight());
-//		if(this.size.getHeight() < 0) {
-//			this.position = new Position(this.position.getOriginX() + this.size.getWidth(),
-//					this.position.getOriginY() + this.size.getHeight());
-//			this.size = new Size(-this.size.getWidth(), -this.size.getHeight());
+		Size newSize = null;
+//		if(this.size.getWidth() == size.getWidth()) {
+//			newSize = new Size(size.getHeight(), size.getHeight());
 //		}
+//		else if(this.size.getHeight() == size.getHeight()) {
+//			newSize = new Size(size.getWidth(), size.getWidth());
+//		}
+//		else {
+//			int heightDif = Math.abs(this.size.getHeight() - size.getHeight());
+//			System.out.println("heightDif: " + heightDif);
+//			int widthDif = Math.abs(this.size.getWidth() - size.getWidth());
+//			System.out.println("widthDif: " + widthDif);
+//			if(heightDif > widthDif){
+//				newSize = new Size(size.getHeight(), size.getHeight());
+//			}
+//			else {
+//				newSize = new Size(size.getWidth(), size.getWidth());
+//			}
+//		}
+		
+		newSize = size;
+		
+		this.size = newSize;
 		System.out.println("Circle set size: " + this.size);
 
 		notifyItemChangedListeners();

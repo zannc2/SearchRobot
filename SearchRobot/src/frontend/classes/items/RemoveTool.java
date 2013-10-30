@@ -4,29 +4,27 @@ import helper.Position;
 
 import java.util.List;
 
+import frontend.classes.view.Field;
 import frontend.interfaces.Item;
-import frontend.interfaces.Tool;
-import frontend.interfaces.View;
 
-public class RemoveTool implements Tool {
+public class RemoveTool extends AbstractTool {
 
-	private View view;
-	
-	public RemoveTool(View view) {
-		this.view = view;
+
+	public RemoveTool(Field field) {
+		super(field);
 	}
 
 	@Override
 	public void mouseDown(Position p) 
 	{
-		List<Item> l = getView().getItems();
+		List<Item> l = getField().getItems();
 		
 		for(int i = 0; i < l.size(); i++)
 		{
 			if(l.get(i).contains(p))
 			{
-				getView().removeItem(l.get(i));
-				System.out.println("Etwas Gelöscht");
+				getField().removeItem(l.get(i));
+				System.out.println("Etwas GelÃ¶scht");
 			}
 		}
 		
@@ -41,9 +39,5 @@ public class RemoveTool implements Tool {
 	public void mouseUp(Position p) {
 		// not needed
 	}
-
-	public View getView() {
-		return view;
-	}	
 
 }

@@ -5,24 +5,22 @@ import helper.Vector;
 
 import java.util.List;
 
+import frontend.classes.view.Field;
 import frontend.interfaces.Item;
-import frontend.interfaces.Tool;
-import frontend.interfaces.View;
 
-public class SelectionTool implements Tool {
+public class SelectionTool extends AbstractTool {
 
-	private View view;
+	public SelectionTool(Field field) {
+		super(field);
+	}
+
 	private Item item;
 	Position lastP;
-	
-	public SelectionTool(View view) {
-		this.view = view;
-	}
 
 	public void mouseDown(Position p) 
 	{
 
-		List<Item> l = getView().getItems();
+		List<Item> l = getField().getItems();
 		
 		for(int i = 0; i < l.size(); i++)
 		{
@@ -48,9 +46,5 @@ public class SelectionTool implements Tool {
 	public void mouseUp(Position p) {
 		item = null;
 	}
-
-	public View getView() {
-		return view;
-	}	
 
 }

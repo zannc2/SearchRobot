@@ -2,60 +2,79 @@ package frontend.classes.items;
 
 import helper.Position;
 import helper.Size;
+import frontend.classes.view.Field;
 import frontend.interfaces.Item;
-import frontend.interfaces.Tool;
-import frontend.interfaces.View;
 
-public class CircleTool implements Tool {
+public class CircleTool extends AbstractTool {
+
+	public CircleTool(Field field) {
+		super(field);
+	}
 
 	private Item i;
-	private View v;
-
-	public CircleTool(View v) {
-		this.v = v;
-	}
 
 	@Override
 	public void mouseDown(Position p) {
 		this.i = new Circle(p);
-		getView().addItem(this.i);
+		getField().addItem(this.i);
 		//System.out.println("Circle Created and added to View");
 	}
 
 	@Override
 	public void mouseDrag(Position p) {
-//		int newX = i.getPosition().getOriginX();
-//		int newY = i.getPosition().getOriginY();
-//		
-//
-//		int xsize = p.getOriginX()-i.getPosition().getOriginX();
-//		int ysize = p.getOriginY()-i.getPosition().getOriginY();
-//		
-//		if(xsize <0) {
-//			newX = newX + xsize;
-//			xsize = -xsize;
-//		}
-//		
-//		if(ysize < 0) {
-//			newY = newY + ysize;
-//			ysize = -ysize;
-//		}
-//		
-//		if(xsize > ysize)
-//		{
-//			i.setSize(new Size(xsize, xsize));
-//		}
-//		else
-//		{
-//			i.setSize(new Size(ysize, ysize));
-//		}
-//		
-//		i.setPosition(new Position(newX, newY));
-
-		int actualX = i.getPosition().getOriginX();
-		int actualY = i.getPosition().getOriginY();
+		Position itemP = i.getPosition();
+		Size itemS = i.getSize();
 		
-		i.setSize(new Size(p.getOriginX() - actualX, p.getOriginY() -  actualY));
+		System.out.println("mouse Drag, Origin: " + itemP + " Position: " + p + " size " + itemS);
+		
+		int originX;
+		int originY;
+		int width;
+		int height;
+		
+		if(itemP.getOriginX() < p.getOriginX() && 
+				(itemP.getOriginX() + itemS.getWidth()) > p.getOriginX()){
+			// position between item Origin and Item size
+			originX = itemP.getOriginX();
+			width = p.getOriginX() - originX;
+		}
+		else if(itemP.getOriginX() > p.getOriginX()){
+			// position smaller then Item origin
+			width = itemS.getWidth() + itemP.getOriginX() -p.getOriginX();
+			originX = p.getOriginX();
+		}
+		else {
+			// normal
+			originX = itemP.getOriginX();
+			width = p.getOriginX() - itemP.getOriginX();
+		}
+		
+		if(itemP.getOriginY() < p.getOriginY() && 
+				(itemP.getOriginY() + itemS.getHeight()) > p.getOriginY()) {
+			// Position between Item Origin and Item size
+			originY = itemP.getOriginY();
+			height = p.getOriginY() - originY;
+		}
+		else if(itemP.getOriginY() > p.getOriginY()){
+			// Position smaler than Item Origin
+			height = itemS.getHeight() + itemP.getOriginY() - p.getOriginY();
+			originY = p.getOriginY();
+		}
+		else {
+			// normal
+			originY = itemP.getOriginY();
+			height = p.getOriginY() - itemP.getOriginY();
+		}
+		
+		i.setPosition(new Position(originX, originY));
+		i.setSize(new Size(width, height));
+
+		//normal
+//		int actualX = i.getPosition().getOriginX();
+//		int actualY = i.getPosition().getOriginY();
+//		System.out.println("tool, x: " + actualX + " y: " + actualY);
+		
+//		i.setSize(new Size(p.getOriginX() - actualX, p.getOriginY() -  actualY));
 		
 		//System.out.println("X-Pos: " + i.getPosition().getOriginX() + " YPos: " + i.getPosition().getOriginY() + " height: " + i.getSize().getHeight() + "Width: " + i.getSize().getWidth());
 	}
@@ -64,8 +83,4 @@ public class CircleTool implements Tool {
 	public void mouseUp(Position p) {
 		mouseDrag(p);
 	}	
-	
-	private View getView() {
-		return this.v;
-	}
 }

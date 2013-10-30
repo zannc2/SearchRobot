@@ -1,23 +1,23 @@
 package frontend.classes.items;
 
 import helper.Position;
+import frontend.classes.view.Field;
 import frontend.interfaces.Item;
 import frontend.interfaces.Tool;
 import frontend.interfaces.View;
 
-public class RobotTool implements Tool {
+public class RobotTool extends AbstractTool {
 
-	private Item i;
-	private View v;
-
-	public RobotTool(View v) {
-		this.v = v;
+	public RobotTool(Field field) {
+		super(field);
 	}
 
+	private Item i;
+	
 	@Override
 	public void mouseDown(Position p) {
 		this.i = new Robot(p);
-		getView().addItem(this.i);
+		getField().addItem(this.i);
 		System.out.println("Robot Created and added to View");
 	}
 
@@ -29,9 +29,5 @@ public class RobotTool implements Tool {
 	@Override
 	public void mouseUp(Position p) {
 
-	}	
-	
-	private View getView() {
-		return this.v;
 	}
 }

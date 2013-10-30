@@ -8,11 +8,6 @@ import java.awt.Graphics;
 import java.util.List;
 
 public interface Item {
-	
-	public enum ItemType{
-		LINE, CIRCLE
-	}
-	
 	/**
 	 * Draws the Item in the Graphics
 	 * @param g A Graphics context

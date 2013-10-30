@@ -1,23 +1,22 @@
 package frontend.classes.items;
 
 import helper.Position;
+import frontend.classes.view.Field;
 import frontend.interfaces.Item;
-import frontend.interfaces.Tool;
-import frontend.interfaces.View;
 
-public class FinishTool implements Tool {
+public class FinishTool extends AbstractTool {
+
+	public FinishTool(Field field) {
+		super(field);
+	}
 
 	private Item i;
-	private View v;
-
-	public FinishTool(View v) {
-		this.v = v;
-	}
+	
 
 	@Override
 	public void mouseDown(Position p) {
 		this.i = new Finish(p);
-		getView().addItem(this.i);
+		getField().addItem(this.i);
 	}
 
 	@Override
@@ -30,9 +29,5 @@ public class FinishTool implements Tool {
 	public void mouseUp(Position p) {
 		// TODO Auto-generated method stub
 		
-	}
-	
-	private View getView() {
-		return this.v;
 	}
 }

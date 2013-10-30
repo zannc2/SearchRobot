@@ -2,24 +2,23 @@ package frontend.classes.items;
 
 import helper.Position;
 import helper.Size;
+import frontend.classes.view.Field;
 import frontend.interfaces.Item;
-import frontend.interfaces.Tool;
-import frontend.interfaces.View;
 
 
-public class LineTool implements Tool {
+public class LineTool extends AbstractTool {
+
+	public LineTool(Field field) {
+		super(field);
+	}
 
 	private Item i;
-	private View view;
 	
-	public LineTool(View view) {
-		this.view = view;
-	}
 
 	@Override
 	public void mouseDown(Position p) {
 		this.i = new Line(p);
-		getView().addItem(this.i);
+		getField().addItem(this.i);
 		//System.out.println("Line Created and added to View");
 	}
 
@@ -37,7 +36,4 @@ public class LineTool implements Tool {
 		mouseDrag(p);
 	}
 
-	public View getView() {
-		return view;
-	}	
 }
