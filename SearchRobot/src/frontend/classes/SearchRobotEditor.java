@@ -72,7 +72,7 @@ public class SearchRobotEditor {
 		fileMenu = new JMenu("Datei");
 		menuBar.add(fileMenu);
 
-		openMenuItem = new JMenuItem("Öffnen");
+		openMenuItem = new JMenuItem("ï¿½ffnen");
 		fileMenu.add(openMenuItem);
 		openMenuItem.addActionListener(new ActionListener() {
 
@@ -107,7 +107,7 @@ public class SearchRobotEditor {
 		editMenu = new JMenu("Bearbeiten");
 		menuBar.add(editMenu);
 
-		colorMenuItem = new JMenuItem("Hintergrundfarbe ändern");
+		colorMenuItem = new JMenuItem("Hintergrundfarbe ï¿½ndern");
 		editMenu.add(colorMenuItem);
 		
 		/* funktioniert nicht mehr :-(
@@ -115,7 +115,7 @@ public class SearchRobotEditor {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				frame.setBackground(JColorChooser.showDialog(null,  "Wähle die Farbe", view.getBackground()));
+				frame.setBackground(JColorChooser.showDialog(null,  "Wï¿½hle die Farbe", view.getBackground()));
 			}
 		});
 		*/
@@ -188,36 +188,36 @@ public class SearchRobotEditor {
 	private void addButtons(JToolBar toolBar) {
 
 		// Button Selection
-		selection = makeNavigationButton("selection", "Auswählen", "Auswählen", new Dimension(40, 40));
+		selection = makeNavigationButton("selection", "AuswÃ¤hlen", "AuswÃ¤hlen", new Dimension(40, 40));
 		toolBar.add(selection);
-		tools.add(new SelectionTool(view));
+		tools.add(new SelectionTool(view.getField()));
 
 		// Button Remove
-		remove = makeNavigationButton("remove", "Löschen", "Löschen", new Dimension(40, 40));
+		remove = makeNavigationButton("remove", "LÃ¶schen", "LÃ¶schen", new Dimension(40, 40));
 		toolBar.add(remove);
-		tools.add(new RemoveTool(view));
+		tools.add(new RemoveTool(view.getField()));
 		
 		toolBar.addSeparator(new Dimension(10,0));
 
 		// Button Robot
 		addRobot = makeNavigationButton("robot", "Start setzen", "Start", new Dimension(40, 40));
 		toolBar.add(addRobot);
-		tools.add(new RobotTool(view));
+		tools.add(new RobotTool(view.getField()));
 
 		// Button Finish
 		addFinish = makeNavigationButton("finish", "Ziel setzen", "Ziel", new Dimension(40, 40));
 		toolBar.add(addFinish);
-		tools.add(new FinishTool(view));
+		tools.add(new FinishTool(view.getField()));
 
 		// Button Line
 		addLine = makeNavigationButton("line", "Hinderniss: Linie", "Linie", new Dimension(40, 40));
 		toolBar.add(addLine);
-		tools.add(new LineTool(view));
+		tools.add(new LineTool(view.getField()));
 
 		// Button Circle
 		addCircle = makeNavigationButton("circle", "Hinderniss: Kreis", "Kreis", new Dimension(40, 40));
 		toolBar.add(addCircle);
-		tools.add(new CircleTool(view));
+		tools.add(new CircleTool(view.getField()));
 
 		toolBar.addSeparator(new Dimension(20,0));
 

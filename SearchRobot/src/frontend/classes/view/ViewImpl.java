@@ -124,8 +124,10 @@ public class ViewImpl extends JPanel implements View{
 		}
 	
 	}
-	
-	
+
+	public Field getField() {
+		return field;
+	}	
 }
 
 

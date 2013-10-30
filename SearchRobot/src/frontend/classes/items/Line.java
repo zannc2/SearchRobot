@@ -28,7 +28,7 @@ public class Line extends AbstractItem {
 	@Override
 	public void draw(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
-		g2.setStroke(new BasicStroke(3));
+		g2.setStroke(new BasicStroke(8));
 		g2.drawLine(this.position.getOriginX(), this.position.getOriginY(), 
 				this.position.getOriginX() + this.size.getWidth(), this.position.getOriginY() + this.size.getHeight());
 		//System.out.println("X-Pos: " + this.position.getOriginX() + " YPos: " + this.position.getOriginY() + " height: " + this.getSize().getHeight() + "Width: " + this.getSize().getWidth());
