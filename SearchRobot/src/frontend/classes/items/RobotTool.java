@@ -30,4 +30,9 @@ public class RobotTool extends AbstractTool {
 	public void mouseUp(Position p) {
 
 	}
+
+	@Override
+	public void mouseOver(Position p) {
+		// Not needed
+	}
 }

@@ -1,5 +1,7 @@
 package frontend.classes.items;
 
+import frontend.classes.items.handler.LineEndHandler;
+import frontend.classes.items.handler.LineOriginHandler;
 import frontend.interfaces.ItemHandler;
 import helper.Position;
 import helper.Size;
@@ -16,13 +18,17 @@ public class Line extends AbstractItem {
 	private Position position;
 	private Size size;
 	
-	private List<ItemHandler> itemHandler = new ArrayList<ItemHandler>();
+	private List<ItemHandler> itemHandlers = new ArrayList<ItemHandler>();
 	
 	public Line(Position p) {
 		this.position = p;
 		this.size = new Size(10, 10);
 		
-		//TODO create hanlder
+		/* Add handlers */
+		this.itemHandlers.add(new LineOriginHandler(this, p));
+		Position end = new Position(this.position.getOriginX() + this.size.getWidth(), 
+				this.position.getOriginY() + this.size.getHeight());
+		this.itemHandlers.add(new LineEndHandler(this, end));
 	}
 
 	@Override
@@ -32,7 +38,7 @@ public class Line extends AbstractItem {
 		g2.drawLine(this.position.getOriginX(), this.position.getOriginY(), 
 				this.position.getOriginX() + this.size.getWidth(), this.position.getOriginY() + this.size.getHeight());
 		//System.out.println("X-Pos: " + this.position.getOriginX() + " YPos: " + this.position.getOriginY() + " height: " + this.getSize().getHeight() + "Width: " + this.getSize().getWidth());
-		System.out.println("draw Line size: " + this.size);
+//		System.out.println("draw Line size: " + this.size);
 	}
 
 	@Override
@@ -63,6 +69,9 @@ public class Line extends AbstractItem {
 	public void setPosition(Position position) {
 		this.position = position;
 		notifyItemChangedListeners();
+
+		/* set handles */
+		itemHandlers.get(0).setPosition(position);
 	}
 
 	@Override
@@ -74,6 +83,11 @@ public class Line extends AbstractItem {
 	public void setSize(Size size) {
 		this.size = size;
 		notifyItemChangedListeners();
+
+		/* set handles */
+		Position end = new Position(this.position.getOriginX() + this.size.getWidth(), 
+				this.position.getOriginY() + this.size.getHeight());
+		itemHandlers.get(1).setPosition(end);
 	}
 
 	@Override
@@ -121,7 +135,7 @@ public class Line extends AbstractItem {
 
 	@Override
 	public List<ItemHandler> getItemHandler() {
-		return this.itemHandler;
+		return this.itemHandlers;
 	}
 
 }

@@ -30,4 +30,9 @@ public class FinishTool extends AbstractTool {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void mouseOver(Position p) {
+		//not needed
+	}
 }

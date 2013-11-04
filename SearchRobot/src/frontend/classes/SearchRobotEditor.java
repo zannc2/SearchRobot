@@ -28,7 +28,7 @@ import frontend.classes.items.FinishTool;
 import frontend.classes.items.LineTool;
 import frontend.classes.items.RemoveTool;
 import frontend.classes.items.RobotTool;
-import frontend.classes.items.SelectionTool;
+import frontend.classes.items.selection.SelectionTool;
 import frontend.classes.view.ViewImpl;
 import frontend.interfaces.Tool;
 

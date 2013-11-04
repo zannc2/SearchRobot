@@ -40,4 +40,9 @@ public class RemoveTool extends AbstractTool {
 		// not needed
 	}
 
+	@Override
+	public void mouseOver(Position p) {
+		// Not needed
+	}
+
 }

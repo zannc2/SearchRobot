@@ -42,14 +42,31 @@ public interface ItemHandler {
 	 * Returns curser wicht should be displayed when the mouse is over the handle.
 	 * @return The Cursor
 	 */
-	public Cursor getCursor();
+	public abstract Cursor getCursor();
 	
-	/*
-	 * Missing interactions
-	 * public boolean contains(Coord c);
+	/**
+	 * Tests if the Position is contained in the Handler
+	 * @param p Position
+	 * @return True if is contained. 
 	 */
-//	public void startInteraction(Position p);
+	public boolean contains(Position p);
+	 
+	/**
+	 * Start of an Interaction on the Handler
+	 * @param p Position
+	 */
+	public void startInteraction(Position p);
+	
+	/**
+	 * Drag Interaction on the Hanlder
+	 * @param p Position
+	 */
 	public void dragInteraction(Position p);
+	
+	/**
+	 * Stop Interaction on the Handler
+	 * @param p Position
+	 */
 	public void stopInteraction(Position p);
 	
 	

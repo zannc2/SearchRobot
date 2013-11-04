@@ -25,6 +25,12 @@ public interface Tool {
 	 * @param p Position of the mouse
 	 */
 	public void mouseUp(Position p);
+	
+	/**
+	 * 
+	 * @param p
+	 */
+	public void mouseOver(Position p);
 
 
 }

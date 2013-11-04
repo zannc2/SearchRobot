@@ -36,4 +36,9 @@ public class LineTool extends AbstractTool {
 		mouseDrag(p);
 	}
 
+	@Override
+	public void mouseOver(Position p) {
+		// Not needed
+	}
+
 }

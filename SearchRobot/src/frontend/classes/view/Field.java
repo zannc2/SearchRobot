@@ -7,9 +7,11 @@ import java.util.List;
 import frontend.interfaces.FieldChangedListener;
 import frontend.interfaces.Item;
 import frontend.interfaces.ItemChangedListener;
+import frontend.interfaces.View;
 
 public class Field {
 
+	private View view;
 	private List<Item> items = new ArrayList<Item>();
 	private List<FieldChangedListener> listeners = new ArrayList<FieldChangedListener>();
 	
@@ -19,10 +21,18 @@ public class Field {
 
 		@Override
 		public void itemChanged(ItemChangedEvent e) {
-			System.out.println("ViewItemChangedListener");
+//			System.out.println("ViewItemChangedListener");
 			notifyFieldChangedListeners();
 		}
 		
+	}
+	
+	public Field(View v) {
+		this.view = v;
+	}
+	
+	public View getView() {
+		return this.view;
 	}
 	
 	public List<Item> getItems() {
@@ -53,5 +63,8 @@ public class Field {
 	public boolean removeListener(FieldChangedListener l) {
 		return this.listeners.remove(l);
 	}
+	
+	
+	
 
 }

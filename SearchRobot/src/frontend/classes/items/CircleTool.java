@@ -32,5 +32,10 @@ public class CircleTool extends AbstractTool {
 	@Override
 	public void mouseUp(Position p) {
 		mouseDrag(p);
+	}
+
+	@Override
+	public void mouseOver(Position p) {
+		//not needed
 	}	
 }
