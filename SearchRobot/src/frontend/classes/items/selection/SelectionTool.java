@@ -25,7 +25,6 @@ public class SelectionTool extends AbstractTool {
 	private StateFactory factory;
 	private SelectionToolState state = null;
 
-	private Item item;
 	private Item selectionArea;
 	Position lastP;
 	
@@ -40,36 +39,9 @@ public class SelectionTool extends AbstractTool {
 
 		this.previousMouseDownPosition = p;
 		this.state.mouseDown(p);
-		
-//		this.selectionArea = new SelectionArea(p);
-//		getField().addItem(this.selectionArea);
-		
-
-//		List<Item> l = getField().getItems();
-//		
-//		for(int i = 0; i < l.size(); i++)
-//		{
-//			if(l.get(i).contains(p))
-//			{
-//				item = l.get(i);
-//			}
-//		}
-//		
-//		lastP = p;
 	}
 
-	public void mouseDrag(Position p) {
-//		Size newSize = new Size(p.getOriginX() -this.selectionArea.getPosition().getOriginX(), 
-//				p.getOriginY() - this.selectionArea.getPosition().getOriginY());
-//		this.selectionArea.setSize(newSize);
-//		
-//		if(item != null)
-//		{
-//			Position calc = new Position(p.getOriginX()-lastP.getOriginX(), p.getOriginY()-lastP.getOriginY());
-//			item.move(new Vector(calc));
-//		}
-//		lastP = p;
-		
+	public void mouseDrag(Position p) {		
 		this.state.mouseDrag(p);
 		this.previousMouseDownPosition = p;
 			
@@ -80,7 +52,6 @@ public class SelectionTool extends AbstractTool {
 	}
 
 	public void mouseUp(Position p) {
-		item = null;
 		this.state.mouseUp(p);
 	}
 	

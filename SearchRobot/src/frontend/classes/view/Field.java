@@ -40,6 +40,7 @@ public class Field {
 	}
 	
 	public boolean removeItem(Item i) {
+		notifyFieldChangedListeners();
 		return items.remove(i);
 	}
 	
