@@ -6,6 +6,7 @@ import helper.Size;
 import helper.Vector;
 
 import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.List;
 public class Robot extends AbstractItem{
 	
 	private Position position;
-	private Size size = new Size(8, 8);
+	private Size size = new Size(20, 20);
 
 	private List<ItemHandler> itemHandler = new ArrayList<ItemHandler>();
 
@@ -28,15 +29,36 @@ public class Robot extends AbstractItem{
 	public void draw(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setStroke(new BasicStroke(1));
-		int[] xPoints = {this.position.getOriginX()+this.size.getWidth()/2,
-		                 this.position.getOriginX()+this.size.getWidth(),
-		                 this.position.getOriginX()+this.size.getWidth()/2};
-		int[] yPoints = {this.position.getOriginY(),
-						this.position.getOriginY()+this.size.getHeight()/2,
-						this.position.getOriginY()+this.size.getHeight()};
-		g2.fillRect(this.position.getOriginX(), this.position.getOriginY(), 
-				this.size.getWidth()/2, this.size.getHeight());
-		g2.fillPolygon(xPoints, yPoints, 3);
+//		int[] xPoints = {this.position.getOriginX()+this.size.getWidth()/2,
+//		                 this.position.getOriginX()+this.size.getWidth(),
+//		                 this.position.getOriginX()+this.size.getWidth()/2};
+//		int[] yPoints = {this.position.getOriginY(),
+//						this.position.getOriginY()+this.size.getHeight()/2,
+//						this.position.getOriginY()+this.size.getHeight()};
+//		g2.fillRect(this.position.getOriginX(), this.position.getOriginY(), 
+//				this.size.getWidth()/2, this.size.getHeight());
+//		g2.fillPolygon(xPoints, yPoints, 3);
+		
+		g2.fillRoundRect(this.position.getOriginX(), this.position.getOriginY(), 
+				this.size.getWidth(), this.size.getHeight()/6*5, this.size.getWidth()/6, this.size.getWidth()/6);
+		g2.fillRoundRect(this.position.getOriginX() + this.size.getWidth()/6, 
+				this.position.getOriginY() + this.size.getHeight()/6*5, this.size.getWidth()/6, 
+				this.size.getWidth()/6, 3, 3);
+
+		g2.fillRoundRect(this.position.getOriginX() + this.size.getWidth()/6*4, 
+				this.position.getOriginY() + this.size.getHeight()/6*5, this.size.getWidth()/6, 
+				this.size.getWidth()/6, 3, 3);
+		Color current = g2.getColor();
+		g2.setColor(Color.WHITE);
+		g2.fillRoundRect(this.position.getOriginX() + this.size.getWidth()/6*3, 
+				this.position.getOriginY() + this.size.getHeight()/6*3, 
+				this.size.getWidth()/6*4, this.size.getHeight()/6, 3, 3);
+		g2.fillOval(this.position.getOriginX() + this.size.getWidth()/6*3, 
+				this.position.getOriginY() + this.size.getHeight()/6, this.size.getWidth()/6, this.size.getHeight()/6);
+		g2.fillOval(this.position.getOriginX() + this.size.getWidth()/6*4, 
+				this.position.getOriginY() + this.size.getHeight()/6, this.size.getWidth()/6, this.size.getHeight()/6);
+		g2.setColor(current);
+		
 		
 	}
 

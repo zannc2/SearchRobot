@@ -14,7 +14,7 @@ import java.util.List;
 public class Finish extends AbstractItem {
 	
 	private Position position;
-	private Size size = new Size(8, 8);
+	private Size size = new Size(20, 20);
 	
 	private List<ItemHandler> itemHandler = new ArrayList<ItemHandler>();
 	
@@ -31,16 +31,51 @@ public class Finish extends AbstractItem {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setStroke(new BasicStroke(1));
 		g2.fillRect(this.position.getOriginX(), this.position.getOriginY(), 
-				this.size.getWidth()/2, this.size.getHeight()/2);
-		g2.drawRect(this.position.getOriginX()+this.size.getWidth()/2, 
-				this.position.getOriginY(), this.size.getWidth()/2, 
-				this.size.getHeight()/2);
-		g2.drawRect(this.position.getOriginX(), 
-				this.position.getOriginY()+this.size.getHeight()/2, 
-				this.size.getWidth()/2, this.size.getHeight()/2);
-		g2.fillRect(this.position.getOriginX()+this.size.getWidth()/2, 
-				this.position.getOriginY()+this.size.getHeight()/2, 
-				this.size.getWidth()/2, this.size.getHeight()/2);
+				this.size.getWidth()/4, this.size.getHeight()/4);
+		g2.drawRect(this.position.getOriginX()+this.size.getWidth()/4, 
+				this.position.getOriginY(), this.size.getWidth()/4, 
+				this.size.getHeight()/4);
+		g2.fillRect(this.position.getOriginX() +this.size.getWidth()/2, this.position.getOriginY(), 
+				this.size.getWidth()/4, this.size.getHeight()/4);
+		g2.drawRect(this.position.getOriginX()+(this.size.getWidth()/4 * 3), 
+				this.position.getOriginY(), this.size.getWidth()/4, 
+				this.size.getHeight()/4);
+		
+		g2.drawRect(this.position.getOriginX(), this.position.getOriginY() + this.size.getHeight()/4, 
+				this.size.getWidth()/4, this.size.getHeight()/4);
+		g2.fillRect(this.position.getOriginX()+this.size.getWidth()/4, 
+				this.position.getOriginY() + this.size.getHeight()/4, this.size.getWidth()/4, 
+				this.size.getHeight()/4);
+		g2.drawRect(this.position.getOriginX() +this.size.getWidth()/2, this.position.getOriginY() + this.size.getHeight()/4, 
+				this.size.getWidth()/4, this.size.getHeight()/4);
+		g2.fillRect(this.position.getOriginX()+(this.size.getWidth()/4 * 3), 
+				this.position.getOriginY() + this.size.getHeight()/4, this.size.getWidth()/4, 
+				this.size.getHeight()/4);
+		
+		g2.fillRect(this.position.getOriginX(), this.position.getOriginY() + this.size.getHeight()/2, 
+				this.size.getWidth()/4, this.size.getHeight()/4);
+		g2.drawRect(this.position.getOriginX()+this.size.getWidth()/4, 
+				this.position.getOriginY() + this.size.getHeight()/2, this.size.getWidth()/4, 
+				this.size.getHeight()/4);
+		g2.fillRect(this.position.getOriginX() +this.size.getWidth()/2, this.position.getOriginY() + this.size.getHeight()/2, 
+				this.size.getWidth()/4, this.size.getHeight()/4);
+		g2.drawRect(this.position.getOriginX()+(this.size.getWidth()/4 * 3), 
+				this.position.getOriginY() + this.size.getHeight()/2, this.size.getWidth()/4, 
+				this.size.getHeight()/4);
+		
+		g2.drawRect(this.position.getOriginX(), this.position.getOriginY() + this.size.getHeight()/4 * 3, 
+				this.size.getWidth()/4, this.size.getHeight()/4);
+		g2.fillRect(this.position.getOriginX()+this.size.getWidth()/4, 
+				this.position.getOriginY() + this.size.getHeight()/4 * 3, this.size.getWidth()/4, 
+				this.size.getHeight()/4);
+		g2.drawRect(this.position.getOriginX() +this.size.getWidth()/2, this.position.getOriginY() + this.size.getHeight()/4 * 3, 
+				this.size.getWidth()/4, this.size.getHeight()/4);
+		g2.fillRect(this.position.getOriginX()+(this.size.getWidth()/4 * 3), 
+				this.position.getOriginY() + this.size.getHeight()/4 * 3, this.size.getWidth()/4, 
+				this.size.getHeight()/4);
+		
+		g2.drawRect(this.position.getOriginX(), this.position.getOriginY(), 
+				this.size.getWidth(), this.size.getHeight());
 	}
 
 	@Override
