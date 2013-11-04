@@ -1,5 +1,9 @@
 package frontend.classes.items;
 
+import frontend.classes.items.handler.CircleBottomLeftHandler;
+import frontend.classes.items.handler.CircleBottomRightHandler;
+import frontend.classes.items.handler.CircleTopLeftHandler;
+import frontend.classes.items.handler.CircleTopRightHandler;
 import frontend.interfaces.ItemHandler;
 import helper.Position;
 import helper.Size;
@@ -19,27 +23,39 @@ public class Circle extends AbstractItem {
 	private Position position;
 	private Size size;
 
-	private List<ItemHandler> itemHandler = new ArrayList<ItemHandler>();
+	private List<ItemHandler> itemHandlers = new ArrayList<ItemHandler>();
 
 	public Circle(Position p) {
 		this.position = p;
 		this.size = new Size(1, 1);
-		//TODO greate Handler
+
+		// Add handlers
+		this.itemHandlers.add(new CircleTopLeftHandler(this, p));
+		Position topRight = new Position(this.position.getOriginX() + this.size.getWidth(), this.position.getOriginY());
+		this.itemHandlers.add(new CircleTopRightHandler(this, topRight));
+		Position bottomLeft = new Position(this.position.getOriginX(), this.position.getOriginY() + this.size.getHeight());
+		this.itemHandlers.add(new CircleBottomLeftHandler(this, bottomLeft));
+		Position bottomRight = new Position(this.position.getOriginX() + this.size.getWidth(),
+				this.position.getOriginY() + this.size.getHeight());	
+		this.itemHandlers.add(new CircleBottomRightHandler(this, bottomRight));
 	}
 
 	@Override
 	public void draw(Graphics g) {
-		java.awt.Rectangle r = getAWTRectangle();
+//		java.awt.Rectangle r = getAWTRectangle();
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		g2.fill(new Ellipse2D.Double(r.x, r.y, r.width, r
-				.height));
+		g2.fill(new Ellipse2D.Double(this.position.getOriginX(), this.position.getOriginY(),
+				this.size.getWidth(), this.size.getHeight()));
 	}
 
 	@Override
 	public void setPosition(Position position) {
 		this.position = position;
 		notifyItemChangedListeners();
+		
+		// set Handler topLeft
+		this.itemHandlers.get(0).setPosition(position);
 	}
 
 	@Override
@@ -51,7 +67,7 @@ public class Circle extends AbstractItem {
 
 	@Override
 	public List<ItemHandler> getItemHandler() {
-		return this.itemHandler;	
+		return this.itemHandlers;	
 	}
 
 	@Override
@@ -69,14 +85,16 @@ public class Circle extends AbstractItem {
 
 		notifyItemChangedListeners();
 
-		//TODO
-		/* set handles */
-		//		Coord c = new Coord(this.bb.getX0(), this.bb.getY0());
-		//		shapeHandles.get(0).setPosition(c);
-		//
-		//		Coord end = new Coord(this.bb.getX0() + this.bb.getWidth(), 
-		//				this.bb.getY0() + this.bb.getHeight());
-		//		shapeHandles.get(1).setPosition(end);
+		// set handles 
+		this.itemHandlers.get(0).setPosition(this.position);
+		Position topRight = new Position(this.position.getOriginX() + this.size.getWidth(), this.position.getOriginY());
+		this.itemHandlers.get(1).setPosition(topRight);;
+		Position bottomLeft = new Position(this.position.getOriginX(), this.position.getOriginY() + this.size.getHeight());
+		this.itemHandlers.get(2).setPosition(bottomLeft);;
+		Position bottomRight = new Position(this.position.getOriginX() + this.size.getWidth(),
+				this.position.getOriginY() + this.size.getHeight());	
+		this.itemHandlers.get(3).setPosition(bottomRight);
+		
 	}
 
 	@Override
@@ -86,8 +104,26 @@ public class Circle extends AbstractItem {
 
 	@Override
 	public void setSize(Size size) {
+		
 		this.size = size;
+		// calculate positive Values
+		java.awt.Rectangle r = getAWTRectangle();
+		
+		System.out.println("new Rectangle: " + r);
+		
+		// set new Size and Position with positive Values
+		this.size = new Size((int) r.getWidth(), (int) r.getHeight());
+		this.position = new Position((int) r.getX(), (int) r.getY());
 		notifyItemChangedListeners();
+		
+		// set Handlers
+		Position topRight = new Position(this.position.getOriginX() + this.size.getWidth(), this.position.getOriginY());
+		this.itemHandlers.get(1).setPosition(topRight);;
+		Position bottomLeft = new Position(this.position.getOriginX(), this.position.getOriginY() + this.size.getHeight());
+		this.itemHandlers.get(2).setPosition(bottomLeft);;
+		Position bottomRight = new Position(this.position.getOriginX() + this.size.getWidth(),
+				this.position.getOriginY() + this.size.getHeight());	
+		this.itemHandlers.get(3).setPosition(bottomRight);
 	}
 
 	@Override
