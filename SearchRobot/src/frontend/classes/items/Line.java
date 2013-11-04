@@ -57,12 +57,11 @@ public class Line extends AbstractItem {
 
 		//TODO
 		/* set handles */
-//		Coord c = new Coord(this.bb.getX0(), this.bb.getY0());
-//		shapeHandles.get(0).setPosition(c);
-//
-//		Coord end = new Coord(this.bb.getX0() + this.bb.getWidth(), 
-//				this.bb.getY0() + this.bb.getHeight());
-//		shapeHandles.get(1).setPosition(end);
+		this.itemHandlers.get(0).setPosition(this.position);
+
+		Position end = new Position(this.position.getOriginX() + this.size.getWidth(), 
+				this.position.getOriginY() + this.size.getHeight());
+		this.itemHandlers.get(1).setPosition(end);
 	}
 	
 	@Override

@@ -1,5 +1,12 @@
 package frontend.classes.items.handler;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.Stroke;
+
 import frontend.interfaces.Item;
 import helper.Position;
 import helper.Size;
@@ -34,7 +41,6 @@ public class LineEndHandler extends AbstractHandler {
 		int newWidth = newX - originX;
 		int newHeight = newY - originY;
 		this.owner.setSize(new Size(newWidth, newHeight));
-		this.owner.setPosition(p);
 	}
 
 	@Override
