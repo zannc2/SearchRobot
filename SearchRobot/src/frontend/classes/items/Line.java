@@ -52,8 +52,6 @@ public class Line extends AbstractItem {
 		y = y + delta.getYComponent();
 		
 		this.position = new Position(x, y);
-		
-		notifyItemChangedListeners();
 
 		//TODO
 		/* set handles */
@@ -62,6 +60,8 @@ public class Line extends AbstractItem {
 		Position end = new Position(this.position.getOriginX() + this.size.getWidth(), 
 				this.position.getOriginY() + this.size.getHeight());
 		this.itemHandlers.get(1).setPosition(end);
+		
+		notifyItemChangedListeners();
 	}
 	
 	@Override

@@ -21,7 +21,6 @@ public abstract class AbstractHandler implements ItemHandler {
 	/** The size of the pen. */
 	public static final int PEN_SIZE = 1;
 
-	private static final Cursor RESIZE_CURSOR = new Cursor(Cursor.CROSSHAIR_CURSOR);
 	
 	private Position position;
 	private Item owner;
@@ -79,11 +78,6 @@ public abstract class AbstractHandler implements ItemHandler {
 		Stroke stroke = new BasicStroke(PEN_SIZE);
 		g2.setStroke(stroke);
 		g2.draw(new Rectangle(getX0(), getY0(), getWidth(), getHeight()));
-	}
-
-	@Override
-	public Cursor getCursor() {
-		return RESIZE_CURSOR;
 	}
 
 	@Override

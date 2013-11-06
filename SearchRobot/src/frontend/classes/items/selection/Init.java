@@ -49,6 +49,9 @@ public class Init extends SelectionToolState{
 			/**** Init ****/
 			setMoveCursor();
 		}
+		else if(isOnUnselectedItem(p)){
+			setMoveCursor();
+		}
 		else {
 			setDefaultCursor();
 		}

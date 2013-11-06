@@ -2,6 +2,7 @@ package frontend.classes.items.handler;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -15,11 +16,18 @@ public class LineEndHandler extends AbstractHandler {
 
 	private Position position;
 	private Item owner;
+	
+	private static final Cursor RESIZE_CURSOR = new Cursor(Cursor.S_RESIZE_CURSOR);
 
 	public LineEndHandler(Item owner, Position position) {
 		super(owner, position);
 		this.owner = owner;
 		this.position = position;
+	}
+
+	@Override
+	public Cursor getCursor() {
+		return RESIZE_CURSOR;
 	}
 
 	@Override

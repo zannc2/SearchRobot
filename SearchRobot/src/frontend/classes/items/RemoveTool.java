@@ -2,6 +2,7 @@ package frontend.classes.items;
 
 import helper.Position;
 
+import java.awt.Cursor;
 import java.util.List;
 
 import frontend.classes.view.Field;
@@ -24,7 +25,7 @@ public class RemoveTool extends AbstractTool {
 			if(l.get(i).contains(p))
 			{
 				getField().removeItem(l.get(i));
-				System.out.println("Etwas Gelöscht");
+				getField().getView().setCursor(Cursor.getDefaultCursor());
 			}
 		}
 		
@@ -42,7 +43,18 @@ public class RemoveTool extends AbstractTool {
 
 	@Override
 	public void mouseOver(Position p) {
-		// Not needed
+		List<Item> l = getField().getItems();
+		
+		for(int i = 0; i < l.size(); i++)
+		{
+			if(l.get(i).contains(p))
+			{
+				getField().getView().setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
+			}
+			else {
+				getField().getView().setCursor(Cursor.getDefaultCursor());
+			}
+		}
 	}
 
 }

@@ -1,5 +1,6 @@
 package frontend.classes.items.handler;
 
+import java.awt.Cursor;
 import java.awt.Rectangle;
 
 import frontend.interfaces.Item;
@@ -11,10 +12,17 @@ public class CircleBottomRightHandler extends AbstractHandler {
 	private Position position;
 	private Item owner;
 	
+	private static final Cursor RESIZE_CURSOR = new Cursor(Cursor.SE_RESIZE_CURSOR);
+	
 	public CircleBottomRightHandler(Item owner, Position position) {
 		super(owner, position);
 		this.owner = owner;
 		this.position = position;
+	}
+
+	@Override
+	public Cursor getCursor() {
+		return RESIZE_CURSOR;
 	}
 
 	@Override

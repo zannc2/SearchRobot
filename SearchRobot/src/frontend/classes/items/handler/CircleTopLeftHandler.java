@@ -4,17 +4,25 @@ import frontend.interfaces.Item;
 import helper.Position;
 import helper.Size;
 
+import java.awt.Cursor;
 import java.awt.Rectangle;
 
 public class CircleTopLeftHandler extends AbstractHandler {
 
 	private Position position;
 	private Item owner;
+	
+	private static final Cursor RESIZE_CURSOR = new Cursor(Cursor.NW_RESIZE_CURSOR);
 
 	public CircleTopLeftHandler(Item owner, Position position) {
 		super(owner, position);
 		this.owner = owner;
 		this.position = position;
+	}
+
+	@Override
+	public Cursor getCursor() {
+		return RESIZE_CURSOR;
 	}
 
 	@Override

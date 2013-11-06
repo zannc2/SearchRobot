@@ -17,10 +17,17 @@ public class LineOriginHandler extends AbstractHandler {
 	private Position position;
 	private Item owner;
 	
+	private static final Cursor RESIZE_CURSOR = new Cursor(Cursor.N_RESIZE_CURSOR);
+	
 	public LineOriginHandler(Item owner, Position position) {
 		super(owner, position);
 		this.owner = owner;
 		this.position = position;
+	}
+
+	@Override
+	public Cursor getCursor() {
+		return RESIZE_CURSOR;
 	}
 
 	@Override

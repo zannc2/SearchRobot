@@ -76,63 +76,29 @@ public class SelectionArea extends AbstractItem {
 		return null;
 	}
 	
-	private Rectangle getAWTRectangle() {
+	public Rectangle getAWTRectangle() {
+		int width = this.size.getWidth();
+		int height = this.size.getHeight();
 		Rectangle r = null;
-		int width = size.getWidth();
-		int height = size.getHeight();
 		if (width >= 0) {
 			if (height >= 0) {
-				
-				if(width > height)
-				{
-					r = new Rectangle(this.position.getOriginX(), this.position
-							.getOriginY(), width, width);
-				}
-				else
-				{
-					r = new Rectangle(this.position.getOriginX(), this.position
-							.getOriginY(), height, height);
-				}
-				
+				r = new Rectangle(this.position.getOriginX(), this.position
+						.getOriginY(), width, height);
 			} else {
 				// width >= 0 && height < 0
-				if(Math.abs(width) > Math.abs(height))
-				{
-					r = new Rectangle(this.position.getOriginX(), this.position
-							.getOriginY() - width, width, width);
-				}
-				else
-				{
-					r = new Rectangle(this.position.getOriginX(), this.position
-							.getOriginY() + height, -height, -height);
-				}
+				r = new Rectangle(this.position.getOriginX(), this.position
+						.getOriginY()
+						+ height, width, -height);
 			}
 		} else {
 			if (height >= 0) {
-				if(Math.abs(width) > Math.abs(height))
-				{
-					r = new Rectangle(this.position.getOriginX() + width, this.position
-						.getOriginY(), -width, -width);
-				}
-				else
-				{
-					r = new Rectangle(this.position.getOriginX() - height, this.position
-							.getOriginY(), height, height);
-				}
+				r = new Rectangle(this.position.getOriginX() + width, this.position
+						.getOriginY(), -width, height);
 			} else {
 				// width < 0 && height < 0
-				if(Math.abs(width) > Math.abs(height))
-				{
 				r = new Rectangle(this.position.getOriginX() + width, this.position
 						.getOriginY()
-						+ width, -width, -width);
-				}
-				else
-				{
-					r = new Rectangle(this.position.getOriginX() + height, this.position
-							.getOriginY()
-							+ height, -height, -height);
-				}
+						+ height, -width, -height);
 			}
 		}
 		return r;
