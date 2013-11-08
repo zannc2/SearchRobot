@@ -39,8 +39,9 @@ public class LineOriginHandler extends AbstractHandler {
 	public void dragInteraction(Position p) {
 		System.out.println("start LineEndHandle - drag");
 		/* get end point*/
-		Position endPoint = new Position(this.position.getOriginX() + this.owner.getSize().getWidth(),
-				this.position.getOriginY() + this.owner.getSize().getHeight());
+		Position endPoint = new Position(
+				this.owner.getPosition().getOriginX() + this.owner.getSize().getWidth(),
+				this.owner.getPosition().getOriginY() + this.owner.getSize().getHeight());
 		/* change Location*/
 		this.position = p;
 		super.setPosition(p);

@@ -67,10 +67,14 @@ public class Line extends AbstractItem {
 	@Override
 	public void setPosition(Position position) {
 		this.position = position;
-		notifyItemChangedListeners();
 
 		/* set handles */
 		itemHandlers.get(0).setPosition(position);
+		Position end = new Position(this.position.getOriginX() + this.size.getWidth(), 
+				this.position.getOriginY() + this.size.getHeight());
+		this.itemHandlers.get(1).setPosition(end);
+
+		notifyItemChangedListeners();
 	}
 
 	@Override
