@@ -1,5 +1,9 @@
 package frontend.classes;
 
+import helper.Position;
+import helper.Size;
+import helper.Vector;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -13,7 +17,6 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -23,6 +26,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 
+import robot.classes.RobotController;
 import frontend.classes.items.CircleTool;
 import frontend.classes.items.FinishTool;
 import frontend.classes.items.LineTool;
@@ -299,7 +303,8 @@ public class SearchRobotEditor {
 					isStarted = false;
 					startButton.setIcon(new ImageIcon(getClass().getResource("resources/search.png")));
 					System.out.println("Suche beendet");
-					// TODO: suche starten
+
+					//TODO stop search
 				}
 				else
 				{
@@ -313,6 +318,12 @@ public class SearchRobotEditor {
 					startButton.setIcon(new ImageIcon(getClass().getResource("resources/abort.png")));
 					System.out.println("Suche gestartet");
 					// TODO: Suche abbrechen
+					//Suche starten
+					RobotController controller = new RobotController();
+					
+					//TODO werte setzten
+					controller.startRobotSearch(new Size(800, 500), new Position(1,1), 
+							new Size(10,10), new Vector(1,0));
 				}
 			}
 		}
