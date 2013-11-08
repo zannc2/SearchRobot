@@ -11,6 +11,7 @@ import helper.Vector;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.geom.Ellipse2D;
@@ -42,7 +43,6 @@ public class Circle extends AbstractItem {
 
 	@Override
 	public void draw(Graphics g) {
-//		java.awt.Rectangle r = getAWTRectangle();
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.fill(new Ellipse2D.Double(this.position.getOriginX(), this.position.getOriginY(),
@@ -60,8 +60,12 @@ public class Circle extends AbstractItem {
 
 	@Override
 	public boolean contains(Position p) {
-		return new Ellipse2D.Double(this.position.getOriginX(), this.position.getOriginX(),
-				this.size.getWidth(), this.size.getHeight()).contains(p.getAWTPoint());
+		Ellipse2D.Double ellipse = new Ellipse2D.Double(this.position.getOriginX(), this.position.getOriginY(),
+				this.size.getWidth(), this.size.getHeight());
+//		System.out.println("ellipse: " + ellipse);
+		boolean rt = ellipse.contains(new Point(p.getOriginX(), p.getOriginY()));
+//		System.out.println("contains: " + rt);
+		return rt;
 
 	}
 
