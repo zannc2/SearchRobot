@@ -18,14 +18,14 @@ public class RobotTool extends AbstractTool {
 		this.field = field;
 	}
 
-	private Item i;
+	private Item item;
 	
 	@Override
 	public void mouseDown(Position p) {
-		this.i = new Robot(p);
-		getField().addItem(this.i);
+		this.item = new Robot(p);
+		getField().addItem(this.item);
 		System.out.println("Robot Created and added to View");
-		this.field.setRoboterPosition(p);
+		this.field.setRoboter(this.item);
 	}
 
 	@Override

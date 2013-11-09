@@ -1,6 +1,7 @@
 package frontend.classes.view;
 
 import helper.Position;
+import helper.Vector;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class Field implements Serializable{
 	private View view;
 	private List<Item> items = new ArrayList<Item>();
 	private List<FieldChangedListener> listeners = new ArrayList<FieldChangedListener>();
-	private Position robotPosition;
+	private Item robotItem;
 	
 	private FieldItemChangedListener l = new FieldItemChangedListener();
 	
@@ -86,13 +87,21 @@ public class Field implements Serializable{
 		}
 		return false;
 	}
-
-	public void setRoboterPosition(Position p) {
-		this.robotPosition = p;
-	}
 	
 	public Position getRobotPosition() {
-		return this.robotPosition;
+		return this.robotItem.getPosition();
+	}
+
+	public void setRoboter(Item item) {
+		this.robotItem = item;
+	}
+	
+	public void moveRobotTo(Position p) {
+		//TODO
+//		Position oldP =this.robotItem.getPosition();
+//		int deltaX = p.getOriginX() - oldP.getOriginX();
+//		int deltaY = p.getOriginY() - oldP.getOriginY();
+//		this.robotItem.move(new Vector(deltaX, deltaY));
 	}
 	
 
