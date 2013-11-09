@@ -5,11 +5,17 @@ import frontend.interfaces.ItemHandler;
 import helper.Position;
 
 import java.awt.Cursor;
+import java.io.Serializable;
 
 
 
-public abstract class SelectionToolState {
+public abstract class SelectionToolState implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6206941490429853065L;
+	
 	private SelectionTool myContext;
 	
 	protected SelectionToolState(SelectionTool context) {

@@ -5,6 +5,11 @@ import frontend.interfaces.StateFactory;
 
 public class MyStateFactory implements StateFactory {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3013856088529493895L;
+
 	@Override
 	public SelectionToolState createDragAreaState(SelectionTool context) {
 		return new DragArea(context);

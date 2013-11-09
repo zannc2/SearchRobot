@@ -5,8 +5,9 @@ import helper.Size;
 
 import java.awt.Cursor;
 import java.awt.Graphics;
+import java.io.Serializable;
 
-public interface ItemHandler {
+public interface ItemHandler extends Serializable{
 	
 	/**
 	 * Gets the Handler's owner. 

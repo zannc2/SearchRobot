@@ -7,6 +7,11 @@ import frontend.interfaces.Item;
 
 public class CircleTool extends AbstractTool {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -994596525815413661L;
+
 	public CircleTool(Field field) {
 		super(field);
 	}
@@ -37,5 +42,5 @@ public class CircleTool extends AbstractTool {
 	@Override
 	public void mouseOver(Position p) {
 		//not needed
-	}	
+	}
 }

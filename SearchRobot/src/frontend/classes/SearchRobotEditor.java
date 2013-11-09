@@ -10,14 +10,16 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -33,6 +35,7 @@ import frontend.classes.items.LineTool;
 import frontend.classes.items.RemoveTool;
 import frontend.classes.items.RobotTool;
 import frontend.classes.items.selection.SelectionTool;
+import frontend.classes.view.Field;
 import frontend.classes.view.ViewImpl;
 import frontend.interfaces.Tool;
 
@@ -76,17 +79,30 @@ public class SearchRobotEditor {
 		fileMenu = new JMenu("Datei");
 		menuBar.add(fileMenu);
 
-		openMenuItem = new JMenuItem("�ffnen");
+		openMenuItem = new JMenuItem("Öffnen");
 		fileMenu.add(openMenuItem);
 		openMenuItem.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser jfc = new JFileChooser();
-				int returnDialog = jfc.showOpenDialog(null);
-				File f = jfc.getSelectedFile();
-				if(returnDialog == JFileChooser.ERROR_OPTION)
-					System.out.println(f.getPath());
+
+				try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("test.bin"))) {
+
+					view.setField((Field) in.readObject());
+					frame.repaint();
+					System.out.println("Deserialization succeeded");
+					System.out.println();
+				}
+				catch (Exception ex) {
+					System.out.println(ex.getMessage());
+					System.out.println("Deserialization failed");
+					System.out.println();
+				}
+				//				JFileChooser jfc = new JFileChooser();
+				//				int returnDialog = jfc.showOpenDialog(null);
+				//				File f = jfc.getSelectedFile();
+				//				if(returnDialog == JFileChooser.ERROR_OPTION)
+				//					System.out.println(f.getPath());
 
 				// TODO: Do something with the file
 
@@ -95,6 +111,22 @@ public class SearchRobotEditor {
 
 		saveMenuItem = new JMenuItem("Speichern");
 		fileMenu.add(saveMenuItem);
+		saveMenuItem.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("test.bin"))) {
+					out.writeObject(view.getField());
+
+					System.out.println("Serialization succeeded");
+					System.out.println();
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+					System.out.println("Serialization failed");
+					System.out.println();
+				}
+			}
+		});
 		//TODO: Add action listener
 
 		exitMenuItem = new JMenuItem("Beenden");
@@ -113,7 +145,7 @@ public class SearchRobotEditor {
 
 		colorMenuItem = new JMenuItem("Hintergrundfarbe �ndern");
 		editMenu.add(colorMenuItem);
-		
+
 		/* funktioniert nicht mehr :-(
 		colorMenuItem.addActionListener(new ActionListener() {
 
@@ -122,7 +154,7 @@ public class SearchRobotEditor {
 				frame.setBackground(JColorChooser.showDialog(null,  "W�hle die Farbe", view.getBackground()));
 			}
 		});
-		*/
+		 */
 		//TODO: Add Menu Items
 
 
@@ -133,18 +165,18 @@ public class SearchRobotEditor {
 		helpMenuItem = new JMenuItem("Hilfe");
 		helpMenu.add(helpMenuItem);
 		helpMenuItem.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				help = new Help(frame);
 				help.setLocationRelativeTo(frame);
 				help.setVisible(true);
-				
+
 				// TODO: help class design
 			}
 		});
 
-		
+
 		//TODO: Add action listener
 
 		frame.setJMenuBar(menuBar);
@@ -162,6 +194,7 @@ public class SearchRobotEditor {
 		toolBar.setFloatable(false);
 		buttonEvent = new ButtonEvent();
 		addButtons(toolBar);
+		view.setTools(tools);
 
 
 		/******************* Draw Area *******************/
@@ -200,7 +233,7 @@ public class SearchRobotEditor {
 		remove = makeNavigationButton("remove", "Löschen", "Löschen", new Dimension(40, 40));
 		toolBar.add(remove);
 		tools.add(new RemoveTool(view.getField()));
-		
+
 		toolBar.addSeparator(new Dimension(10,0));
 
 		// Button Robot
@@ -278,7 +311,6 @@ public class SearchRobotEditor {
 			{
 				System.out.println("Ziel Button");
 				view.setTool(tools.get(3));
-				view.repaint();
 			}
 			else if(e.getSource() == addLine)
 			{
@@ -292,6 +324,7 @@ public class SearchRobotEditor {
 			}
 			else if (e.getSource() == startButton)
 			{
+				frame.repaint();
 				if(isStarted)
 				{
 					selection.setEnabled(true);
@@ -320,7 +353,7 @@ public class SearchRobotEditor {
 					// TODO: Suche abbrechen
 					//Suche starten
 					RobotController controller = new RobotController();
-					
+
 					//TODO werte setzten
 					controller.startRobotSearch(new Size(800, 500), new Position(1,1), 
 							new Size(10,10), new Vector(1,0));

@@ -4,16 +4,14 @@ import frontend.interfaces.Item;
 import helper.Position;
 import helper.Size;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Cursor;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.Stroke;
 
 public class LineOriginHandler extends AbstractHandler {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2242302675505928594L;
 	private Position position;
 	private Item owner;
 	

@@ -6,6 +6,12 @@ import frontend.interfaces.Item;
 
 public class FinishTool extends AbstractTool {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6250908523620856857L;
+
+
 	public FinishTool(Field field) {
 		super(field);
 	}

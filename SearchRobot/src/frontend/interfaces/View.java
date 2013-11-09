@@ -18,4 +18,5 @@ public interface View
 	void clearSelection();
 	public void setCursor(Cursor cur);
 	public List<ItemHandler> getSelectionHandles();
+	public void setField(Field f);
 }

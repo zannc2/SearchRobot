@@ -8,12 +8,17 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.JPanel;
 
+import frontend.classes.items.Finish;
+import frontend.classes.items.FinishTool;
+import frontend.classes.items.Robot;
+import frontend.classes.items.RobotTool;
 import frontend.classes.items.selection.MyStateFactory;
 import frontend.classes.items.selection.SelectionTool;
 import frontend.interfaces.FieldChangedListener;
@@ -25,16 +30,30 @@ import frontend.interfaces.View;
 
 public class ViewImpl extends JPanel implements View{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1400303408929046896L;
 	private Field field = new Field(this);
 	private Tool tool = new SelectionTool(field);
+	private List<Tool> tools = new ArrayList<Tool>();
 	
 
+	public void setTools(List<Tool> tools) {
+		this.tools = tools;
+	}
+	
 	private List<Item> selection = new LinkedList<Item>(); 
 	private List<ItemHandler> handlers = new LinkedList<ItemHandler>();
 	
 	private ViewFieldChangedListener l = new ViewFieldChangedListener();
 	
 	private class ViewFieldChangedListener implements FieldChangedListener {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1790883301541690796L;
 
 		@Override
 		public void fieldChanged(FieldChangedEvent e) {
@@ -43,10 +62,6 @@ public class ViewImpl extends JPanel implements View{
 		
 	}
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	
 	public ViewImpl() {
 		super();
@@ -81,7 +96,10 @@ public class ViewImpl extends JPanel implements View{
 	@Override
 	public void setTool(Tool t)
 	{
+		System.out.println("Tool Changed");
+		
 		this.tool = t;
+		System.out.println(tool.getClass().toString());
 	}
 	
 	@Override
@@ -112,26 +130,35 @@ public class ViewImpl extends JPanel implements View{
 		}
 
 		@Override
-		public void mouseEntered(MouseEvent e) {
-//			for (Item i : getItems()) {
-//				if(i instanceof Robot)
-//					i.move(new Vector(2, 1));
-//			}
-//			repaint();
-		}
+		public void mouseEntered(MouseEvent e) {}
 
 		@Override
-		public void mouseExited(MouseEvent e) {
-//			for (Item i : getItems()) {
-//				if(i instanceof Robot)
-//					i.move(new Vector(2, 1));
-//			}
-//			repaint();
-		}
+		public void mouseExited(MouseEvent e) {}
 
 		@Override
 		public void mousePressed(MouseEvent e) {
-			getTool().mouseDown(new Position(e.getX(), e.getY()));
+			Tool t = getTool();
+			if(t instanceof RobotTool)
+			{
+				List<Item> l = getField().getItems();
+				boolean draw = true;
+				for(int i = 0; i < l.size(); i++){
+					if(l.get(i) instanceof Robot) draw = false;
+				}
+				if(draw == true) t.mouseDown(new Position(e.getX(), e.getY()));
+			}
+			else if(t instanceof FinishTool)
+			{
+				List<Item> l = getField().getItems();
+				boolean draw = true;
+				for(int i = 0; i < l.size(); i++){
+					if(l.get(i) instanceof Finish) draw = false;
+				}
+				if(draw == true) t.mouseDown(new Position(e.getX(), e.getY()));
+			}
+			else{
+			t.mouseDown(new Position(e.getX(), e.getY()));
+			};
 		}
 
 		@Override
@@ -191,6 +218,17 @@ public class ViewImpl extends JPanel implements View{
 	@Override
 	public List<ItemHandler> getSelectionHandles() {
 		return this.handlers;
+	}
+
+
+	@Override
+	public void setField(Field f) {
+		this.field = f;
+		field.addListener(l);
+		for(Tool t: this.tools)
+		{
+			t.setField(this.field);
+		}
 	}
 }
 

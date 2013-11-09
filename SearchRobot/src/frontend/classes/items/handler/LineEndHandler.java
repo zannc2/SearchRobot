@@ -1,19 +1,17 @@
 package frontend.classes.items.handler;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.Stroke;
-
 import frontend.interfaces.Item;
 import helper.Position;
 import helper.Size;
 
+import java.awt.Cursor;
+
 public class LineEndHandler extends AbstractHandler {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7023598776530603132L;
 	private Position position;
 	private Item owner;
 	

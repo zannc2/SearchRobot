@@ -11,6 +11,11 @@ import frontend.interfaces.Item;
 public class RemoveTool extends AbstractTool {
 
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7187559079694994595L;
+
 	public RemoveTool(Field field) {
 		super(field);
 	}

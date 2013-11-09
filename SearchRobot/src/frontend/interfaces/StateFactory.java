@@ -1,9 +1,11 @@
 package frontend.interfaces;
 
+import java.io.Serializable;
+
 import frontend.classes.items.selection.SelectionTool;
 import frontend.classes.items.selection.SelectionToolState;
 
-public interface StateFactory {
+public interface StateFactory extends Serializable{
 
 	public SelectionToolState createDragAreaState(SelectionTool context);
 	

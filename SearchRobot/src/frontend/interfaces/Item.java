@@ -5,9 +5,10 @@ import helper.Size;
 import helper.Vector;
 
 import java.awt.Graphics;
+import java.io.Serializable;
 import java.util.List;
 
-public interface Item {
+public interface Item extends Serializable{
 	/**
 	 * Draws the Item in the Graphics
 	 * @param g A Graphics context

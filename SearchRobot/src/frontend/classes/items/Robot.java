@@ -14,6 +14,10 @@ import java.util.List;
 
 public class Robot extends AbstractItem{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 649366280258810993L;
 	private Position position;
 	private Size size = new Size(20, 20);
 

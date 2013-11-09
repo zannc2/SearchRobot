@@ -8,6 +8,12 @@ import frontend.interfaces.Item;
 
 public class LineTool extends AbstractTool {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3403869222008259766L;
+
+
 	public LineTool(Field field) {
 		super(field);
 	}

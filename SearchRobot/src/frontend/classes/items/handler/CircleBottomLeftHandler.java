@@ -9,6 +9,10 @@ import helper.Size;
 
 public class CircleBottomLeftHandler extends AbstractHandler {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7231749653609181674L;
 	private Position position;
 	private Item owner;
 	

@@ -1,11 +1,11 @@
 package frontend.interfaces;
 
+import java.io.Serializable;
 import java.util.EventListener;
 
 import frontend.classes.view.FieldChangedEvent;
-import frontend.classes.view.ItemChangedEvent;
 
-public interface FieldChangedListener extends EventListener {
+public interface FieldChangedListener extends EventListener, Serializable {
 
 	public void fieldChanged(FieldChangedEvent e);
 	

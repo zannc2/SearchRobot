@@ -4,6 +4,11 @@ import helper.Position;
 
 public class Moving extends SelectionToolState{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 275781069975424852L;
+
 	protected Moving(SelectionTool context) {
 		super(context);
 		System.out.println("moving State");

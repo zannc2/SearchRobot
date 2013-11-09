@@ -5,10 +5,13 @@ import java.util.List;
 import frontend.classes.view.Field;
 import frontend.interfaces.Item;
 import frontend.interfaces.Tool;
-import frontend.interfaces.View;
 
 public abstract class AbstractTool implements Tool {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8629131851697054206L;
 	private Field field;
 	
 	public AbstractTool(Field field) {
@@ -21,5 +24,11 @@ public abstract class AbstractTool implements Tool {
 	
 	public List<Item> getItems() {
 		return this.field.getItems();
+	}
+	
+	@Override
+	public void setField(Field f)
+	{
+		this.field = f;
 	}
 }

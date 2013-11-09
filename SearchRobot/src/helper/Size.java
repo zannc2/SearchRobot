@@ -1,7 +1,14 @@
 package helper;
 
-public class Size {
+import java.io.Serializable;
 
+public class Size implements Serializable{
+
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1272203908120963516L;
 
 	private int width;
 

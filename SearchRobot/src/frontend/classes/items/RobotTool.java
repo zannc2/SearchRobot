@@ -3,10 +3,13 @@ package frontend.classes.items;
 import helper.Position;
 import frontend.classes.view.Field;
 import frontend.interfaces.Item;
-import frontend.interfaces.Tool;
-import frontend.interfaces.View;
 
 public class RobotTool extends AbstractTool {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 448110753972659981L;
 
 	public RobotTool(Field field) {
 		super(field);

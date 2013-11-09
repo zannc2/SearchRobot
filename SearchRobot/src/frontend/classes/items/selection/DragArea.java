@@ -5,6 +5,11 @@ import helper.Position;
 
 public class DragArea extends SelectionToolState{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7209631474658123301L;
+
 	DragArea(SelectionTool context) {
 		super(context);
 //		System.out.println("DragArea State");

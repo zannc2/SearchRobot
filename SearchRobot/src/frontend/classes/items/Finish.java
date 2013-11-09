@@ -13,6 +13,10 @@ import java.util.List;
 
 public class Finish extends AbstractItem {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9221569467727804276L;
 	private Position position;
 	private Size size = new Size(20, 20);
 	

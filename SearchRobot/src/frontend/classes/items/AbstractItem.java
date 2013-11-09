@@ -9,6 +9,10 @@ import frontend.interfaces.ItemChangedListener;
 
 public abstract class AbstractItem implements Item {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1979293322187545428L;
 	private List<ItemChangedListener> listeners = new ArrayList<ItemChangedListener>();
 	
 

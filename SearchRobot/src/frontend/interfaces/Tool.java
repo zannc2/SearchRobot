@@ -1,8 +1,11 @@
 package frontend.interfaces;
 
+import java.io.Serializable;
+
+import frontend.classes.view.Field;
 import helper.Position;
 
-public interface Tool {
+public interface Tool extends Serializable{
 	
 	/**
 	 * Handles mouse down events in the drawing view.
@@ -32,5 +35,6 @@ public interface Tool {
 	 */
 	public void mouseOver(Position p);
 
+	public void setField(Field f);
 
 }

@@ -1,5 +1,6 @@
 package frontend.classes.view;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -9,8 +10,12 @@ import frontend.interfaces.Item;
 import frontend.interfaces.ItemChangedListener;
 import frontend.interfaces.View;
 
-public class Field {
-
+public class Field implements Serializable{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4010939498931240714L;
 	private View view;
 	private List<Item> items = new ArrayList<Item>();
 	private List<FieldChangedListener> listeners = new ArrayList<FieldChangedListener>();
@@ -18,6 +23,11 @@ public class Field {
 	private FieldItemChangedListener l = new FieldItemChangedListener();
 	
 	private class FieldItemChangedListener implements ItemChangedListener {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 
 		@Override
 		public void itemChanged(ItemChangedEvent e) {

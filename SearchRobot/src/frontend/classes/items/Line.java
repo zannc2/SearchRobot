@@ -15,6 +15,10 @@ import java.util.List;
 
 
 public class Line extends AbstractItem {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5100543977628153129L;
 	private Position position;
 	private Size size;
 	

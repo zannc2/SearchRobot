@@ -4,7 +4,6 @@ import helper.Position;
 import helper.Size;
 
 import java.awt.BasicStroke;
-import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -15,6 +14,11 @@ import frontend.interfaces.ItemHandler;
 
 public abstract class AbstractHandler implements ItemHandler {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3242887632529170092L;
+
 	/** The size of the quadratic handle. */
 	public static final Size HANDLE_SIZE = new Size(16,16);
 	

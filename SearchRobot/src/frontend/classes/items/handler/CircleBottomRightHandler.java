@@ -1,14 +1,18 @@
 package frontend.classes.items.handler;
 
-import java.awt.Cursor;
-import java.awt.Rectangle;
-
 import frontend.interfaces.Item;
 import helper.Position;
 import helper.Size;
 
+import java.awt.Cursor;
+import java.awt.Rectangle;
+
 public class CircleBottomRightHandler extends AbstractHandler {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7085318201596784835L;
 	private Position position;
 	private Item owner;
 	

@@ -21,6 +21,10 @@ import java.util.List;
 
 public class Circle extends AbstractItem {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2274073036259976650L;
 	private Position position;
 	private Size size;
 

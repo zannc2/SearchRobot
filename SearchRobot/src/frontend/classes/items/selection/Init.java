@@ -2,11 +2,14 @@ package frontend.classes.items.selection;
 
 import helper.Position;
 
-import java.awt.Cursor;
-
 public class Init extends SelectionToolState{
 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1385970579527343812L;
+
 	protected Init(SelectionTool context) {
 		super(context);
 		System.out.println("Init State");
