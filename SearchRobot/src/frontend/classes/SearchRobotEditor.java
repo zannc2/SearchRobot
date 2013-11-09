@@ -355,7 +355,7 @@ public class SearchRobotEditor {
 					System.out.println("Suche gestartet");
 
 					//TODO werte setzten
-					robotController.startRobotSearch(new Size(800, 500), new Position(1,1), 
+					robotController.startRobotSearch(new Size(800, 500), view.getField().getRobotPosition(), 
 							new Size(10,10), new Vector(1,0));
 				}
 			}

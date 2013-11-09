@@ -5,6 +5,8 @@ import frontend.classes.view.Field;
 import frontend.interfaces.Item;
 
 public class RobotTool extends AbstractTool {
+	
+	private Field field;
 
 	/**
 	 * 
@@ -13,6 +15,7 @@ public class RobotTool extends AbstractTool {
 
 	public RobotTool(Field field) {
 		super(field);
+		this.field = field;
 	}
 
 	private Item i;
@@ -22,6 +25,7 @@ public class RobotTool extends AbstractTool {
 		this.i = new Robot(p);
 		getField().addItem(this.i);
 		System.out.println("Robot Created and added to View");
+		this.field.setRoboterPosition(p);
 	}
 
 	@Override
