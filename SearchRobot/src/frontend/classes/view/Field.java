@@ -1,5 +1,7 @@
 package frontend.classes.view;
 
+import helper.Position;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -75,7 +77,14 @@ public class Field implements Serializable{
 		return this.listeners.remove(l);
 	}
 	
-	
+	public boolean contains(Position p, int epsilon) {
+		for(Item i : this.items) {
+			if(i.contains(p, epsilon)) {
+				return true;
+			}
+		}
+		return false;
+	}
 	
 
 }

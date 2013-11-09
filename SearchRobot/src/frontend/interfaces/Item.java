@@ -53,6 +53,13 @@ public interface Item extends Serializable{
 	public boolean contains(Position p);
 	
 	/**
+	 * Tests weather the Position is contained in the Item width a specified epsilon.
+	 * @param p Position
+	 * @return if it is contained it returns true
+	 */
+	public boolean contains(Position p, int epsilon);
+	
+	/**
 	 * returns a List of ItemHandler
 	 * A ItemHandler is used to manipulate the Item. 
 	 * @return List of ItemHandler

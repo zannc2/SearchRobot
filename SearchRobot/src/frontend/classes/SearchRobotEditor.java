@@ -57,6 +57,8 @@ public class SearchRobotEditor {
 	private List<Tool> tools = new ArrayList<Tool>();
 	private JFrame frame;
 	private boolean isStarted;
+	
+	private RobotController robotController;
 
 	public SearchRobotEditor() {
 		initComponents();
@@ -70,6 +72,7 @@ public class SearchRobotEditor {
 		frame.setResizable(false);
 
 		view = new ViewImpl();
+		robotController = new RobotController(view);
 
 
 		/*************** JMenu ********************/
@@ -350,12 +353,9 @@ public class SearchRobotEditor {
 					isStarted = true;
 					startButton.setIcon(new ImageIcon(getClass().getResource("resources/abort.png")));
 					System.out.println("Suche gestartet");
-					// TODO: Suche abbrechen
-					//Suche starten
-					RobotController controller = new RobotController();
 
 					//TODO werte setzten
-					controller.startRobotSearch(new Size(800, 500), new Position(1,1), 
+					robotController.startRobotSearch(new Size(800, 500), new Position(1,1), 
 							new Size(10,10), new Vector(1,0));
 				}
 			}

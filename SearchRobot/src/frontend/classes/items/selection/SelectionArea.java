@@ -108,4 +108,10 @@ public class SelectionArea extends AbstractItem {
 		return r;
 	}
 
+	@Override
+	public boolean contains(Position p, int epsilon) {
+		// not used
+		return false;
+	}
+
 }

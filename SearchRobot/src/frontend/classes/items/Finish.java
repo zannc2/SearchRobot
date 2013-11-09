@@ -110,6 +110,12 @@ public class Finish extends AbstractItem {
 	public boolean contains(Position p) {
 		return isCloseToLine(p, 2);
 	}
+
+
+	@Override
+	public boolean contains(Position p, int epsilon) {
+		return isCloseToLine(p, epsilon);
+	}
 	
 	/**
 	 * calculations if Position is in line

@@ -74,6 +74,17 @@ public class Circle extends AbstractItem {
 	}
 
 	@Override
+	public boolean contains(Position p, int epsilon) {
+		Ellipse2D.Double ellipse = new Ellipse2D.Double(this.position.getOriginX() - epsilon, 
+				this.position.getOriginY() - epsilon,
+				this.size.getWidth() + epsilon, this.size.getHeight() + epsilon);
+//		System.out.println("ellipse: " + ellipse);
+		boolean rt = ellipse.contains(new Point(p.getOriginX(), p.getOriginY()));
+//		System.out.println("contains: " + rt);
+		return rt;
+	}
+
+	@Override
 	public List<ItemHandler> getItemHandler() {
 		return this.itemHandlers;	
 	}

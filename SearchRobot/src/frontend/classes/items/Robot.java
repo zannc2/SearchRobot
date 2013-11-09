@@ -148,4 +148,9 @@ public class Robot extends AbstractItem{
 		return this.itemHandler;
 	}
 
+	@Override
+	public boolean contains(Position p, int epsilon) {
+		return false;
+	}
+
 }
