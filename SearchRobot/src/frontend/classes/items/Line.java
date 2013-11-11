@@ -10,6 +10,7 @@ import helper.Vector;
 import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +39,7 @@ public class Line extends AbstractItem {
 	@Override
 	public void draw(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.setStroke(new BasicStroke(10));
 		g2.drawLine(this.position.getOriginX(), this.position.getOriginY(), 
 				this.position.getOriginX() + this.size.getWidth(), this.position.getOriginY() + this.size.getHeight());
