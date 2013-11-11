@@ -49,8 +49,11 @@ public class Circle extends AbstractItem {
 	public void draw(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		g2.fill(new Ellipse2D.Double(this.position.getOriginX(), this.position.getOriginY(),
-				this.size.getWidth(), this.size.getHeight()));
+		Rectangle r = getAWTRectangle();
+		g2.fill(new Ellipse2D.Double(r.getX(), r.getY(),
+				r.getWidth(), r.getHeight()));
+//		g2.fill(new Ellipse2D.Double(this.position.getOriginX(), this.position.getOriginY(),
+//				this.size.getWidth(), this.size.getHeight()));
 	}
 
 	@Override
@@ -126,23 +129,26 @@ public class Circle extends AbstractItem {
 		
 		this.size = size;
 		// calculate positive Values
-		java.awt.Rectangle r = getAWTRectangle();
+		//java.awt.Rectangle r = getAWTRectangle();
 		
-		System.out.println("new Rectangle: " + r);
+//		System.out.println("new Rectangle: " + r);
 		
 		// set new Size and Position with positive Values
-		this.size = new Size((int) r.getWidth(), (int) r.getHeight());
-		this.position = new Position((int) r.getX(), (int) r.getY());
+//		this.size = new Size((int) r.getWidth(), (int) r.getHeight());
+//		this.position = new Position((int) r.getX(), (int) r.getY());
 		notifyItemChangedListeners();
 		
 		// set Handlers
-		Position topRight = new Position(this.position.getOriginX() + this.size.getWidth(), this.position.getOriginY());
-		this.itemHandlers.get(1).setPosition(topRight);;
-		Position bottomLeft = new Position(this.position.getOriginX(), this.position.getOriginY() + this.size.getHeight());
+		Rectangle r = getAWTRectangle();
+		Position topLeft = new Position((int)r.getX(), (int)r.getY());
+		this.itemHandlers.get(1).setPosition(topLeft);
+		Position topRight = new Position((int)(r.getX() + r.getWidth()), (int)r.getY());
+		this.itemHandlers.get(1).setPosition(topRight);
+		Position bottomLeft = new Position((int)r.getX(), (int)(r.getY() + r.getHeight()));
 		this.itemHandlers.get(2).setPosition(bottomLeft);;
-		Position bottomRight = new Position(this.position.getOriginX() + this.size.getWidth(),
-				this.position.getOriginY() + this.size.getHeight());	
+		Position bottomRight = new Position((int)(r.getX()+r.getWidth()), (int)(r.getY()+r.getHeight()));	
 		this.itemHandlers.get(3).setPosition(bottomRight);
+		System.out.println("Set Size");
 	}
 
 	@Override
