@@ -44,7 +44,7 @@ public class CircleTopRightHandler extends AbstractHandler {
 
 		// calculate new Size
 		int width = p.getOriginX() - origP.getOriginX();
-		int height = p.getOriginY() - bottomLeft.getOriginY();
+		int height = bottomLeft.getOriginY() - p.getOriginY();
 
 		Position newOrigin = null;
 		Size newS = null;

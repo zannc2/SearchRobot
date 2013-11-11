@@ -1,6 +1,5 @@
 package frontend.classes;
 
-import helper.Position;
 import helper.Size;
 import helper.Vector;
 
@@ -10,6 +9,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
@@ -20,6 +20,7 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -57,7 +58,7 @@ public class SearchRobotEditor {
 	private List<Tool> tools = new ArrayList<Tool>();
 	private JFrame frame;
 	private boolean isStarted;
-	
+
 	private RobotController robotController;
 
 	public SearchRobotEditor() {
@@ -89,26 +90,24 @@ public class SearchRobotEditor {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("test.bin"))) {
+				JFileChooser jfc = new JFileChooser();
+				int returnDialog = jfc.showOpenDialog(null);
+				if(returnDialog == JFileChooser.APPROVE_OPTION)
+				{
+					File f = jfc.getSelectedFile();
+					try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(f))) {
 
-					view.setField((Field) in.readObject());
-					frame.repaint();
-					System.out.println("Deserialization succeeded");
-					System.out.println();
-				}
-				catch (Exception ex) {
-					System.out.println(ex.getMessage());
-					System.out.println("Deserialization failed");
-					System.out.println();
-				}
-				//				JFileChooser jfc = new JFileChooser();
-				//				int returnDialog = jfc.showOpenDialog(null);
-				//				File f = jfc.getSelectedFile();
-				//				if(returnDialog == JFileChooser.ERROR_OPTION)
-				//					System.out.println(f.getPath());
-
-				// TODO: Do something with the file
-
+						view.setField((Field) in.readObject());
+						frame.repaint();
+						System.out.println("Deserialization succeeded");
+						System.out.println();
+					}
+					catch (Exception ex) {
+						System.out.println(ex.getMessage());
+						System.out.println("Deserialization failed");
+						System.out.println();
+					}
+				}	
 			}
 		});
 
@@ -118,19 +117,22 @@ public class SearchRobotEditor {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("test.bin"))) {
+				JFileChooser jfc = new JFileChooser();
+				int returnDialog = jfc.showSaveDialog(null);
+				if(returnDialog == JFileChooser.APPROVE_OPTION)
+				{
+				System.out.println(jfc.getSelectedFile());
+				
+				try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(jfc.getSelectedFile() + ".robot"))) {
 					out.writeObject(view.getField());
-
 					System.out.println("Serialization succeeded");
-					System.out.println();
 				} catch (Exception e) {
 					System.out.println(e.getMessage());
 					System.out.println("Serialization failed");
-					System.out.println();
 				}
 			}
+			}
 		});
-		//TODO: Add action listener
 
 		exitMenuItem = new JMenuItem("Beenden");
 		fileMenu.add(exitMenuItem);
