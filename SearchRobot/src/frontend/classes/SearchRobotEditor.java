@@ -122,8 +122,8 @@ public class SearchRobotEditor {
 				if(returnDialog == JFileChooser.APPROVE_OPTION)
 				{
 				System.out.println(jfc.getSelectedFile());
-				
-				try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(jfc.getSelectedFile() + ".robot"))) {
+				String s = jfc.getSelectedFile().toString().replaceAll(".robot", "") + ".robot";				
+				try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(s))) {
 					out.writeObject(view.getField());
 					System.out.println("Serialization succeeded");
 				} catch (Exception e) {
