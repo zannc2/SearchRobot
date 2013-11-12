@@ -13,6 +13,10 @@ public class FieldMatrix {
 
 	private int[][] field;
 	
+	public FieldMatrix(Size s) {
+		this.field = new int[s.getWidth()][s.getHeight()];
+	}
+	
 	public FieldMatrix(Size s, Field f) {
 		int width = s.getWidth()/10;
 		int height = s.getHeight()/10;
@@ -21,8 +25,8 @@ public class FieldMatrix {
 		List<Item> items = f.getItems();
 		
 		//TODO fill Matrix
-		for(int j = 0; j<height; j++) {
 		for(int i = 0; i<width; i++){
+			for(int j = 0; j<height; j++) {
 				for(Item item:items){
 					if(field[i][j] == 0)
 					{
@@ -39,9 +43,9 @@ public class FieldMatrix {
 //				field[i][j] = f.contains(p, epsilon)
 			}
 		}
-		for(int i = 0; i<width; i++){
+		for(int j = 0; j<height; j++) {
 			System.out.println("{");
-			for(int j = 0; j<height; j++) {
+			for(int i = 0; i<width; i++){
 				System.out.print("[" + field[i][j] + "]");
 			}
 			System.out.print(" }");
@@ -51,8 +55,7 @@ public class FieldMatrix {
 	
 	
 	public int contains(Position p) {
-		//TODO
-		return 0;
+		return field[p.getOriginX()][p.getOriginY()];
 	}
 	
 }

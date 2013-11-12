@@ -359,9 +359,9 @@ public class SearchRobotEditor {
 					System.out.println("Suche gestartet");
 
 					//TODO werte setzten
-					FieldMatrix fm = new FieldMatrix(new Size(800, 500), view.getField());
-//					robotController.startRobotSearch(new Size(800, 500), view.getField().getRobotPosition(), 
-//							new Size(10,10), new Vector(1,0));
+					FieldMatrix fieldMatrix = new FieldMatrix(new Size(800, 500), view.getField());
+					robotController.startRobotSearch(new Size(800, 500), view.getField().getRobotPosition(), 
+							new Size(10,10), new Vector(1,0), fieldMatrix);
 				}
 			}
 		}

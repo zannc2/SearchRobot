@@ -108,7 +108,20 @@ public class Finish extends AbstractItem {
 
 	@Override
 	public boolean contains(Position p) {
-		return isCloseToLine(p, 2);
+		boolean containsX = false;
+		boolean containsY = false;
+		// test x Coordinate
+		if(p.getOriginX() >= this.position.getOriginX() && 
+				p.getOriginX() <= (this.position.getOriginX() + this.size.getWidth()))
+			containsX = true;
+			
+		//test y Coordinate
+		if(p.getOriginY() >= this.position.getOriginY() &&
+				p.getOriginY() <= (this.position.getOriginY() + this.size.getHeight()))
+			containsY = true;
+		if(containsX && containsY) return true;
+		
+		return false;
 	}
 
 
