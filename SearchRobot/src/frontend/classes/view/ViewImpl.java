@@ -229,6 +229,10 @@ public class ViewImpl extends JPanel implements View{
 		{
 			t.setField(this.field);
 		}
+		
+		for(Item i:f.getItems()) {
+			System.out.println("handlers: " + i.getItemHandler());
+		}
 	}
 }
 

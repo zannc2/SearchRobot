@@ -29,6 +29,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 
+import robot.classes.FieldMatrix;
 import robot.classes.RobotController;
 import frontend.classes.items.CircleTool;
 import frontend.classes.items.FinishTool;
@@ -97,6 +98,7 @@ public class SearchRobotEditor {
 					File f = jfc.getSelectedFile();
 					try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(f))) {
 
+//						view = (ViewImpl) in.readObject();
 						view.setField((Field) in.readObject());
 						frame.repaint();
 						System.out.println("Deserialization succeeded");
@@ -357,8 +359,9 @@ public class SearchRobotEditor {
 					System.out.println("Suche gestartet");
 
 					//TODO werte setzten
-					robotController.startRobotSearch(new Size(800, 500), view.getField().getRobotPosition(), 
-							new Size(10,10), new Vector(1,0));
+					FieldMatrix fm = new FieldMatrix(new Size(800, 500), view.getField());
+//					robotController.startRobotSearch(new Size(800, 500), view.getField().getRobotPosition(), 
+//							new Size(10,10), new Vector(1,0));
 				}
 			}
 		}

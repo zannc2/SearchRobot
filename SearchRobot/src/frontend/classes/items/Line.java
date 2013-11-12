@@ -107,7 +107,7 @@ public class Line extends AbstractItem {
 
 	@Override
 	public boolean contains(Position p) {
-		return isCloseToLine(p, 2);
+		return isCloseToLine(p, 7);
 	}
 	
 
