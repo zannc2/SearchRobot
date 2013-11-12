@@ -58,4 +58,8 @@ public class FieldMatrix {
 		return field[p.getOriginX()][p.getOriginY()];
 	}
 	
+	public void set(Position p, int value) {
+		this.field[p.getOriginX()][p.getOriginY()] = value;
+	}
+	
 }

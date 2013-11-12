@@ -49,15 +49,12 @@ public class RobotController {
 		System.out.println("eyePos: " + lastP);
 		// degrees Between 0 and 180
 		for(double i = -90; i <= 90; i=i+0.1) {
-//			System.out.println("angle: " + i);
 			boolean whileB = true;
 			while(whileB){
 				int x = (int) (Math.cos(Math.toRadians(i)) *epsilon) ;
 				int y = (int) (Math.sin(Math.toRadians(i)) * epsilon) ;
-//				System.out.println("x: " + x + " y: " + y);
 				
 				Position nextP = new Position(lastP.getOriginX() + x, lastP.getOriginY() + y);
-//				System.out.println("nextP: " + nextP);
 				if(nextP.getOriginX() >= this.fieldSize.getWidth() || 
 					nextP.getOriginY() >= this.fieldSize.getHeight() || 
 					nextP.getOriginX() < 0 || 
@@ -66,7 +63,6 @@ public class RobotController {
 						break;
 				}
 				else{
-//				boolean found = field.contains(nextP, epsilon);
 					Position pixelP = new Position(((int)nextP.getOriginX()/10)*10, ((int) nextP.getOriginY()/10)*10);
 					int found = this.fieldCopy.contains(new Position(pixelP.getOriginX()/10, pixelP.getOriginY()/10));
 					lastP = nextP;
@@ -76,6 +72,9 @@ public class RobotController {
 						field.addItem(foundI);
 						lastP = this.eyePosition;
 						whileB = false;
+						
+						//fill foundMatrix
+						this.foundMatrix.set(new Position(pixelP.getOriginX()/10, pixelP.getOriginY()/10), 1);
 					}
 					else if(found == 2){
 						System.out.println("robot found!!!");
@@ -83,10 +82,17 @@ public class RobotController {
 						field.addItem(foundI);
 						lastP = this.eyePosition;
 						whileB = false;
+						
+						//fill foundMatrix
+						this.foundMatrix.set(new Position(pixelP.getOriginX()/10, pixelP.getOriginY()/10), 2);
 					}
 					else {
 						Item notfoundI = new Pixel(pixelP, Color.red);
 						field.addItem(notfoundI);
+						
+						//fill foundMatrix
+						System.out.println("pixelP: " + pixelP);
+//						this.foundMatrix.set(new Position(pixelP.getOriginX()/10, pixelP.getOriginY()/10), 0);
 					}
 				}
 			}
