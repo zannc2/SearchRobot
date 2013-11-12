@@ -1,19 +1,21 @@
 package frontend.classes.items;
 
 import helper.Position;
+import helper.Size;
 import frontend.classes.view.Field;
 import frontend.interfaces.Item;
 
 public class RobotTool extends AbstractTool {
 	
 	private Field field;
+	private Size size;
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 448110753972659981L;
 
-	public RobotTool(Field field) {
+	public RobotTool(Field field, Size s) {
 		super(field);
 		this.field = field;
 	}
@@ -22,7 +24,7 @@ public class RobotTool extends AbstractTool {
 	
 	@Override
 	public void mouseDown(Position p) {
-		this.item = new Robot(p);
+		this.item = new Robot(p, size);
 		getField().addItem(this.item);
 		System.out.println("Robot Created and added to View");
 		this.field.setRoboter(this.item);

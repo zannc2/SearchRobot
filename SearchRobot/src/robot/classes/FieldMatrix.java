@@ -12,19 +12,21 @@ import java.util.List;
 public class FieldMatrix {
 
 	private int[][] field;
+	private Size size;
 	
 	public FieldMatrix(Size s) {
-		this.field = new int[s.getWidth()][s.getHeight()];
+		this.field = new int[s.getWidth()/10][s.getHeight()/10];
+		this.size = s;
 	}
 	
 	public FieldMatrix(Size s, Field f) {
 		int width = s.getWidth()/10;
 		int height = s.getHeight()/10;
 		this.field = new int[width][height];
+		this.size = s;
 		
 		List<Item> items = f.getItems();
 		
-		//TODO fill Matrix
 		for(int i = 0; i<width; i++){
 			for(int j = 0; j<height; j++) {
 				for(Item item:items){
@@ -40,17 +42,9 @@ public class FieldMatrix {
 						else field[i][j] = 0;
 					}
 				}
-//				field[i][j] = f.contains(p, epsilon)
 			}
 		}
-		for(int j = 0; j<height; j++) {
-			System.out.println("{");
-			for(int i = 0; i<width; i++){
-				System.out.print("[" + field[i][j] + "]");
-			}
-			System.out.print(" }");
-			
-		}
+		printArray();
 	}
 	
 	
@@ -60,6 +54,18 @@ public class FieldMatrix {
 	
 	public void set(Position p, int value) {
 		this.field[p.getOriginX()][p.getOriginY()] = value;
+	}
+	
+	public void printArray()
+	{
+		for(int j = 0; j<size.getHeight()/10; j++) {
+			System.out.println("{");
+			for(int i = 0; i<size.getWidth()/10; i++){
+				System.out.print("[" + field[i][j] + "]");
+			}
+			System.out.print(" }");
+			
+		}
 	}
 	
 }

@@ -1,6 +1,7 @@
 package frontend.classes.view;
 
 import helper.Position;
+import helper.Size;
 
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -62,11 +63,10 @@ public class ViewImpl extends JPanel implements View{
 		
 	}
 	
-	
-	public ViewImpl() {
+	public ViewImpl(Size fieldSize) {
 		super();
 		
-		this.setPreferredSize(new Dimension(800, 500));
+		this.setPreferredSize(new Dimension(fieldSize.getWidth(), fieldSize.getHeight()));
 		this.setMinimumSize(this.getPreferredSize());
 		this.setMaximumSize(this.getPreferredSize());
 		
