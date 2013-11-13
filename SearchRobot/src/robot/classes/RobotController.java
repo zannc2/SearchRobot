@@ -40,7 +40,7 @@ public class RobotController {
 		this.foundMatrix = new FieldMatrix(fieldSize);
 //		this.eyePosition = new Position(this.robotPosition.getOriginX() + roboterSize.getWidth(),
 //				this.robotPosition.getOriginY() + roboterSize.getHeight()/2);
-		
+
 		scanField();
 		((Robot)field.getRobot()).setDirection(Direction.EAST);
 		scanField();
@@ -48,6 +48,7 @@ public class RobotController {
 		scanField();
 		((Robot)field.getRobot()).setDirection(Direction.SOUTH);
 		scanField();
+
 		
 	}
 	
@@ -152,5 +153,4 @@ public class RobotController {
 		System.out.println("done");
 		foundMatrix.printArray();
 	}
-
 }
