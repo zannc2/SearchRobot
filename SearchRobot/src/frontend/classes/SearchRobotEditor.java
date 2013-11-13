@@ -1,5 +1,6 @@
 package frontend.classes;
 
+import helper.Direction;
 import helper.Size;
 import helper.Vector;
 
@@ -35,16 +36,20 @@ import frontend.classes.items.CircleTool;
 import frontend.classes.items.FinishTool;
 import frontend.classes.items.LineTool;
 import frontend.classes.items.RemoveTool;
+import frontend.classes.items.Robot;
 import frontend.classes.items.RobotTool;
 import frontend.classes.items.selection.SelectionTool;
 import frontend.classes.view.Field;
 import frontend.classes.view.ViewImpl;
+import frontend.interfaces.Item;
 import frontend.interfaces.Tool;
 
 public class SearchRobotEditor {
 
 	/** The name of the Programm */
 	private static final String PROGRAM_TITLE = "Search Robot";
+	private static final Size FIELD_SIZE = new Size(800,500);
+	private static final Size ROBOT_SIZE = new Size(10, 10);
 
 	private JButton addRobot, addFinish, addLine, addCircle, startButton, selection, remove;
 	private JMenuBar menuBar;
@@ -73,7 +78,7 @@ public class SearchRobotEditor {
 		frame.setLayout(new BorderLayout());
 		frame.setResizable(false);
 
-		view = new ViewImpl();
+		view = new ViewImpl(FIELD_SIZE);
 		robotController = new RobotController(view);
 
 
@@ -246,7 +251,7 @@ public class SearchRobotEditor {
 		// Button Robot
 		addRobot = makeNavigationButton("robot", "Start setzen", "Start", new Dimension(40, 40));
 		toolBar.add(addRobot);
-		tools.add(new RobotTool(view.getField()));
+		tools.add(new RobotTool(view.getField(), ROBOT_SIZE));
 
 		// Button Finish
 		addFinish = makeNavigationButton("finish", "Ziel setzen", "Ziel", new Dimension(40, 40));
@@ -357,9 +362,9 @@ public class SearchRobotEditor {
 					isStarted = true;
 					startButton.setIcon(new ImageIcon(getClass().getResource("resources/abort.png")));
 					System.out.println("Suche gestartet");
-
+					
 					//TODO werte setzten
-					FieldMatrix fieldMatrix = new FieldMatrix(new Size(800, 500), view.getField());
+					FieldMatrix fieldMatrix = new FieldMatrix(FIELD_SIZE, view.getField());
 					robotController.startRobotSearch(new Size(800, 500), view.getField().getRobotPosition(), 
 							new Size(10,10), new Vector(1,0), fieldMatrix);
 				}
