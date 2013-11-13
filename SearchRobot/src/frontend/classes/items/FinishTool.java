@@ -24,16 +24,10 @@ public class FinishTool extends AbstractTool {
 
 	@Override
 	public void mouseDown(Position p) {
-		List<Item> l = getField().getItems();
 
-		for(int i = 0; i < l.size(); i++)
-		{
-			if(!l.get(i).contains(p))
-			{
-				this.i = new Finish(p);
-				getField().addItem(this.i);
-			}
-		}
+		this.i = new Finish(p);
+		getField().addItem(this.i);
+
 	}
 
 	@Override

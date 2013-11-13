@@ -50,7 +50,6 @@ public class Robot extends AbstractItem{
             robot = ImageIO.read(new File("src/frontend/classes/resources/draw_robot.png"));
             AffineTransform tx = AffineTransform.getRotateInstance(direction.getDirection(), 5, 5);
             AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
-            
             g2.drawImage(op.filter(robot, null), this.position.getOriginX(), this.position.getOriginY(), null);
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -62,8 +61,6 @@ public class Robot extends AbstractItem{
 		if(p.getOriginX()>=0 && p.getOriginY() >= 0 && p.getOriginX() < 790 && p.getOriginY() < 490){
 			this.position = p;
 		}
-
-		System.out.println("X: " + this.position.getOriginX() + ", Y: " + this.position.getOriginY());
 		notifyItemChangedListeners();
 	}
 
@@ -131,7 +128,7 @@ public class Robot extends AbstractItem{
 
 	@Override
 	public boolean contains(Position p, int epsilon) {
-		return false;
+		return contains(p);
 	}
 
 	public Direction getDirection() {

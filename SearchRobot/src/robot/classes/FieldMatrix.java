@@ -59,12 +59,10 @@ public class FieldMatrix {
 	public void printArray()
 	{
 		for(int j = 0; j<size.getHeight()/10; j++) {
-			System.out.println("{");
 			for(int i = 0; i<size.getWidth()/10; i++){
 				System.out.print("[" + field[i][j] + "]");
 			}
-			System.out.print(" }");
-			
+			System.out.println();
 		}
 	}
 	

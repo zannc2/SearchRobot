@@ -124,44 +124,6 @@ public class Finish extends AbstractItem {
 		return false;
 	}
 
-
-	@Override
-	public boolean contains(Position p, int epsilon) {
-		return isCloseToLine(p, epsilon);
-	}
-	
-	/**
-	 * calculations if Position is in line
-	 * @param p Position
-	 * @param epsilon 
-	 * @return
-	 */
-	private boolean isCloseToLine(Position p, int epsilon) {
-		boolean rval = false;
-		Position a = this.position;
-		Position b = new Position(this.size.getWidth() + this.position.getOriginX(), 
-				this.size.getHeight() + this.position.getOriginY());
-		Vector oa = new Vector(a); // place vector of a
-		Vector ob = new Vector(b); // place vector of b
-		Vector oc = new Vector(p); // place vector of c
-		Vector ab = ob.minus(oa); // distance vector ab
-		Vector ac = oc.minus(oa); // distance vector ac
-		Vector ab_n = ab.getNormalVector(); // norm vector of ab
-		double D = ab.getDeterminantBy(ab_n);
-		double D_alpha = ac.getDeterminantBy(ab_n);
-		double D_beta = ab.getDeterminantBy(ac);
-		double alpha = D_alpha / D;
-		double distance = 0.0;
-		if (alpha < 0.0 || alpha > 1.0) {
-			rval = false;
-		} else {
-			double beta = D_beta / D;
-			distance = Math.abs(beta * ab_n.magnitude());
-			rval = distance <= epsilon;
-		}
-		return rval;
-	}
-
 	@Override
 	public List<ItemHandler> getItemHandler() {
 		return this.itemHandler;
@@ -181,6 +143,11 @@ public class Finish extends AbstractItem {
 	@Override
 	public Size getSize() {
 		return this.size;
+	}
+
+	@Override
+	public boolean contains(Position p, int epsilon) {
+		return contains(p);
 	}
 
 }

@@ -18,6 +18,7 @@ public class RobotTool extends AbstractTool {
 	public RobotTool(Field field, Size s) {
 		super(field);
 		this.field = field;
+		this.size = s;
 	}
 
 	private Item item;
@@ -26,7 +27,6 @@ public class RobotTool extends AbstractTool {
 	public void mouseDown(Position p) {
 		this.item = new Robot(p, size);
 		getField().addItem(this.item);
-		System.out.println("Robot Created and added to View");
 		this.field.setRoboter(this.item);
 	}
 
