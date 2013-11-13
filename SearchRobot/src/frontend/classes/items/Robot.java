@@ -30,7 +30,7 @@ public class Robot extends AbstractItem{
 	private static final long serialVersionUID = 649366280258810993L;
 	private Position position;
 	private Size size;
-	private Direction direction = Direction.EAST;
+	private Direction direction = Direction.WEST;
 
 	private List<ItemHandler> itemHandler = new ArrayList<ItemHandler>();
 

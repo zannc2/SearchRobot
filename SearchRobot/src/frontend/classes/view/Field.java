@@ -96,6 +96,11 @@ public class Field implements Serializable{
 		this.robotItem = item;
 	}
 	
+	public Item getRobot()
+	{
+		return robotItem;
+	}
+	
 	public void moveRobotTo(Position p) {
 		//TODO
 //		Position oldP =this.robotItem.getPosition();

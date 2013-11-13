@@ -23,6 +23,7 @@ public class RobotController {
 	private FieldMatrix fieldCopy;
 	private FieldMatrix foundMatrix;
 	private Robot robot;
+	private Size roboterSize;
 	
 	public RobotController(View v) {
 		this.view = v;
@@ -33,14 +34,21 @@ public class RobotController {
 		this.fieldSize = fieldSize;
 		this.robotPosition = p;
 		this.direction = direction;
+		this.roboterSize = roboterSize;
 		
 		this.fieldCopy = fieldMatrix;
 		this.foundMatrix = new FieldMatrix(fieldSize);
-		
-		this.eyePosition = new Position(this.robotPosition.getOriginX() + roboterSize.getWidth(),
-				this.robotPosition.getOriginY() + roboterSize.getHeight()/2);
+//		this.eyePosition = new Position(this.robotPosition.getOriginX() + roboterSize.getWidth(),
+//				this.robotPosition.getOriginY() + roboterSize.getHeight()/2);
 		
 		scanField();
+		((Robot)field.getRobot()).setDirection(Direction.EAST);
+		scanField();
+		((Robot)field.getRobot()).setDirection(Direction.NORTH);
+		scanField();
+		((Robot)field.getRobot()).setDirection(Direction.SOUTH);
+		scanField();
+		
 	}
 	
 	private void scanField() {
@@ -49,11 +57,43 @@ public class RobotController {
 		
 		//Feld grösse definieren (schritte)
 		int epsilon = 10;
+		Direction d = ((Robot)(field.getRobot())).getDirection();
+		double minDegree, maxDegree;
+		if(d == Direction.NORTH)
+		{
+			this.eyePosition = new Position(this.robotPosition.getOriginX() + roboterSize.getWidth()/2,
+					this.robotPosition.getOriginY());
+			minDegree = -180;
+			maxDegree = 0;
+		}
+		else if(d == Direction.EAST)
+		{
+			this.eyePosition = new Position(this.robotPosition.getOriginX() + roboterSize.getWidth(),
+					this.robotPosition.getOriginY() + roboterSize.getHeight()/2);	
+			minDegree = -90;
+			maxDegree = 90;
+		}
+		else if(d == Direction.SOUTH)
+		{
+			this.eyePosition = new Position(this.robotPosition.getOriginX() + roboterSize.getWidth()/2,
+					this.robotPosition.getOriginY() + roboterSize.getHeight());	
+			minDegree = 0;
+			maxDegree = 180;
+		}
+		else
+		{
+			this.eyePosition = new Position(this.robotPosition.getOriginX(),
+					this.robotPosition.getOriginY() + roboterSize.getHeight()/2);
+			minDegree = 90;
+			maxDegree = 270;
+			
+		}
+		
 		Position lastP = new Position(this.eyePosition.getOriginX(), this.eyePosition.getOriginY());
 		System.out.println("eyePos: " + lastP);
 		
 		// degrees Between 0 and 180
-		for(double i = -90; i <= 90; i=i+0.3) {
+		for(double i = minDegree; i <= maxDegree; i=i+0.35) {
 			boolean whileB = true;
 			int factor = 1;
 			double x = Math.cos(Math.toRadians(i)) * epsilon;
@@ -79,8 +119,8 @@ public class RobotController {
 					int found = this.fieldCopy.contains(new Position(pixelP.getOriginX()/10, pixelP.getOriginY()/10));
 					if(found == 1) { // 1 = Item
 						System.out.println("found: " + lastP);
-//						Item foundI = new Pixel(pixelP, Color.green);
-//						field.addItem(foundI);
+						Item foundI = new Pixel(pixelP, Color.red);
+						field.addItem(foundI);
 						lastP = this.eyePosition;
 						whileB = false;
 						
@@ -89,16 +129,16 @@ public class RobotController {
 					}
 					else if(found == 2){ // 2 = Finish
 						System.out.println("finish found!!!");
-//						Item foundI = new Pixel(pixelP, Color.yellow);
-//						field.addItem(foundI);
+						Item foundI = new Pixel(pixelP, Color.yellow);
+						field.addItem(foundI);
 						whileB = false;
 						
 						//fill foundMatrix
 						this.foundMatrix.set(new Position(pixelP.getOriginX()/10, pixelP.getOriginY()/10), 2);
 					}
 					else { // If the position is free
-//						Item notfoundI = new Pixel(pixelP, Color.red);
-//						field.addItem(notfoundI);
+						Item notfoundI = new Pixel(pixelP, Color.green);
+						field.addItem(notfoundI);
 						
 						//fill foundMatrix
 						System.out.println("pixelP: " + pixelP);
@@ -111,27 +151,6 @@ public class RobotController {
 		}
 		System.out.println("done");
 		foundMatrix.printArray();
-		
-		for(int j = 0; j<80; j++) {
-			for(int i = 0; i<50; i++){
-				Position p = new Position(j, i);
-				if(foundMatrix.contains(p) == 1){
-					Item item = new Pixel(new Position(j*10, i*10), Color.red);
-					field.addItem(item);
-				}
-				else if(foundMatrix.contains(p) == 2)
-				{
-					Item item = new Pixel(new Position(j*10, i*10), Color.gray);
-					field.addItem(item);
-				}
-				else if(foundMatrix.contains(p) == 3)
-				{
-					Item item = new Pixel(new Position(j*10, i*10), Color.green);
-					field.addItem(item);
-				}
-			}
-			System.out.println();
-		}
 	}
 
 }
