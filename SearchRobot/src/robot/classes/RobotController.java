@@ -12,16 +12,11 @@ import frontend.classes.view.Field;
 import frontend.classes.view.ViewImpl;
 
 public class RobotController implements Runnable {
-	private ViewImpl view;
 	private Field field;
-
 	private Size fieldSize;
-	private Vector direction;
 	private FieldMatrix fieldCopy;
 	private FieldMatrix foundMatrix;
-	private Robot robot;
 	private Size robotSize;
-	private boolean isNotFinished = true;
 	private Thread thread = null;
 
 	public RobotController(Field f) {
@@ -106,26 +101,26 @@ public class RobotController implements Runnable {
 					Position pixelP = new Position((p.getOriginX()/10)*10, (p.getOriginY()/10)*10);
 					int found = this.fieldCopy.contains(new Position(pixelP.getOriginX()/10, pixelP.getOriginY()/10));
 					if(found == 1) { // 1 = Item
-						//						field.addItem(new Pixel(pixelP, Color.red));
+//						field.addItem(new Pixel(pixelP, Color.red));
 						whileB = false;
 						//fill foundMatrix
 						this.foundMatrix.set(new Position((pixelP.getOriginX())/10, (pixelP.getOriginY())/10), 1);
 					}
 					else if(found == 2){ // 2 = Finish
-						//						field.addItem(new Pixel(pixelP, Color.yellow));
+//						field.addItem(new Pixel(pixelP, Color.yellow));
 						whileB = false;
 						//fill foundMatrix
 						this.foundMatrix.set(new Position(pixelP.getOriginX()/10, pixelP.getOriginY()/10), 2);
 					}
 					else { // If the position is free
-						//						field.addItem(new Pixel(pixelP, Color.green));
+//						field.addItem(new Pixel(pixelP, Color.green));
 
 						//fill foundMatrix
 						this.foundMatrix.set(new Position(pixelP.getOriginX()/10, pixelP.getOriginY()/10), 3);
 					}
 				}
 				//				try {
-				//					Thread.sleep(1);
+				//					Thread.sleep(5);
 				//				} catch (InterruptedException e) {
 				//					// TODO Auto-generated catch block
 				//					e.printStackTrace();
@@ -155,7 +150,7 @@ public class RobotController implements Runnable {
 			
 			// TODO move -> mit einer liste, welche alle positionen enthält von der 
 			//				aktuellen position bis zur endposition
-
+			stop();
 		}
 	}
 

@@ -36,7 +36,7 @@ public class ViewImpl extends JPanel implements View{
 	 */
 	private static final long serialVersionUID = 1400303408929046896L;
 	private Field field;
-	private Tool tool = new SelectionTool(field);
+	private Tool tool;
 	private List<Tool> tools = new ArrayList<Tool>();
 	
 
@@ -66,16 +66,14 @@ public class ViewImpl extends JPanel implements View{
 	public ViewImpl(Size fieldSize, Size robotSize) {
 		super();
 		field = new Field(this, fieldSize, robotSize);
+		field.addListener(l);
+		tool = new SelectionTool(field);
 		
 		this.setPreferredSize(new Dimension(fieldSize.getWidth(), fieldSize.getHeight()));
 		this.setMinimumSize(this.getPreferredSize());
 		this.setMaximumSize(this.getPreferredSize());
-		
 		this.addMouseMotionListener(new ViewMouseMotionListener());
 		this.addMouseListener(new ViewMouseListener());
-		
-		field.addListener(l);
-		
 		setOpaque(false);
 	}
 	
