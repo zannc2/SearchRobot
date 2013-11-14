@@ -5,152 +5,171 @@ import helper.Position;
 import helper.Size;
 import helper.Vector;
 
-import java.awt.Color;
+import java.util.List;
 
 import frontend.classes.items.Robot;
 import frontend.classes.view.Field;
-import frontend.interfaces.Item;
-import frontend.interfaces.View;
+import frontend.classes.view.ViewImpl;
 
-public class RobotController {
-	private View view;
+public class RobotController implements Runnable {
+	private ViewImpl view;
 	private Field field;
-	
+
 	private Size fieldSize;
-	private Position robotPosition;
 	private Vector direction;
-	private Position eyePosition;
 	private FieldMatrix fieldCopy;
 	private FieldMatrix foundMatrix;
 	private Robot robot;
-	private Size roboterSize;
-	
-	public RobotController(View v) {
-		this.view = v;
-		this.field = this.view.getField();
-	}
-	
-	public void startRobotSearch(Size fieldSize, Position p, Size roboterSize, Vector direction, FieldMatrix fieldMatrix) {
-		this.fieldSize = fieldSize;
-		this.robotPosition = p;
-		this.direction = direction;
-		this.roboterSize = roboterSize;
-		
-		this.fieldCopy = fieldMatrix;
+	private Size robotSize;
+	private boolean isNotFinished = true;
+	private Thread thread = null;
+
+	public RobotController(Field f) {
+		this.field = f;
+		this.fieldSize = f.getFieldSize();
+		this.fieldCopy = new FieldMatrix(this.fieldSize, f);
+		this.robotSize = f.getRobotSize();
 		this.foundMatrix = new FieldMatrix(fieldSize);
-//		this.eyePosition = new Position(this.robotPosition.getOriginX() + roboterSize.getWidth(),
-//				this.robotPosition.getOriginY() + roboterSize.getHeight()/2);
-
-		scanField();
-		((Robot)field.getRobot()).setDirection(Direction.EAST);
-		scanField();
-		((Robot)field.getRobot()).setDirection(Direction.NORTH);
-		scanField();
-		((Robot)field.getRobot()).setDirection(Direction.SOUTH);
-		scanField();
-
-		
 	}
-	
+
+
+	public synchronized void start(){
+		if (thread == null){
+			thread = new Thread(this);
+			thread.start();
+		}
+	}
+
+	public synchronized void stop(){
+		if (thread != null)
+			thread = null;
+	}
+
 	private void scanField() {
-		System.out.println("scan Field");
-//		field.addItem(eye);
-		
-		//Feld grösse definieren (schritte)
+		// The position of the robot eye(s)
+		Position eyePosition;
+		// size of the steps
 		int epsilon = 10;
-		Direction d = ((Robot)(field.getRobot())).getDirection();
+		// direction of the robot
+		Direction d = field.getRobotDirection();
+		// max and min angle of the robots view
 		double minDegree, maxDegree;
+		Position robotPosition = this.field.getRobotPosition();
 		if(d == Direction.NORTH)
 		{
-			this.eyePosition = new Position(this.robotPosition.getOriginX() + roboterSize.getWidth()/2,
-					this.robotPosition.getOriginY());
+			eyePosition = new Position(robotPosition.getOriginX() + robotSize.getWidth()/2,
+					robotPosition.getOriginY());
 			minDegree = -180;
 			maxDegree = 0;
 		}
 		else if(d == Direction.EAST)
 		{
-			this.eyePosition = new Position(this.robotPosition.getOriginX() + roboterSize.getWidth(),
-					this.robotPosition.getOriginY() + roboterSize.getHeight()/2);	
+			eyePosition = new Position(robotPosition.getOriginX() + robotSize.getWidth(),
+					robotPosition.getOriginY() + robotSize.getHeight()/2);	
 			minDegree = -90;
 			maxDegree = 90;
 		}
 		else if(d == Direction.SOUTH)
 		{
-			this.eyePosition = new Position(this.robotPosition.getOriginX() + roboterSize.getWidth()/2,
-					this.robotPosition.getOriginY() + roboterSize.getHeight());	
+			eyePosition = new Position(robotPosition.getOriginX() + robotSize.getWidth()/2,
+					robotPosition.getOriginY() + robotSize.getHeight());	
 			minDegree = 0;
 			maxDegree = 180;
 		}
 		else
 		{
-			this.eyePosition = new Position(this.robotPosition.getOriginX(),
-					this.robotPosition.getOriginY() + roboterSize.getHeight()/2);
+			eyePosition = new Position(robotPosition.getOriginX(),
+					robotPosition.getOriginY() + robotSize.getHeight()/2);
 			minDegree = 90;
 			maxDegree = 270;
-			
+
 		}
-		
-		Position lastP = new Position(this.eyePosition.getOriginX(), this.eyePosition.getOriginY());
-		System.out.println("eyePos: " + lastP);
-		
+
 		// degrees Between 0 and 180
 		for(double i = minDegree; i <= maxDegree; i=i+0.35) {
 			boolean whileB = true;
 			int factor = 1;
 			double x = Math.cos(Math.toRadians(i)) * epsilon;
 			double y = Math.sin(Math.toRadians(i)) * epsilon;
-			
+
 			while(whileB){
-				
-				
-				Position p = new Position((int)(this.eyePosition.getOriginX() + (factor * x)), (int)(this.eyePosition.getOriginY() + (factor * y)));
+
+
+				Position p = new Position((int)(eyePosition.getOriginX() + (factor * x)), (int)(eyePosition.getOriginY() + (factor * y)));
 				if(p.getOriginX() >= this.fieldSize.getWidth() || 
-					p.getOriginY() >= this.fieldSize.getHeight() || 
-					p.getOriginX() < 0 || 
-					p.getOriginY() < 0) {
-						lastP = this.eyePosition;
-						break;
+						p.getOriginY() >= this.fieldSize.getHeight() || 
+						p.getOriginX() < 0 || 
+						p.getOriginY() < 0) {
+					break;
 				}
 				else{
 					Position pixelP = new Position((p.getOriginX()/10)*10, (p.getOriginY()/10)*10);
-					if(pixelP.getOriginX() == 790)
-					{
-						int r = 1;
-					}
 					int found = this.fieldCopy.contains(new Position(pixelP.getOriginX()/10, pixelP.getOriginY()/10));
 					if(found == 1) { // 1 = Item
-						System.out.println("found: " + lastP);
-						Item foundI = new Pixel(pixelP, Color.red);
-						field.addItem(foundI);
-						lastP = this.eyePosition;
+						//						field.addItem(new Pixel(pixelP, Color.red));
 						whileB = false;
-						
 						//fill foundMatrix
 						this.foundMatrix.set(new Position((pixelP.getOriginX())/10, (pixelP.getOriginY())/10), 1);
 					}
 					else if(found == 2){ // 2 = Finish
-						System.out.println("finish found!!!");
-						Item foundI = new Pixel(pixelP, Color.yellow);
-						field.addItem(foundI);
+						//						field.addItem(new Pixel(pixelP, Color.yellow));
 						whileB = false;
-						
 						//fill foundMatrix
 						this.foundMatrix.set(new Position(pixelP.getOriginX()/10, pixelP.getOriginY()/10), 2);
 					}
 					else { // If the position is free
-						Item notfoundI = new Pixel(pixelP, Color.green);
-						field.addItem(notfoundI);
-						
+						//						field.addItem(new Pixel(pixelP, Color.green));
+
 						//fill foundMatrix
-						System.out.println("pixelP: " + pixelP);
 						this.foundMatrix.set(new Position(pixelP.getOriginX()/10, pixelP.getOriginY()/10), 3);
 					}
 				}
+				//				try {
+				//					Thread.sleep(1);
+				//				} catch (InterruptedException e) {
+				//					// TODO Auto-generated catch block
+				//					e.printStackTrace();
+				//				}
 				factor++;
 			}
-			
+
 		}
-		System.out.println("done");
-		foundMatrix.printArray();
+		System.out.println("DONE");
+		//foundMatrix.printArray();
+	}
+
+	@Override
+	public void run() {
+		long lastRound = System.currentTimeMillis();
+		while(thread != null)
+		{
+			scanField();
+			{// calculation of time for scanning, just for testing
+				long thisRound = System.currentTimeMillis();
+				float timeSinceLastRound = ((float)(thisRound-lastRound)/1000f);
+				lastRound = thisRound;
+				System.out.println(timeSinceLastRound);
+			}
+			// TODO computePath(); -> nächster weg berechnen und in form einer liste alle
+			//						  punkte wo der roboter durch muss
+			
+			// TODO move -> mit einer liste, welche alle positionen enthält von der 
+			//				aktuellen position bis zur endposition
+
+		}
+	}
+
+	private void move(List<Position> pl) {
+		// TODO Will be implemented
+		// bsp
+		for(Position p: pl)
+		{
+			this.field.setRobotPosition(p);
+		}
+	}
+
+	private List<Position> computePath() {
+		// TODO Will be implemented
+		return null;
 	}
 }

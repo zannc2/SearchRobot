@@ -6,8 +6,6 @@ import frontend.classes.view.Field;
 import frontend.interfaces.Item;
 
 public class RobotTool extends AbstractTool {
-	
-	private Field field;
 	private Size size;
 
 	/**
@@ -17,7 +15,6 @@ public class RobotTool extends AbstractTool {
 
 	public RobotTool(Field field, Size s) {
 		super(field);
-		this.field = field;
 		this.size = s;
 	}
 
@@ -27,7 +24,6 @@ public class RobotTool extends AbstractTool {
 	public void mouseDown(Position p) {
 		this.item = new Robot(p, size);
 		getField().addItem(this.item);
-		this.field.setRoboter(this.item);
 	}
 
 	@Override

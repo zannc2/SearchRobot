@@ -1,11 +1,10 @@
 package frontend.items;
 
-import static org.junit.Assert.*;
-import frontend.classes.items.Circle;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import frontend.classes.items.Robot;
 import frontend.classes.view.ItemChangedEvent;
 import frontend.interfaces.ItemChangedListener;
-import frontend.items.CircleTest.MyListener;
 import helper.Position;
 import helper.Size;
 import helper.Vector;
@@ -17,7 +16,7 @@ public class RobotTest {
 	private int x = 10;
 	private int y = 11;
 	private Position p = new Position(x, y);
-	private Robot r = new Robot(p);
+	private Robot r = new Robot(p, new Size(10,10));
 	
 	private boolean test;
 	
@@ -55,7 +54,7 @@ public class RobotTest {
 		r.addItemChangedListener(listener);
 		Vector v = new Vector(10, 25);
 		Position newP = new Position(p.getOriginX() + 10, p.getOriginY() + 25);
-		Robot newRobot = new Robot(newP);
+		Robot newRobot = new Robot(newP, new Size(10, 10));
 		r.move(v);
 		assertTrue(test);
 		assertEquals(r.getPosition(), newRobot.getPosition());

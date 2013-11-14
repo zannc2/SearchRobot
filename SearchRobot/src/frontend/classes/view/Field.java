@@ -1,13 +1,15 @@
 package frontend.classes.view;
 
+import helper.Direction;
 import helper.Position;
-import helper.Vector;
+import helper.Size;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import frontend.classes.items.Robot;
 import frontend.interfaces.FieldChangedListener;
 import frontend.interfaces.Item;
 import frontend.interfaces.ItemChangedListener;
@@ -22,9 +24,11 @@ public class Field implements Serializable{
 	private View view;
 	private List<Item> items = new ArrayList<Item>();
 	private List<FieldChangedListener> listeners = new ArrayList<FieldChangedListener>();
-	private Item robotItem;
+	private Robot robot;
 	
 	private FieldItemChangedListener l = new FieldItemChangedListener();
+	private final Size robotSize;
+	private final Size fieldSize;
 	
 	private class FieldItemChangedListener implements ItemChangedListener {
 
@@ -41,29 +45,58 @@ public class Field implements Serializable{
 		
 	}
 	
-	public Field(View v) {
+	/**
+	 * Constructor
+	 * @param v view
+	 * @param robotSize size of the robot
+	 */
+	public Field(View v, Size fieldsize, Size robotSize) {
 		this.view = v;
+		this.robotSize = robotSize;
+		this.fieldSize = fieldsize;
 	}
 	
+	/**
+	 * Returns the view panel
+	 * @return view
+	 */
 	public View getView() {
 		return this.view;
 	}
 	
+	/**
+	 * Returns a copy of the items on the field
+	 * @return unmodifiable copy if items
+	 */
 	public List<Item> getItems() {
 		return Collections.unmodifiableList(this.items);
 	}
 	
-	public boolean removeItem(Item i) {
+	/**
+	 * Removes an item from the field
+	 * @param item the item to remove
+	 * @return true if removed successful
+	 */
+	public boolean removeItem(Item item) {
 		notifyFieldChangedListeners();
-		return items.remove(i);
+		if(item instanceof Robot) this.robot = null;
+		return items.remove(item);
 	}
 	
+	/**
+	 * Adds a new Item to the view
+	 * @param item the item to add
+	 */
 	public void addItem(Item item) {
 		this.items.add(item);
 		item.addItemChangedListener(this.l);
+		if(item instanceof Robot) this.robot = (Robot) item;
 		notifyFieldChangedListeners();
 	}
 
+	/**
+	 * Notifier for all registered FieldChangeListeners
+	 */
 	private void notifyFieldChangedListeners() {
 		FieldChangedEvent e = new FieldChangedEvent(this);
 		for (FieldChangedListener l : this.listeners) {
@@ -71,14 +104,29 @@ public class Field implements Serializable{
 		}
 	}
 	
+	/**
+	 * Adds a FieldChangeListener
+	 * @param l the listener to add
+	 */
 	public void addListener(FieldChangedListener l) {
 		this.listeners.add(l);
 	}
 	
+	/**
+	 * Removes an FieldChangeListener
+	 * @param l the listener to remove
+	 * @return true if removed successful
+	 */
 	public boolean removeListener(FieldChangedListener l) {
 		return this.listeners.remove(l);
 	}
 	
+	/**
+	 * Tests whether an item touches position p 
+	 * @param p position to test
+	 * @param epsilon 
+	 * @return true if an item touches the position p
+	 */
 	public boolean contains(Position p, int epsilon) {
 		for(Item i : this.items) {
 			if(i.contains(p, epsilon)) {
@@ -88,26 +136,56 @@ public class Field implements Serializable{
 		return false;
 	}
 	
+	/**
+	 * getter for the robot position
+	 * @return returns the robot position
+	 */
 	public Position getRobotPosition() {
-		return this.robotItem.getPosition();
-	}
-
-	public void setRoboter(Item item) {
-		this.robotItem = item;
+		return robot.getPosition();
 	}
 	
-	public Item getRobot()
-	{
-		return robotItem;
-	}
-	
-	public void moveRobotTo(Position p) {
-		//TODO
+	/**
+	 * This method sets the Robot to a new Position
+	 * @param p new position of the robt
+	 */
+	public void setRobotPosition(Position p) {
+		// TODO Will be implemented
 //		Position oldP =this.robotItem.getPosition();
 //		int deltaX = p.getOriginX() - oldP.getOriginX();
 //		int deltaY = p.getOriginY() - oldP.getOriginY();
 //		this.robotItem.move(new Vector(deltaX, deltaY));
 	}
-	
 
+	/**
+	 * Getter for the robot size
+	 * @return robot size
+	 */
+	public Size getRobotSize() {
+		return robotSize;
+	}
+
+	/**
+	 * Getter for the robot direction
+	 * @return robot direction
+	 */
+	public Direction getRobotDirection() {
+		if (robot != null) return robot.getDirection();
+		else return null;
+	}
+	
+	/**
+	 * Turns the robot to another direction
+	 * @param d new robot direction
+	 */
+	public void setRobotDirection(Direction d) {
+		if(this.robot != null)
+		{
+			this.robot.setDirection(d);
+		}
+	}
+	
+	public Size getFieldSize()
+	{
+		return fieldSize;
+	}
 }

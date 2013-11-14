@@ -1,8 +1,15 @@
 package frontend.classes;
 
-import helper.Direction;
+import frontend.classes.items.CircleTool;
+import frontend.classes.items.FinishTool;
+import frontend.classes.items.LineTool;
+import frontend.classes.items.RemoveTool;
+import frontend.classes.items.RobotTool;
+import frontend.classes.items.selection.SelectionTool;
+import frontend.classes.view.Field;
+import frontend.classes.view.ViewImpl;
+import frontend.interfaces.Tool;
 import helper.Size;
-import helper.Vector;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -30,19 +37,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 
-import robot.classes.FieldMatrix;
 import robot.classes.RobotController;
-import frontend.classes.items.CircleTool;
-import frontend.classes.items.FinishTool;
-import frontend.classes.items.LineTool;
-import frontend.classes.items.RemoveTool;
-import frontend.classes.items.Robot;
-import frontend.classes.items.RobotTool;
-import frontend.classes.items.selection.SelectionTool;
-import frontend.classes.view.Field;
-import frontend.classes.view.ViewImpl;
-import frontend.interfaces.Item;
-import frontend.interfaces.Tool;
 
 public class SearchRobotEditor {
 
@@ -64,8 +59,7 @@ public class SearchRobotEditor {
 	private List<Tool> tools = new ArrayList<Tool>();
 	private JFrame frame;
 	private boolean isStarted;
-
-	private RobotController robotController;
+	private RobotController src;
 
 	public SearchRobotEditor() {
 		initComponents();
@@ -78,8 +72,7 @@ public class SearchRobotEditor {
 		frame.setLayout(new BorderLayout());
 		frame.setResizable(false);
 
-		view = new ViewImpl(FIELD_SIZE);
-		robotController = new RobotController(view);
+		view = new ViewImpl(FIELD_SIZE, ROBOT_SIZE);
 
 
 		/*************** JMenu ********************/
@@ -339,6 +332,7 @@ public class SearchRobotEditor {
 				frame.repaint();
 				if(isStarted)
 				{
+					if(src != null) src.stop();
 					selection.setEnabled(true);
 					remove.setEnabled(true);
 					addRobot.setEnabled(true);
@@ -362,11 +356,9 @@ public class SearchRobotEditor {
 					isStarted = true;
 					startButton.setIcon(new ImageIcon(getClass().getResource("resources/abort.png")));
 					System.out.println("Suche gestartet");
-					
 					//TODO werte setzten
-					FieldMatrix fieldMatrix = new FieldMatrix(FIELD_SIZE, view.getField());
-					robotController.startRobotSearch(new Size(800, 500), view.getField().getRobotPosition(), 
-							new Size(10,10), new Vector(1,0), fieldMatrix);
+					src = new RobotController(view.getField());
+					src.start();
 				}
 			}
 		}
