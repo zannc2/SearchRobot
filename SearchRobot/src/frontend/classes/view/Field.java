@@ -45,6 +45,10 @@ public class Field implements Serializable{
 		
 	}
 	
+	public Field(Size fieldsize, Size robotSize) {
+		this.robotSize = robotSize;
+		this.fieldSize = fieldsize;
+	}
 	/**
 	 * Constructor
 	 * @param v view
@@ -149,6 +153,7 @@ public class Field implements Serializable{
 	 * @param p new position of the robt
 	 */
 	public void setRobotPosition(Position p) {
+		if(this.robot != null) this.robot.setPosition(p);
 		// TODO Will be implemented
 //		Position oldP =this.robotItem.getPosition();
 //		int deltaX = p.getOriginX() - oldP.getOriginX();

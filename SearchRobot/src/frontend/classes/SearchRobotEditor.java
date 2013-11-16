@@ -9,6 +9,7 @@ import frontend.classes.items.selection.SelectionTool;
 import frontend.classes.view.Field;
 import frontend.classes.view.ViewImpl;
 import frontend.interfaces.Tool;
+import helper.Position;
 import helper.Size;
 
 import java.awt.BorderLayout;

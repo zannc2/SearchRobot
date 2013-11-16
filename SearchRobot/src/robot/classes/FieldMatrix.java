@@ -11,35 +11,33 @@ import java.util.List;
 
 public class FieldMatrix {
 
-	private int[][] field;
-	private Size size;
+	private int[][] fieldMatrix;
+	private int fieldMatrixWidth, fieldMatrixHeight;
+	private int gridSize;
 	
-	public FieldMatrix(Size s) {
-		this.field = new int[s.getWidth()/10][s.getHeight()/10];
-		this.size = s;
+	public FieldMatrix(Size fieldSize, Size gridSize) {
+		this(fieldSize, gridSize, new Field(fieldSize, gridSize));
 	}
 	
-	public FieldMatrix(Size s, Field f) {
-		int width = s.getWidth()/10;
-		int height = s.getHeight()/10;
-		this.field = new int[width][height];
-		this.size = s;
+	public FieldMatrix(Size fieldSize, Size gridSize, Field f) {
+		this.fieldMatrixWidth = fieldSize.getWidth()/gridSize.getWidth();
+		this.fieldMatrixHeight = fieldSize.getHeight()/gridSize.getWidth();
+		this.fieldMatrix = new int[this.fieldMatrixWidth][this.fieldMatrixHeight];
+		this.gridSize = gridSize.getWidth();
 		
 		List<Item> items = f.getItems();
 		
-		for(int i = 0; i<width; i++){
-			for(int j = 0; j<height; j++) {
+		for(int i = 0; i < this.fieldMatrixWidth; i++){
+			for(int j = 0; j < this.fieldMatrixHeight; j++) {
 				for(Item item:items){
-					if(field[i][j] == 0)
+					if(fieldMatrix[i][j] == 0)
 					{
-						if(item.contains(new Position(i*10 + 5, j*10 + 5))) {
-							if(item instanceof Finish) {
-								field[i][j] = 2;
-							}
-							else if(item instanceof Robot) field[i][j] = 0;
-							else field[i][j] = 1;
+						if(item.contains(new Position(i*this.gridSize + this.gridSize/2, j*this.gridSize + this.gridSize/2))) {
+							if(item instanceof Finish) fieldMatrix[i][j] = 2;
+							else if(item instanceof Robot) fieldMatrix[i][j] = 0;
+							else fieldMatrix[i][j] = 1;
 						}
-						else field[i][j] = 0;
+						else fieldMatrix[i][j] = 0;
 					}
 				}
 			}
@@ -49,18 +47,18 @@ public class FieldMatrix {
 	
 	
 	public int contains(Position p) {
-		return field[p.getOriginX()][p.getOriginY()];
+		return fieldMatrix[p.getOriginX()][p.getOriginY()];
 	}
 	
 	public void set(Position p, int value) {
-		this.field[p.getOriginX()][p.getOriginY()] = value;
+		this.fieldMatrix[p.getOriginX()][p.getOriginY()] = value;
 	}
 	
 	public void printArray()
 	{
-		for(int j = 0; j<size.getHeight()/10; j++) {
-			for(int i = 0; i<size.getWidth()/10; i++){
-				System.out.print("[" + field[i][j] + "]");
+		for(int j = 0; j < fieldMatrixHeight; j++) {
+			for(int i = 0; i < fieldMatrixWidth; i++){
+				System.out.print("[" + fieldMatrix[i][j] + "]");
 			}
 			System.out.println();
 		}

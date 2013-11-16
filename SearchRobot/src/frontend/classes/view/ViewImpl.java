@@ -85,9 +85,9 @@ public class ViewImpl extends JPanel implements View{
 		for (ItemHandler h : this.handlers) {
 			h.draw(g);
 		}
-		
-		for (Item i : this.field.getItems()) {
-			i.draw(g);
+		for(int i = 0; i < this.field.getItems().size(); i++)
+		{
+			this.field.getItems().get(i).draw(g);
 		}
     }
 

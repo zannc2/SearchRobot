@@ -3,15 +3,15 @@ package robot.classes;
 import helper.Direction;
 import helper.Position;
 import helper.Size;
-import helper.Vector;
 
+import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
 
-import frontend.classes.items.Robot;
 import frontend.classes.view.Field;
-import frontend.classes.view.ViewImpl;
 
 public class RobotController implements Runnable {
+	private final int MOVE_SPEED = 10;
 	private Field field;
 	private Size fieldSize;
 	private FieldMatrix fieldCopy;
@@ -22,9 +22,9 @@ public class RobotController implements Runnable {
 	public RobotController(Field f) {
 		this.field = f;
 		this.fieldSize = f.getFieldSize();
-		this.fieldCopy = new FieldMatrix(this.fieldSize, f);
 		this.robotSize = f.getRobotSize();
-		this.foundMatrix = new FieldMatrix(fieldSize);
+		this.fieldCopy = new FieldMatrix(this.fieldSize, this.robotSize, f);
+		this.foundMatrix = new FieldMatrix(this.fieldSize, this.robotSize);
 	}
 
 
@@ -53,7 +53,7 @@ public class RobotController implements Runnable {
 		if(d == Direction.NORTH)
 		{
 			eyePosition = new Position(robotPosition.getOriginX() + robotSize.getWidth()/2,
-					robotPosition.getOriginY());
+					robotPosition.getOriginY()-1);
 			minDegree = -180;
 			maxDegree = 0;
 		}
@@ -73,7 +73,7 @@ public class RobotController implements Runnable {
 		}
 		else
 		{
-			eyePosition = new Position(robotPosition.getOriginX(),
+			eyePosition = new Position(robotPosition.getOriginX()-1,
 					robotPosition.getOriginY() + robotSize.getHeight()/2);
 			minDegree = 90;
 			maxDegree = 270;
@@ -101,30 +101,30 @@ public class RobotController implements Runnable {
 					Position pixelP = new Position((p.getOriginX()/10)*10, (p.getOriginY()/10)*10);
 					int found = this.fieldCopy.contains(new Position(pixelP.getOriginX()/10, pixelP.getOriginY()/10));
 					if(found == 1) { // 1 = Item
-//						field.addItem(new Pixel(pixelP, Color.red));
+												field.addItem(new Pixel(pixelP, Color.red));
 						whileB = false;
 						//fill foundMatrix
 						this.foundMatrix.set(new Position((pixelP.getOriginX())/10, (pixelP.getOriginY())/10), 1);
 					}
 					else if(found == 2){ // 2 = Finish
-//						field.addItem(new Pixel(pixelP, Color.yellow));
+												field.addItem(new Pixel(pixelP, Color.yellow));
 						whileB = false;
 						//fill foundMatrix
 						this.foundMatrix.set(new Position(pixelP.getOriginX()/10, pixelP.getOriginY()/10), 2);
 					}
 					else { // If the position is free
-//						field.addItem(new Pixel(pixelP, Color.green));
+												field.addItem(new Pixel(pixelP, Color.green));
 
 						//fill foundMatrix
 						this.foundMatrix.set(new Position(pixelP.getOriginX()/10, pixelP.getOriginY()/10), 3);
 					}
 				}
-				//				try {
-				//					Thread.sleep(5);
-				//				} catch (InterruptedException e) {
-				//					// TODO Auto-generated catch block
-				//					e.printStackTrace();
-				//				}
+				//								try {
+				//									Thread.sleep(1);
+				//								} catch (InterruptedException e) {
+				//									// TODO Auto-generated catch block
+				//									e.printStackTrace();
+				//								}
 				factor++;
 			}
 
@@ -136,30 +136,114 @@ public class RobotController implements Runnable {
 	@Override
 	public void run() {
 		long lastRound = System.currentTimeMillis();
+		this.field.setRobotDirection(Direction.NORTH);
+		scanField();
+		this.field.setRobotDirection(Direction.WEST);
+		scanField();
+		this.field.setRobotDirection(Direction.SOUTH);
+		scanField();
+		this.field.setRobotDirection(Direction.EAST);
 		while(thread != null)
 		{
+			//scanField();
 			scanField();
+
+			// fill a list of positions, for testing move
+			List<Position> pl = new ArrayList<>();
+			{
+
+				Position now = new Position(field.getRobotPosition().getOriginX() + 10, 
+						field.getRobotPosition().getOriginY());
+				int fill = 0;
+				pl.add(now);
+				while(fill < 10)
+				{
+					now = new Position(now.getOriginX(), 
+							now.getOriginY()+10);
+					pl.add(now);
+					now = new Position(now.getOriginX()+10, 
+							now.getOriginY());
+					pl.add(now);
+					now = new Position(now.getOriginX()+10, 
+							now.getOriginY());
+					pl.add(now);
+					fill++;
+				}
+			}
+			move(pl);
+			// TODO computePath(); -> nächster weg berechnen und in form einer liste alle
+			//						  punkte wo der roboter durch muss
+
+			// TODO move -> mit einer liste, welche alle positionen enthält von der 
+			//				aktuellen position bis zur endposition
 			{// calculation of time for scanning, just for testing
 				long thisRound = System.currentTimeMillis();
 				float timeSinceLastRound = ((float)(thisRound-lastRound)/1000f);
 				lastRound = thisRound;
 				System.out.println(timeSinceLastRound);
 			}
-			// TODO computePath(); -> nächster weg berechnen und in form einer liste alle
-			//						  punkte wo der roboter durch muss
-			
-			// TODO move -> mit einer liste, welche alle positionen enthält von der 
-			//				aktuellen position bis zur endposition
 			stop();
 		}
 	}
 
 	private void move(List<Position> pl) {
-		// TODO Will be implemented
 		// bsp
+		Direction d = this.field.getRobotDirection();
+		Position lastP = this.field.getRobotPosition();
 		for(Position p: pl)
 		{
-			this.field.setRobotPosition(p);
+			// move east
+			if(p.getOriginX() > lastP.getOriginX())
+			{
+				this.field.setRobotDirection(Direction.EAST);
+				int step = 1;
+				while(step < 11)
+				{
+					this.field.setRobotPosition(new Position(lastP.getOriginX()+step, lastP.getOriginY()));
+					step++;
+					try { Thread.sleep(MOVE_SPEED); } 
+					catch (InterruptedException e) { e.printStackTrace(); }
+				}
+			}
+			// move west
+			else if(p.getOriginX() < lastP.getOriginX())
+			{
+				this.field.setRobotDirection(Direction.WEST);
+				int step = 1;
+				while(step < 11)
+				{
+					this.field.setRobotPosition(new Position(lastP.getOriginX()-step, lastP.getOriginY()));
+					step++;
+					try { Thread.sleep(MOVE_SPEED); } 
+					catch (InterruptedException e) { e.printStackTrace(); }
+				}
+			}
+			//move south
+			else if(p.getOriginY() > lastP.getOriginY())
+			{
+				this.field.setRobotDirection(Direction.SOUTH);
+				int step = 1;
+				while(step < 11)
+				{
+					this.field.setRobotPosition(new Position(lastP.getOriginX(), lastP.getOriginY()+step));
+					step++;
+					try { Thread.sleep(MOVE_SPEED); } 
+					catch (InterruptedException e) { e.printStackTrace(); }
+				}
+			}
+			else // move north
+			{
+				this.field.setRobotDirection(Direction.NORTH);
+				int step = 1;
+				while(step < 11)
+				{
+					this.field.setRobotPosition(new Position(lastP.getOriginX(), lastP.getOriginY()-step));
+					step++;
+					try { Thread.sleep(MOVE_SPEED); } 
+					catch (InterruptedException e) { e.printStackTrace(); }
+				}
+			}
+			lastP = p;
 		}
 	}
 
