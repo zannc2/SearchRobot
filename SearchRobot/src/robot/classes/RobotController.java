@@ -99,24 +99,30 @@ public class RobotController implements Runnable {
 				}
 				else{
 					Position pixelP = new Position((p.getOriginX()/10)*10, (p.getOriginY()/10)*10);
-					int found = this.fieldCopy.contains(new Position(pixelP.getOriginX()/10, pixelP.getOriginY()/10));
-					if(found == 1) { // 1 = Item
-												field.addItem(new Pixel(pixelP, Color.red));
-						whileB = false;
-						//fill foundMatrix
-						this.foundMatrix.set(new Position((pixelP.getOriginX())/10, (pixelP.getOriginY())/10), 1);
-					}
-					else if(found == 2){ // 2 = Finish
-												field.addItem(new Pixel(pixelP, Color.yellow));
-						whileB = false;
-						//fill foundMatrix
-						this.foundMatrix.set(new Position(pixelP.getOriginX()/10, pixelP.getOriginY()/10), 2);
-					}
-					else { // If the position is free
-												field.addItem(new Pixel(pixelP, Color.green));
-
-						//fill foundMatrix
-						this.foundMatrix.set(new Position(pixelP.getOriginX()/10, pixelP.getOriginY()/10), 3);
+					
+					//check if not allready checked
+					int foundMatrixFound = this.foundMatrix.contains(new Position(pixelP.getOriginX()/10, pixelP.getOriginY()/10));
+					if(foundMatrixFound == 1 || foundMatrixFound == 2) whileB = false;
+					if(foundMatrixFound == 0){					
+						int found = this.fieldCopy.contains(new Position(pixelP.getOriginX()/10, pixelP.getOriginY()/10));
+						if(found == 1) { // 1 = Item
+							field.addItem(new Pixel(pixelP, Color.red));
+							whileB = false;
+							//fill foundMatrix
+							this.foundMatrix.set(new Position((pixelP.getOriginX())/10, (pixelP.getOriginY())/10), 1);
+						}
+						else if(found == 2){ // 2 = Finish
+							field.addItem(new Pixel(pixelP, Color.yellow));
+							whileB = false;
+							//fill foundMatrix
+							this.foundMatrix.set(new Position(pixelP.getOriginX()/10, pixelP.getOriginY()/10), 2);
+						}
+						else { // If the position is free
+							field.addItem(new Pixel(pixelP, Color.green));
+	
+							//fill foundMatrix
+							this.foundMatrix.set(new Position(pixelP.getOriginX()/10, pixelP.getOriginY()/10), 3);
+						}
 					}
 				}
 				//								try {
