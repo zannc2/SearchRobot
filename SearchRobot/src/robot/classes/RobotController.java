@@ -106,19 +106,19 @@ public class RobotController implements Runnable {
 					if(foundMatrixFound == 0){					
 						int found = this.fieldCopy.contains(new Position(pixelP.getOriginX()/10, pixelP.getOriginY()/10));
 						if(found == 1) { // 1 = Item
-							field.addItem(new Pixel(pixelP, Color.red));
+//							field.addItem(new Pixel(pixelP, Color.red));
 							whileB = false;
 							//fill foundMatrix
 							this.foundMatrix.set(new Position((pixelP.getOriginX())/10, (pixelP.getOriginY())/10), 1);
 						}
 						else if(found == 2){ // 2 = Finish
-							field.addItem(new Pixel(pixelP, Color.yellow));
+//							field.addItem(new Pixel(pixelP, Color.yellow));
 							whileB = false;
 							//fill foundMatrix
 							this.foundMatrix.set(new Position(pixelP.getOriginX()/10, pixelP.getOriginY()/10), 2);
 						}
 						else { // If the position is free
-							field.addItem(new Pixel(pixelP, Color.green));
+//							field.addItem(new Pixel(pixelP, Color.green));
 	
 							//fill foundMatrix
 							this.foundMatrix.set(new Position(pixelP.getOriginX()/10, pixelP.getOriginY()/10), 3);
@@ -135,13 +135,15 @@ public class RobotController implements Runnable {
 			}
 
 		}
-		System.out.println("DONE");
+//		System.out.println("DONE");
 		//foundMatrix.printArray();
 	}
 
 	@Override
 	public void run() {
 		long lastRound = System.currentTimeMillis();
+		
+		//first scan
 		this.field.setRobotDirection(Direction.NORTH);
 		scanField();
 		this.field.setRobotDirection(Direction.WEST);
@@ -149,39 +151,40 @@ public class RobotController implements Runnable {
 		this.field.setRobotDirection(Direction.SOUTH);
 		scanField();
 		this.field.setRobotDirection(Direction.EAST);
+		
 		while(thread != null)
 		{
-			//scanField();
 			scanField();
 
 			// fill a list of positions, for testing move
-			List<Position> pl = new ArrayList<>();
-			{
+//			List<Position> pl = new ArrayList<>();
+//			{
+//
+//				Position now = new Position(field.getRobotPosition().getOriginX() + 10, 
+//						field.getRobotPosition().getOriginY());
+//				int fill = 0;
+//				pl.add(now);
+//				while(fill < 10)
+//				{
+//					now = new Position(now.getOriginX(), 
+//							now.getOriginY()+10);
+//					pl.add(now);
+//					now = new Position(now.getOriginX()+10, 
+//							now.getOriginY());
+//					pl.add(now);
+//					now = new Position(now.getOriginX()+10, 
+//							now.getOriginY());
+//					pl.add(now);
+//					fill++;
+//				}
+//			}
+//			move(pl);
+			//compute next position (list of Positions for move)
+			List<Position> movePath = computePath();
 
-				Position now = new Position(field.getRobotPosition().getOriginX() + 10, 
-						field.getRobotPosition().getOriginY());
-				int fill = 0;
-				pl.add(now);
-				while(fill < 10)
-				{
-					now = new Position(now.getOriginX(), 
-							now.getOriginY()+10);
-					pl.add(now);
-					now = new Position(now.getOriginX()+10, 
-							now.getOriginY());
-					pl.add(now);
-					now = new Position(now.getOriginX()+10, 
-							now.getOriginY());
-					pl.add(now);
-					fill++;
-				}
-			}
-			move(pl);
-			// TODO computePath(); -> nächster weg berechnen und in form einer liste alle
-			//						  punkte wo der roboter durch muss
-
-			// TODO move -> mit einer liste, welche alle positionen enthält von der 
-			//				aktuellen position bis zur endposition
+			//move to new Position with given movePath
+			move(movePath);
+			
 			{// calculation of time for scanning, just for testing
 				long thisRound = System.currentTimeMillis();
 				float timeSinceLastRound = ((float)(thisRound-lastRound)/1000f);
@@ -254,7 +257,110 @@ public class RobotController implements Runnable {
 	}
 
 	private List<Position> computePath() {
-		// TODO Will be implemented
-		return null;
+		
+		List<Position> movePath = new ArrayList<>();
+		
+		//check if finish is found
+		for(int i = 0; i < this.fieldSize.getWidth()/10; i++){
+			for(int j = 0; j < this.fieldSize.getHeight()/10; j++) {
+				if(this.foundMatrix.contains(new Position(i, j)) == 2)
+				{ 
+					Position finishP = new Position(i,j);
+					movePath = computePathToFinish(finishP);
+					break;
+				}
+			}
+		}
+		
+		return movePath;
+	}
+
+
+	private List<Position> computePathToFinish(Position finishP) {
+		List<Position> movePath = new ArrayList<>();
+
+		Position robotP = new Position(this.field.getRobotPosition().getOriginX()/10,
+				this.field.getRobotPosition().getOriginY()/10);
+		System.out.println("Finish found: " + finishP);
+		System.out.println("Robot Position: " + robotP);
+		
+		int deltaX = finishP.getOriginX() - robotP.getOriginX();
+		int deltaY = finishP.getOriginY() - robotP.getOriginY();
+		System.out.println("deltaX: " + deltaX + " deltaY: " + deltaY);
+		
+		if(deltaX < 0 && deltaY < 0){
+			boolean repeat = true;
+			int newX = robotP.getOriginX() *10;
+			int newY = robotP.getOriginY() *10;
+			while(repeat) {
+				if(deltaX != 0){
+					deltaX ++;
+					newX = newX - 10;					
+				}
+				if (deltaY != 0){
+					deltaY ++;
+					newY = newY - 10;					
+				}
+
+				movePath.add(new Position(newX, newY));
+				if(deltaY == 0 && deltaX == 0) repeat = false;
+			}
+		}
+		else if(deltaX >= 0 && deltaY < 0) {
+			boolean repeat = true;
+			int newX = robotP.getOriginX() *10;
+			int newY = robotP.getOriginY() *10;
+			while(repeat) {
+				if(deltaX != 0){
+					deltaX --;
+					newX = newX + 10;					
+				}
+				if (deltaY != 0){
+					deltaY ++;
+					newY = newY - 10;					
+				}
+
+				movePath.add(new Position(newX, newY));
+				if(deltaY == 0 && deltaX == 0) repeat = false;
+			}
+		}
+		else if(deltaX < 0 && deltaY >= 0){
+			boolean repeat = true;
+			int newX = robotP.getOriginX() *10;
+			int newY = robotP.getOriginY() *10;
+			while(repeat) {
+				if(deltaX != 0){
+					deltaX ++;
+					newX = newX - 10;					
+				}
+				if (deltaY != 0){
+					deltaY --;
+					newY = newY + 10;					
+				}
+
+				movePath.add(new Position(newX, newY));
+				if(deltaY == 0 && deltaX == 0) repeat = false;
+			}
+		}
+		else {
+			//deltaX && deltaY >=0
+			boolean repeat = true;
+			int newX = robotP.getOriginX() *10;
+			int newY = robotP.getOriginY() *10;
+			while(repeat) {
+				if(deltaX != 0){
+					deltaX --;
+					newX = newX + 10;
+				}
+				if (deltaY != 0){
+					deltaY --;
+					newY = newY + 10;
+				}
+				movePath.add(new Position(newX, newY));
+				if(deltaY == 0 && deltaX == 0) repeat = false;
+			}
+		}
+		System.out.println("movePath: " + movePath);
+		return movePath;
 	}
 }
