@@ -18,6 +18,9 @@ public class RobotController implements Runnable {
 	private FieldMatrix foundMatrix;
 	private Size robotSize;
 	private Thread thread = null;
+	
+	//size of steps
+	private int EPSILON = 10;
 
 	public RobotController(Field f) {
 		this.field = f;
@@ -43,8 +46,6 @@ public class RobotController implements Runnable {
 	private void scanField() {
 		// The position of the robot eye(s)
 		Position eyePosition;
-		// size of the steps
-		int epsilon = 10;
 		// direction of the robot
 		Direction d = field.getRobotDirection();
 		// max and min angle of the robots view
@@ -84,8 +85,8 @@ public class RobotController implements Runnable {
 		for(double i = minDegree; i <= maxDegree; i=i+0.35) {
 			boolean whileB = true;
 			int factor = 1;
-			double x = Math.cos(Math.toRadians(i)) * epsilon;
-			double y = Math.sin(Math.toRadians(i)) * epsilon;
+			double x = Math.cos(Math.toRadians(i)) * this.EPSILON;
+			double y = Math.sin(Math.toRadians(i)) * this.EPSILON;
 
 			while(whileB){
 
@@ -288,79 +289,84 @@ public class RobotController implements Runnable {
 		int deltaY = finishP.getOriginY() - robotP.getOriginY();
 		System.out.println("deltaX: " + deltaX + " deltaY: " + deltaY);
 		
+		double angle = Math.toDegrees(Math.atan(((double)deltaY)/((double)deltaX)));
+		System.out.println("winkel: " + angle);
+		
+		double x = this.EPSILON / Math.tan(Math.toRadians(angle));
+		double y = Math.tan(Math.toRadians(angle)) * this.EPSILON;
+		
+
+		int newX = robotP.getOriginX() *10;
+		int newY = robotP.getOriginY() *10;
+		
+		boolean repeat = true;
+		
 		if(deltaX < 0 && deltaY < 0){
-			boolean repeat = true;
-			int newX = robotP.getOriginX() *10;
-			int newY = robotP.getOriginY() *10;
+			if(x >= 10) {
+				x = -this.EPSILON;
+				y = -y;
+			}
+			else {
+				y = -this.EPSILON;
+				x = -x;
+			}
+			System.out.println("x: " + x + " y: " + y);
+			
 			while(repeat) {
-				if(deltaX != 0){
-					deltaX ++;
-					newX = newX - 10;					
-				}
-				if (deltaY != 0){
-					deltaY ++;
-					newY = newY - 10;					
-				}
+				newX = (int) (newX + x);
+				newY = (int) (newY + y);
 
 				movePath.add(new Position(newX, newY));
-				if(deltaY == 0 && deltaX == 0) repeat = false;
+				if(newY <= (finishP.getOriginY()*10 +10) && newX <= (finishP.getOriginX()*10 + 10)) repeat = false;
 			}
 		}
 		else if(deltaX >= 0 && deltaY < 0) {
-			boolean repeat = true;
-			int newX = robotP.getOriginX() *10;
-			int newY = robotP.getOriginY() *10;
+			if(x <= -10) x = this.EPSILON;
+			else {
+				y = -this.EPSILON;
+				x = -x;
+			}
+			System.out.println("x: " + x + " y: " + y);
+			
 			while(repeat) {
-				if(deltaX != 0){
-					deltaX --;
-					newX = newX + 10;					
-				}
-				if (deltaY != 0){
-					deltaY ++;
-					newY = newY - 10;					
-				}
+				newX = (int) (newX + x);
+				newY = (int) (newY + y);
 
 				movePath.add(new Position(newX, newY));
-				if(deltaY == 0 && deltaX == 0) repeat = false;
+				if(newY <= (finishP.getOriginY()*10 +10) && newX >= (finishP.getOriginX()*10 - 10)) repeat = false;
 			}
 		}
 		else if(deltaX < 0 && deltaY >= 0){
-			boolean repeat = true;
-			int newX = robotP.getOriginX() *10;
-			int newY = robotP.getOriginY() *10;
+			if(x <= -10) {
+				x = -this.EPSILON;
+				y = -y;
+			}
+			else y = this.EPSILON;
+			System.out.println("x: " + x + " y: " + y);
+			
 			while(repeat) {
-				if(deltaX != 0){
-					deltaX ++;
-					newX = newX - 10;					
-				}
-				if (deltaY != 0){
-					deltaY --;
-					newY = newY + 10;					
-				}
+				newX = (int) (newX + x);
+				newY = (int) (newY + y);
 
 				movePath.add(new Position(newX, newY));
-				if(deltaY == 0 && deltaX == 0) repeat = false;
+				if(newY >= (finishP.getOriginY()*10 -10) && newX <= (finishP.getOriginX()*10 + 10)) repeat = false;
 			}
 		}
 		else {
 			//deltaX && deltaY >=0
-			boolean repeat = true;
-			int newX = robotP.getOriginX() *10;
-			int newY = robotP.getOriginY() *10;
+			if(x >= 10) x = this.EPSILON;
+			else y = this.EPSILON;
+			System.out.println("x: " + x + " y: " + y);
+			
 			while(repeat) {
-				if(deltaX != 0){
-					deltaX --;
-					newX = newX + 10;
-				}
-				if (deltaY != 0){
-					deltaY --;
-					newY = newY + 10;
-				}
+				newX = (int) (newX + x);
+				newY = (int) (newY + y);
+
 				movePath.add(new Position(newX, newY));
-				if(deltaY == 0 && deltaX == 0) repeat = false;
+				if(newY >= (finishP.getOriginY()*10 -10) && newX >= (finishP.getOriginX()*10 - 10)) repeat = false;
 			}
 		}
-		System.out.println("movePath: " + movePath);
+//		System.out.println("movePath: " + movePath);
 		return movePath;
 	}
 }
