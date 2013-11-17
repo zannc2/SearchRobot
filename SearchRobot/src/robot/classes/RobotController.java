@@ -282,15 +282,15 @@ public class RobotController implements Runnable {
 
 		Position robotP = new Position(this.field.getRobotPosition().getOriginX()/10,
 				this.field.getRobotPosition().getOriginY()/10);
-		System.out.println("Finish found: " + finishP);
-		System.out.println("Robot Position: " + robotP);
+//		System.out.println("Finish found: " + finishP);
+//		System.out.println("Robot Position: " + robotP);
 		
 		int deltaX = finishP.getOriginX() - robotP.getOriginX();
 		int deltaY = finishP.getOriginY() - robotP.getOriginY();
-		System.out.println("deltaX: " + deltaX + " deltaY: " + deltaY);
+//		System.out.println("deltaX: " + deltaX + " deltaY: " + deltaY);
 		
 		double angle = Math.toDegrees(Math.atan(((double)deltaY)/((double)deltaX)));
-		System.out.println("winkel: " + angle);
+//		System.out.println("winkel: " + angle);
 		
 		double x = this.EPSILON / Math.tan(Math.toRadians(angle));
 		double y = Math.tan(Math.toRadians(angle)) * this.EPSILON;
@@ -310,14 +310,14 @@ public class RobotController implements Runnable {
 				y = -this.EPSILON;
 				x = -x;
 			}
-			System.out.println("x: " + x + " y: " + y);
+//			System.out.println("x: " + x + " y: " + y);
 			
 			while(repeat) {
 				newX = (int) (newX + x);
 				newY = (int) (newY + y);
 
 				movePath.add(new Position(newX, newY));
-				if(newY <= (finishP.getOriginY()*10 +10) && newX <= (finishP.getOriginX()*10 + 10)) repeat = false;
+				if(newY <= (finishP.getOriginY()*10) && newX <= (finishP.getOriginX()*10)) repeat = false;
 			}
 		}
 		else if(deltaX >= 0 && deltaY < 0) {
@@ -326,14 +326,14 @@ public class RobotController implements Runnable {
 				y = -this.EPSILON;
 				x = -x;
 			}
-			System.out.println("x: " + x + " y: " + y);
+//			System.out.println("x: " + x + " y: " + y);
 			
 			while(repeat) {
 				newX = (int) (newX + x);
 				newY = (int) (newY + y);
 
 				movePath.add(new Position(newX, newY));
-				if(newY <= (finishP.getOriginY()*10 +10) && newX >= (finishP.getOriginX()*10 - 10)) repeat = false;
+				if(newY <= (finishP.getOriginY()*10) && newX >= (finishP.getOriginX()*10)) repeat = false;
 			}
 		}
 		else if(deltaX < 0 && deltaY >= 0){
@@ -342,28 +342,28 @@ public class RobotController implements Runnable {
 				y = -y;
 			}
 			else y = this.EPSILON;
-			System.out.println("x: " + x + " y: " + y);
+//			System.out.println("x: " + x + " y: " + y);
 			
 			while(repeat) {
 				newX = (int) (newX + x);
 				newY = (int) (newY + y);
 
 				movePath.add(new Position(newX, newY));
-				if(newY >= (finishP.getOriginY()*10 -10) && newX <= (finishP.getOriginX()*10 + 10)) repeat = false;
+				if(newY >= (finishP.getOriginY()*10) && newX <= (finishP.getOriginX()*10)) repeat = false;
 			}
 		}
 		else {
 			//deltaX && deltaY >=0
 			if(x >= 10) x = this.EPSILON;
 			else y = this.EPSILON;
-			System.out.println("x: " + x + " y: " + y);
+//			System.out.println("x: " + x + " y: " + y);
 			
 			while(repeat) {
 				newX = (int) (newX + x);
 				newY = (int) (newY + y);
 
 				movePath.add(new Position(newX, newY));
-				if(newY >= (finishP.getOriginY()*10 -10) && newX >= (finishP.getOriginX()*10 - 10)) repeat = false;
+				if(newY >= (finishP.getOriginY()*10) && newX >= (finishP.getOriginX()*10)) repeat = false;
 			}
 		}
 //		System.out.println("movePath: " + movePath);
