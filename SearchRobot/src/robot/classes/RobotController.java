@@ -19,6 +19,8 @@ public class RobotController implements Runnable {
 	private Size robotSize;
 	private Thread thread = null;
 	
+	private boolean foundFinish = false;
+	
 	//size of steps
 	private int EPSILON = 10;
 
@@ -117,6 +119,7 @@ public class RobotController implements Runnable {
 							whileB = false;
 							//fill foundMatrix
 							this.foundMatrix.set(new Position(pixelP.getOriginX()/10, pixelP.getOriginY()/10), 2);
+							foundFinish = true;
 						}
 						else { // If the position is free
 //							field.addItem(new Pixel(pixelP, Color.green));
@@ -192,7 +195,7 @@ public class RobotController implements Runnable {
 				lastRound = thisRound;
 				System.out.println(timeSinceLastRound);
 			}
-			stop();
+			if(this.foundFinish)	stop();
 		}
 	}
 
@@ -267,13 +270,137 @@ public class RobotController implements Runnable {
 				if(this.foundMatrix.contains(new Position(i, j)) == 2)
 				{ 
 					Position finishP = new Position(i,j);
-					movePath = computePathToFinish(finishP);
-					break;
+					return movePath = computePathToFinish(finishP);
 				}
 			}
 		}
 		
+		// finish not found yet
+		//TODO compute next position for scan
+		Position nextP = computeNextPosition();
+		movePath = computePathToNextPosition(nextP);
+		
 		return movePath;
+	}
+
+
+	private List<Position> computePathToNextPosition(Position nextP) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	private Position computeNextPosition() {
+		for(int i = 0; i < this.fieldSize.getWidth()/10; i++) {
+			for(int j = 0; j < this.fieldSize.getHeight()/10; j++) {
+				if(this.foundMatrix.contains(new Position(i, j)) == 0) {
+					Position next = checkedNeighbouer(new Position(i, j));
+					if (next != null) { 
+						return next;
+					}
+				}
+			}
+		}
+		return null;
+	}
+
+
+	private Position checkedNeighbouer(Position position) {
+		int x = position.getOriginX();
+		int y = position.getOriginY();
+		
+		// x on left boarder
+		if(x == 0) {
+			// y on top boarder
+			if(y == 0) {
+				if(this.foundMatrix.contains(new Position(x + 1, y)) == 3) return new Position(x+1, y);
+				
+				else if(this.foundMatrix.contains(new Position(x, y + 1)) == 3) return new Position(x, y+1);
+				else if(this.foundMatrix.contains(new Position(x + 1, y + 1)) == 3) return new Position(x+1, y+1);
+			}
+			// y on bottom border
+			else if(y == this.fieldSize.getHeight()/10 -1){
+				if(this.foundMatrix.contains(new Position(x, y -1)) == 3) return new Position(x, y-1);
+				else if(this.foundMatrix.contains(new Position(x + 1, y -1)) == 3) return new Position(x+1, y-1);
+				
+				else if(this.foundMatrix.contains(new Position(x + 1, y)) == 3) return new Position(x+1, y);
+			}
+			// y not on border
+			else {
+				if(this.foundMatrix.contains(new Position(x, y -1)) == 3) return new Position(x, y-1);
+				else if(this.foundMatrix.contains(new Position(x + 1, y -1)) == 3) return new Position(x+1, y-1);
+				
+				else if(this.foundMatrix.contains(new Position(x + 1, y)) == 3) return new Position(x+1, y);
+				
+				else if(this.foundMatrix.contains(new Position(x, y + 1)) == 3) return new Position(x, y+1);
+				else if(this.foundMatrix.contains(new Position(x + 1, y + 1)) == 3) return new Position(x+1, y+1);
+			}
+		}
+		// x on right border
+		else if(x == this.fieldSize.getWidth()/10 -1) {
+
+			// y on top boarder
+			if(y == 0) {				
+				if(this.foundMatrix.contains(new Position(x -1, y )) == 3) return new Position(x-1, y);
+				
+				else if(this.foundMatrix.contains(new Position(x -1, y +1)) == 3) return new Position(x-1, y+1);
+				else if(this.foundMatrix.contains(new Position(x, y + 1)) == 3) return new Position(x, y+1);
+			}
+			// y on bottom border
+			else if(y == this.fieldSize.getHeight()/10 -1){
+				if(this.foundMatrix.contains(new Position(x -1, y -1)) == 3) return new Position(x-1, y-1);
+				else if(this.foundMatrix.contains(new Position(x, y -1)) == 3) return new Position(x, y-1);
+				
+				else if(this.foundMatrix.contains(new Position(x -1, y )) == 3) return new Position(x-1, y);
+			}
+			// y not on border
+			else {
+				if(this.foundMatrix.contains(new Position(x -1, y -1)) == 3) return new Position(x-1, y-1);
+				else if(this.foundMatrix.contains(new Position(x, y -1)) == 3) return new Position(x, y-1);
+				
+				else if(this.foundMatrix.contains(new Position(x -1, y )) == 3) return new Position(x-1, y);
+				
+				else if(this.foundMatrix.contains(new Position(x -1, y +1)) == 3) return new Position(x-1, y+1);
+				else if(this.foundMatrix.contains(new Position(x, y + 1)) == 3) return new Position(x, y+1);
+			}
+		}
+		// x not on border
+		else {
+
+			// y on top boarder
+			if(y == 0) {				
+				if(this.foundMatrix.contains(new Position(x -1, y )) == 3) return new Position(x-1, y);
+				else if(this.foundMatrix.contains(new Position(x + 1, y)) == 3) return new Position(x+1, y);
+				
+				else if(this.foundMatrix.contains(new Position(x -1, y +1)) == 3) return new Position(x-1, y+1);
+				else if(this.foundMatrix.contains(new Position(x, y + 1)) == 3) return new Position(x, y+1);
+				else if(this.foundMatrix.contains(new Position(x + 1, y + 1)) == 3) return new Position(x+1, y+1);				
+			}
+			// y on bottom border
+			else if(y == this.fieldSize.getHeight()/10 -1){
+				if(this.foundMatrix.contains(new Position(x -1, y -1)) == 3) return new Position(x-1, y-1);
+				else if(this.foundMatrix.contains(new Position(x, y -1)) == 3) return new Position(x, y-1);
+				else if(this.foundMatrix.contains(new Position(x + 1, y -1)) == 3) return new Position(x+1, y-1);
+				
+				else if(this.foundMatrix.contains(new Position(x -1, y )) == 3) return new Position(x-1, y);
+				else if(this.foundMatrix.contains(new Position(x + 1, y)) == 3) return new Position(x+1, y);				
+			}
+			// y not on border
+			else {
+				if(this.foundMatrix.contains(new Position(x -1, y -1)) == 3) return new Position(x-1, y-1);
+				else if(this.foundMatrix.contains(new Position(x, y -1)) == 3) return new Position(x, y-1);
+				else if(this.foundMatrix.contains(new Position(x + 1, y -1)) == 3) return new Position(x+1, y-1);
+				
+				else if(this.foundMatrix.contains(new Position(x -1, y )) == 3) return new Position(x-1, y);
+				else if(this.foundMatrix.contains(new Position(x + 1, y)) == 3) return new Position(x+1, y);
+				
+				else if(this.foundMatrix.contains(new Position(x -1, y +1)) == 3) return new Position(x-1, y+1);
+				else if(this.foundMatrix.contains(new Position(x, y + 1)) == 3) return new Position(x, y+1);
+				else if(this.foundMatrix.contains(new Position(x + 1, y + 1)) == 3) return new Position(x+1, y+1);				
+			}
+		}
+		
+		return null;
 	}
 
 
