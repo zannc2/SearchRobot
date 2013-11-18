@@ -3,6 +3,7 @@ package frontend.classes.view;
 import helper.Direction;
 import helper.Position;
 import helper.Size;
+import helper.Vector;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -146,6 +147,14 @@ public class Field implements Serializable{
 	 */
 	public Position getRobotPosition() {
 		return robot.getPosition();
+	}
+	
+	/**
+	 * Move the robot width a given Vector
+	 * @param delta Vector
+	 */
+	public void moveRobot(Vector delta) {
+		if(this.robot != null) this.robot.move(delta);
 	}
 	
 	/**
