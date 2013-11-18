@@ -273,8 +273,8 @@ public class RobotController implements Runnable {
 		List<Position> movePath = new ArrayList<>();
 		
 		//check if finish is found
-		for(int i = 0; i < this.fieldSize.getWidth()/10; i++){
-			for(int j = 0; j < this.fieldSize.getHeight()/10; j++) {
+		for(int i = 0; i < this.fieldSize.getWidth()/this.EPSILON; i++){
+			for(int j = 0; j < this.fieldSize.getHeight()/this.EPSILON; j++) {
 				if(this.foundMatrix.contains(new Position(i, j)) == this.FINISH)
 				{ 
 					Position finishP = new Position(i,j);
@@ -312,7 +312,7 @@ public class RobotController implements Runnable {
 		double y = Math.tan(Math.toRadians(angle)) * this.EPSILON;
 		
 		if(deltaX < 0 && deltaY < 0){
-			if(x >= 10) {
+			if(x >= this.EPSILON) {
 				x = -this.EPSILON;
 				y = -y;
 			}
@@ -322,14 +322,14 @@ public class RobotController implements Runnable {
 			}
 		}
 		else if(deltaX >= 0 && deltaY < 0) {
-			if(x <= -10) x = this.EPSILON;
+			if(x <= -this.EPSILON) x = this.EPSILON;
 			else {
 				y = -this.EPSILON;
 				x = -x;
 			}
 		}
 		else if(deltaX < 0 && deltaY >= 0){
-			if(x <= -10) {
+			if(x <= -this.EPSILON) {
 				x = -this.EPSILON;
 				y = -y;
 			}
@@ -337,7 +337,7 @@ public class RobotController implements Runnable {
 		}
 		else {
 			//deltaX && deltaY >=0
-			if(x >= 10) x = this.EPSILON;
+			if(x >= this.EPSILON) x = this.EPSILON;
 			else y = this.EPSILON;
 		}
 		
@@ -352,15 +352,15 @@ public class RobotController implements Runnable {
 		while(free) {
 			System.out.println("nextP: " + nextP);
 
-			int foundMatrixPosition = this.foundMatrix.contains(new Position(newX/10, newY/10));
+			int foundMatrixPosition = this.foundMatrix.contains(new Position(newX/this.EPSILON, newY/this.EPSILON));
 			
 			//Position is not free, there is a item
 			if(foundMatrixPosition == this.ITEM) {
 				//check direction
 				if(angle > 315 && angle < 45) {
 					//check if east Position of oldP is free
-					Position eastP = new Position(oldP.getOriginX() + 10, oldP.getOriginY());
-					if(this.foundMatrix.contains(new Position(eastP.getOriginX()/10, eastP.getOriginY()/10)) == this.FREE) {
+					Position eastP = new Position(oldP.getOriginX() + this.EPSILON, oldP.getOriginY());
+					if(this.foundMatrix.contains(new Position(eastP.getOriginX()/this.EPSILON, eastP.getOriginY()/this.EPSILON)) == this.FREE) {
 						movePath.add(eastP);
 						oldP = eastP;
 					}
@@ -369,8 +369,8 @@ public class RobotController implements Runnable {
 				}
 				else if(angle > 45 && angle < 135) {				
 					//check if north Position of oldP is free
-					Position northP = new Position(oldP.getOriginX(), oldP.getOriginY() - 10);
-					if(this.foundMatrix.contains(new Position(northP.getOriginX()/10, northP.getOriginY()/10)) == this.FREE) {
+					Position northP = new Position(oldP.getOriginX(), oldP.getOriginY() - this.EPSILON);
+					if(this.foundMatrix.contains(new Position(northP.getOriginX()/this.EPSILON, northP.getOriginY()/this.EPSILON)) == this.FREE) {
 						movePath.add(northP);
 						oldP = northP;
 					}
@@ -379,8 +379,8 @@ public class RobotController implements Runnable {
 				}
 				else if(angle > 135 && angle < 225) {
 					//check if west Position of oldP is free
-					Position westP = new Position(oldP.getOriginX() - 10, oldP.getOriginY());
-					if(this.foundMatrix.contains(new Position(westP.getOriginX()/10, westP.getOriginY()/10)) == this.FREE) {
+					Position westP = new Position(oldP.getOriginX() - this.EPSILON, oldP.getOriginY());
+					if(this.foundMatrix.contains(new Position(westP.getOriginX()/this.EPSILON, westP.getOriginY()/this.EPSILON)) == this.FREE) {
 						movePath.add(westP);
 						oldP = westP;
 					}
@@ -389,8 +389,8 @@ public class RobotController implements Runnable {
 				}
 				else {				
 					//check if south Position of oldP is free
-					Position southP = new Position(oldP.getOriginX(), oldP.getOriginY() + 10);
-					if(this.foundMatrix.contains(new Position(southP.getOriginX()/10, southP.getOriginY()/10)) == this.FREE) {
+					Position southP = new Position(oldP.getOriginX(), oldP.getOriginY() + this.EPSILON);
+					if(this.foundMatrix.contains(new Position(southP.getOriginX()/this.EPSILON, southP.getOriginY()/this.EPSILON)) == this.FREE) {
 						movePath.add(southP);
 						oldP = southP;
 					}
@@ -413,8 +413,8 @@ public class RobotController implements Runnable {
 			free= false;
 			
 			//Test if Path finalFosition is nextP
-			if((newX/10 - pathFinish.getOriginX()/10) > -10 && (newX/10 - pathFinish.getOriginX()/10) < 10
-					 && (newY/10 - pathFinish.getOriginY()/10) > -10 && (newY/10 - pathFinish.getOriginY()/10) < 10) free = false;
+			if((newX/this.EPSILON - pathFinish.getOriginX()/this.EPSILON) > -this.EPSILON && (newX/this.EPSILON - pathFinish.getOriginX()/this.EPSILON) < this.EPSILON
+					 && (newY/this.EPSILON - pathFinish.getOriginY()/this.EPSILON) > -this.EPSILON && (newY/this.EPSILON - pathFinish.getOriginY()/this.EPSILON) < this.EPSILON) free = false;
 		}
 		
 		
@@ -425,8 +425,8 @@ public class RobotController implements Runnable {
 
 
 	private Position computeNextPosition() {
-		for(int line = 0; line < this.fieldSize.getHeight()/10; line++) {
-			for(int row = 0; row < this.fieldSize.getWidth()/10; row++) {
+		for(int line = 0; line < this.fieldSize.getHeight()/this.EPSILON; line++) {
+			for(int row = 0; row < this.fieldSize.getWidth()/this.EPSILON; row++) {
 				
 				if(this.foundMatrix.contains(new Position(row, line)) == this.FREE) {
 					boolean neighbor = checkNeighbors(new Position(row, line));
@@ -454,7 +454,7 @@ public class RobotController implements Runnable {
 				else if(this.foundMatrix.contains(new Position(x + 1, y + 1)) == this.UNKNOWN) return false;
 			}
 			// y on bottom border
-			else if(y == this.fieldSize.getHeight()/10 -1){
+			else if(y == this.fieldSize.getHeight()/this.EPSILON -1){
 				if(this.foundMatrix.contains(new Position(x, y -1)) == this.UNKNOWN) return false;
 				else if(this.foundMatrix.contains(new Position(x + 1, y -1)) == this.UNKNOWN) return false;
 				
@@ -472,7 +472,7 @@ public class RobotController implements Runnable {
 			}
 		}
 		// x on right border
-		else if(x == this.fieldSize.getWidth()/10 -1) {
+		else if(x == this.fieldSize.getWidth()/this.EPSILON -1) {
 
 			// y on top boarder
 			if(y == 0) {				
@@ -482,7 +482,7 @@ public class RobotController implements Runnable {
 				else if(this.foundMatrix.contains(new Position(x, y + 1)) == this.UNKNOWN) return false;
 			}
 			// y on bottom border
-			else if(y == this.fieldSize.getHeight()/10 -1){
+			else if(y == this.fieldSize.getHeight()/this.EPSILON -1){
 				if(this.foundMatrix.contains(new Position(x -1, y -1)) == this.UNKNOWN) return false;
 				else if(this.foundMatrix.contains(new Position(x, y -1)) == this.UNKNOWN) return false;
 				
@@ -512,7 +512,7 @@ public class RobotController implements Runnable {
 				else if(this.foundMatrix.contains(new Position(x + 1, y + 1)) == this.UNKNOWN) return false;				
 			}
 			// y on bottom border
-			else if(y == this.fieldSize.getHeight()/10 -1){
+			else if(y == this.fieldSize.getHeight()/this.EPSILON -1){
 				if(this.foundMatrix.contains(new Position(x -1, y -1)) == this.UNKNOWN) return false;
 				else if(this.foundMatrix.contains(new Position(x, y -1)) == this.UNKNOWN) return false;
 				else if(this.foundMatrix.contains(new Position(x + 1, y -1)) == this.UNKNOWN) return false;
@@ -542,8 +542,8 @@ public class RobotController implements Runnable {
 	private List<Position> computePathToFinish(Position finishP) {
 		List<Position> movePath = new ArrayList<>();
 
-		Position robotP = new Position(this.field.getRobotPosition().getOriginX()/10,
-				this.field.getRobotPosition().getOriginY()/10);
+		Position robotP = new Position(this.field.getRobotPosition().getOriginX()/this.EPSILON,
+				this.field.getRobotPosition().getOriginY()/this.EPSILON);
 //		System.out.println("Finish found: " + finishP);
 //		System.out.println("Robot Position: " + robotP);
 		
@@ -558,13 +558,13 @@ public class RobotController implements Runnable {
 		double y = Math.tan(Math.toRadians(angle)) * this.EPSILON;
 		
 
-		double newX = robotP.getOriginX() *10;
-		double newY = robotP.getOriginY() *10;
+		double newX = robotP.getOriginX() *this.EPSILON;
+		double newY = robotP.getOriginY() *this.EPSILON;
 		
 		boolean repeat = true;
 		
 		if(deltaX < 0 && deltaY < 0){
-			if(x >= 10) {
+			if(x >= this.EPSILON) {
 				x = -this.EPSILON;
 				y = -y;
 			}
@@ -579,11 +579,11 @@ public class RobotController implements Runnable {
 				newY = newY + y;
 
 				movePath.add(new Position((int)newX, (int)newY));
-				if(newY <= (finishP.getOriginY()*10) && newX <= (finishP.getOriginX()*10)) repeat = false;
+				if(newY <= (finishP.getOriginY()*this.EPSILON) && newX <= (finishP.getOriginX()*this.EPSILON)) repeat = false;
 			}
 		}
 		else if(deltaX >= 0 && deltaY < 0) {
-			if(x <= -10) x = this.EPSILON;
+			if(x <= -this.EPSILON) x = this.EPSILON;
 			else {
 				y = -this.EPSILON;
 				x = -x;
@@ -595,11 +595,11 @@ public class RobotController implements Runnable {
 				newY = newY + y;
 
 				movePath.add(new Position((int)newX, (int)newY));
-				if(newY <= (finishP.getOriginY()*10) && newX >= (finishP.getOriginX()*10)) repeat = false;
+				if(newY <= (finishP.getOriginY()*this.EPSILON) && newX >= (finishP.getOriginX()*this.EPSILON)) repeat = false;
 			}
 		}
 		else if(deltaX < 0 && deltaY >= 0){
-			if(x <= -10) {
+			if(x <= -this.EPSILON) {
 				x = -this.EPSILON;
 				y = -y;
 			}
@@ -611,12 +611,12 @@ public class RobotController implements Runnable {
 				newY = newY + y;
 
 				movePath.add(new Position((int)newX, (int)newY));
-				if(newY >= (finishP.getOriginY()*10) && newX <= (finishP.getOriginX()*10)) repeat = false;
+				if(newY >= (finishP.getOriginY()*this.EPSILON) && newX <= (finishP.getOriginX()*this.EPSILON)) repeat = false;
 			}
 		}
 		else {
 			//deltaX && deltaY >=0
-			if(x >= 10) x = this.EPSILON;
+			if(x >= this.EPSILON) x = this.EPSILON;
 			else y = this.EPSILON;
 //			System.out.println("x: " + x + " y: " + y);
 			
@@ -625,7 +625,7 @@ public class RobotController implements Runnable {
 				newY = newY + y;
 
 				movePath.add(new Position((int)newX, (int)newY));
-				if(newY >= (finishP.getOriginY()*10) && newX >= (finishP.getOriginX()*10)) repeat = false;
+				if(newY >= (finishP.getOriginY()*this.EPSILON) && newX >= (finishP.getOriginX()*this.EPSILON)) repeat = false;
 			}
 		}
 //		System.out.println("movePath: " + movePath);
