@@ -36,7 +36,17 @@ public class RobotController implements Runnable {
 	private Thread thread = null;
 	private boolean foundFinish;
 	private Position finish;
-	private boolean unreachable;
+	private boolean unreachable, isFinished;
+	public boolean isFinished() {
+		return isFinished;
+	}
+
+
+	public void setFinished(boolean isFinished) {
+		this.isFinished = isFinished;
+	}
+
+
 	private SearchRobotEditor editor;
 
 
@@ -66,7 +76,7 @@ public class RobotController implements Runnable {
 
 	private void scanField() {
 		this.foundMatrix.set(new Position(this.field.getRobotPosition().getOriginX()/10, this.field.getRobotPosition().getOriginY()/10), this.FREE);
-		field.addItem(new Pixel(new Position(this.field.getRobotPosition().getOriginX(), this.field.getRobotPosition().getOriginY()), Color.green));
+//		field.addItem(new Pixel(new Position(this.field.getRobotPosition().getOriginX(), this.field.getRobotPosition().getOriginY()), Color.green));
 		// The position of the robot eye(s)
 		Position eyePosition;
 		// direction of the robot
@@ -130,21 +140,21 @@ public class RobotController implements Runnable {
 					if(foundMatrixFound == 0){					
 						int found = this.fieldCopy.contains(new Position(pixelP.getOriginX()/10, pixelP.getOriginY()/10));
 						if(found == this.ITEM) { // 1 = Item
-							field.addItem(new Pixel(pixelP, Color.RED));
+//							field.addItem(new Pixel(pixelP, Color.RED));
 							whileB = false;
 							//fill foundMatrix
 							this.foundMatrix.set(new Position((pixelP.getOriginX())/10, (pixelP.getOriginY())/10), this.ITEM);
 						}
 						else if(found == this.FINISH){ // 2 = Finish
-							field.addItem(new Pixel(pixelP, Color.yellow));
+//							field.addItem(new Pixel(pixelP, Color.yellow));
 							whileB = false;
 							//fill foundMatrix
 							this.foundMatrix.set(new Position(pixelP.getOriginX()/10, pixelP.getOriginY()/10), this.FINISH);
 							foundFinish = true;
-							finish = new Position(pixelP.getOriginX()/10, pixelP.getOriginY()/10);
+							finish = new Position(pixelP.getOriginX(), pixelP.getOriginY());
 						}
 						else { // If the position is free
-							field.addItem(new Pixel(pixelP, Color.green));
+//							field.addItem(new Pixel(pixelP, Color.green));
 
 							//fill foundMatrix
 							this.foundMatrix.set(new Position(pixelP.getOriginX()/10, pixelP.getOriginY()/10), this.FREE);
@@ -199,8 +209,8 @@ public class RobotController implements Runnable {
 			}
 			else
 			{
-				movePath = computePathToFinish(finish);
-				//				List<Position> movePath = strategy_g.computeFinishPath();
+				movePath = strategy_g.computePathToFinish();
+				//			List<Position> movePath = strategy_g.computeFinishPath();
 			}
 			//move to new Position with given movePath
 			move(movePath);
@@ -218,6 +228,13 @@ public class RobotController implements Runnable {
 				editor.stopSearch();
 				System.out.println("Can not reach the Finish!");
 			}
+			else if (isFinished())
+			{
+				JOptionPane.showMessageDialog(null, "Der Roboter hat das Ziel erreicht!");
+				editor.stopSearch();
+				System.out.println("Can not reach the Finish!");
+			}
+				
 			//			this.foundFinish = true;
 			//if(this.foundFinish)	stop();
 		}

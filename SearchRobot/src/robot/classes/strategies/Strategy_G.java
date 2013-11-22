@@ -27,6 +27,7 @@ public class Strategy_G {
 
 
 	private RobotController robotController;
+	private boolean finishAcessible;
 
 	public Strategy_G(RobotController robotController, FieldMatrix foundMatrix, Size fieldSize, Field field) {
 		this.foundMatrix = foundMatrix;
@@ -132,4 +133,97 @@ public class Strategy_G {
 			}
 		}
 	}
+
+	public List<Position> computePathToFinish() {
+		// get the robot position
+		Position robot = new Position(this.field.getRobotPosition().getOriginX()/10, 
+				this.field.getRobotPosition().getOriginY()/10);
+		// create array to mark the visited positions
+		visited = new int[fieldSize.getWidth()/10][fieldSize.getHeight()/10];
+
+		// set the shortest way to max possible
+		shortestWay = fieldSize.getHeight()*fieldSize.getWidth();
+
+		// create the list to return
+		returnList = new LinkedList<Position>();
+
+		// compute the path, start with the robot position
+		computePathToFinish(new Position(robot.getOriginX(), robot.getOriginY()), 0);
+		
+		// if the method found an unknown field
+		if(finishAcessible)
+		{
+			Collections.reverse(returnList);
+			this.robotController.setFinished(true);
+		}
+		else // if all reachable fields are discovered -> the finish is unreachable
+		{
+			returnList.clear();
+			computePath(new Position(robot.getOriginX(), robot.getOriginY()), 0);
+		}
+		return returnList;
+	}
+	
+	private void computePathToFinish(Position p, int depth) {
+		// if position p was already visited in a less deep recursion OR 
+		if ((visited[p.getOriginX()][p.getOriginY()] != 0 && 
+				visited[p.getOriginX()][p.getOriginY()] <= depth) || depth > shortestWay)
+		{
+			return;
+		}
+
+		// if the position is visited the first time or the last time was in a deeper recursion
+		else
+		{
+			// set visited in this depth
+			visited[p.getOriginX()][p.getOriginY()] = depth;
+			// get the value of this position
+			int fieldValue = foundMatrix.contains(p);
+
+			// if the value of position p is UNKNOWN & the its the less deepest unknown position till now
+			if(fieldValue == FINISH && depth < shortestWay)
+			{
+				// set unknown as true, its important to find out if there is still an unknown field or not
+				finishAcessible = true;
+				System.out.println(foundMatrix.contains(p));
+				// set the shortest way and create a new list from here
+				shortestWay = depth;
+				returnList.clear();
+				return;// returnList;
+			}
+			// if the value of this position is unknown or its an item -> return without changes
+			else if(fieldValue == UNKNOWN || fieldValue == FINISH || fieldValue == ITEM)
+			{
+				return;
+			}
+			else // we go one step deeper
+			{
+				depth += 1;
+				// north
+				if(p.getOriginY() > 0)
+					computePathToFinish(new Position(p.getOriginX(), p.getOriginY()-1), depth);
+				// west
+				if(p.getOriginX() > 0)
+					computePathToFinish(new Position(p.getOriginX()-1, p.getOriginY()), depth);
+				// east
+				if(p.getOriginX() < (fieldSize.getWidth()/10)-1)
+					computePathToFinish(new Position(p.getOriginX()+1, p.getOriginY()), depth);
+				// south
+				if(p.getOriginY() < (fieldSize.getHeight()/10)-1)
+					computePathToFinish(new Position(p.getOriginX(), p.getOriginY()+1), depth);
+
+				// if 
+				if(depth+returnList.size() > shortestWay)
+				{
+					return;				
+				}
+				else
+				{
+					returnList.add(p);
+					return;
+				}
+			}
+		}
+	}
+	
 }

@@ -13,6 +13,7 @@ import helper.Position;
 import helper.Size;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -27,6 +28,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -45,9 +47,9 @@ public class SearchRobotEditor {
 
 	/** The name of the Programm */
 	private static final String PROGRAM_TITLE = "Search Robot";
-	private Size field_size = new Size(800,500);
+	private Size field_size = new Size(800,600);
 	private static final Size ROBOT_SIZE = new Size(10, 10);
-	private int robotSpeed = 10;
+	private int robotSpeed = 5;
 
 	private JButton addRobot, addFinish, addLine, addCircle, startButton, selection, remove;
 	private JMenuBar menuBar;
@@ -77,6 +79,7 @@ public class SearchRobotEditor {
 		frame.setResizable(false);
 
 		view = new ViewImpl(field_size, ROBOT_SIZE);
+		view.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 
 		/*************** JMenu ********************/
