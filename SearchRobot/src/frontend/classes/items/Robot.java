@@ -30,10 +30,12 @@ public class Robot extends AbstractItem{
 	private Direction direction = Direction.WEST;
 
 	private List<ItemHandler> itemHandler = new ArrayList<ItemHandler>();
+	private Size fieldSize;
 
-	public Robot(Position p, Size s) {
+	public Robot(Position p, Size s, Size fieldSize) {
 		this.position = new Position((p.getOriginX()/10)*10, (p.getOriginY()/10)*10);
 		this.size = s;
+		this.fieldSize = fieldSize;
 		
 		//TODO create hanlder
 	}
@@ -55,7 +57,7 @@ public class Robot extends AbstractItem{
 
 	@Override
 	public void setPosition(Position p) {
-		if(p.getOriginX()>=0 && p.getOriginY() >= 0 && p.getOriginX() < 790 && p.getOriginY() < 490){
+		if(p.getOriginX()>=0 && p.getOriginY() >= 0 && p.getOriginX() <= fieldSize.getWidth()-10 && p.getOriginY() <= fieldSize.getHeight()-10){
 			this.position = p;
 		}
 		notifyItemChangedListeners();

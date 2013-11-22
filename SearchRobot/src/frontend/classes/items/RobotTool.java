@@ -22,7 +22,7 @@ public class RobotTool extends AbstractTool {
 	
 	@Override
 	public void mouseDown(Position p) {
-		this.item = new Robot(p, size);
+		this.item = new Robot(p, size, field.getFieldSize());
 		getField().addItem(this.item);
 	}
 

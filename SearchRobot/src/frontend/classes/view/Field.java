@@ -94,6 +94,11 @@ public class Field implements Serializable{
 	 */
 	public void addItem(Item item) {
 		this.items.add(item);
+		if(this.robot != null) 
+		{
+			this.items.remove(robot);
+			this.items.add(robot);
+		}
 		item.addItemChangedListener(this.l);
 		if(item instanceof Robot) this.robot = (Robot) item;
 		notifyFieldChangedListeners();
@@ -163,11 +168,6 @@ public class Field implements Serializable{
 	 */
 	public void setRobotPosition(Position p) {
 		if(this.robot != null) this.robot.setPosition(p);
-		// TODO Will be implemented
-//		Position oldP =this.robotItem.getPosition();
-//		int deltaX = p.getOriginX() - oldP.getOriginX();
-//		int deltaY = p.getOriginY() - oldP.getOriginY();
-//		this.robotItem.move(new Vector(deltaX, deltaY));
 	}
 
 	/**

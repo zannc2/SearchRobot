@@ -37,6 +37,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
+import javax.swing.RepaintManager;
 
 import robot.classes.RobotController;
 
@@ -44,8 +45,9 @@ public class SearchRobotEditor {
 
 	/** The name of the Programm */
 	private static final String PROGRAM_TITLE = "Search Robot";
-	private static final Size FIELD_SIZE = new Size(800,500);
+	private Size field_size = new Size(800,500);
 	private static final Size ROBOT_SIZE = new Size(10, 10);
+	private int robotSpeed = 10;
 
 	private JButton addRobot, addFinish, addLine, addCircle, startButton, selection, remove;
 	private JMenuBar menuBar;
@@ -61,6 +63,7 @@ public class SearchRobotEditor {
 	private JFrame frame;
 	private boolean isStarted;
 	private RobotController src;
+	private Position robotPosition;
 
 	public SearchRobotEditor() {
 		initComponents();
@@ -73,7 +76,7 @@ public class SearchRobotEditor {
 		frame.setLayout(new BorderLayout());
 		frame.setResizable(false);
 
-		view = new ViewImpl(FIELD_SIZE, ROBOT_SIZE);
+		view = new ViewImpl(field_size, ROBOT_SIZE);
 
 
 		/*************** JMenu ********************/
@@ -97,7 +100,7 @@ public class SearchRobotEditor {
 					File f = jfc.getSelectedFile();
 					try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(f))) {
 
-//						view = (ViewImpl) in.readObject();
+						//						view = (ViewImpl) in.readObject();
 						view.setField((Field) in.readObject());
 						frame.repaint();
 						System.out.println("Deserialization succeeded");
@@ -122,16 +125,16 @@ public class SearchRobotEditor {
 				int returnDialog = jfc.showSaveDialog(null);
 				if(returnDialog == JFileChooser.APPROVE_OPTION)
 				{
-				System.out.println(jfc.getSelectedFile());
-				String s = jfc.getSelectedFile().toString().replaceAll(".robot", "") + ".robot";				
-				try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(s))) {
-					out.writeObject(view.getField());
-					System.out.println("Serialization succeeded");
-				} catch (Exception e) {
-					System.out.println(e.getMessage());
-					System.out.println("Serialization failed");
+					System.out.println(jfc.getSelectedFile());
+					String s = jfc.getSelectedFile().toString().replaceAll(".robot", "") + ".robot";				
+					try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(s))) {
+						out.writeObject(view.getField());
+						System.out.println("Serialization succeeded");
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+						System.out.println("Serialization failed");
+					}
 				}
-			}
 			}
 		});
 
@@ -204,7 +207,7 @@ public class SearchRobotEditor {
 
 
 		/******************* Draw Area *******************/
-		scrollPane = new JScrollPane(view, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		//scrollPane = new JScrollPane(view, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
 
 		gc.gridx = 0;
@@ -219,7 +222,7 @@ public class SearchRobotEditor {
 		gc.weightx = 1;
 		gc.weighty = 1;
 		gc.fill = GridBagConstraints.NONE;
-		mainPanel.add(scrollPane, gc);
+		mainPanel.add(view, gc);
 
 		frame.getContentPane().add(mainPanel, BorderLayout.CENTER);
 
@@ -330,41 +333,55 @@ public class SearchRobotEditor {
 			}
 			else if (e.getSource() == startButton)
 			{
-				frame.repaint();
 				if(isStarted)
 				{
-					if(src != null) src.stop();
-					selection.setEnabled(true);
-					remove.setEnabled(true);
-					addRobot.setEnabled(true);
-					addFinish.setEnabled(true);
-					addLine.setEnabled(true);
-					addCircle.setEnabled(true);
-					isStarted = false;
-					startButton.setIcon(new ImageIcon(getClass().getResource("resources/search.png")));
-					System.out.println("Suche beendet");
-
-					//TODO stop search
+					stopSearch();
 				}
-				else
+				else 
 				{
-					selection.setEnabled(false);
-					remove.setEnabled(false);
-					addRobot.setEnabled(false);
-					addFinish.setEnabled(false);
-					addLine.setEnabled(false);
-					addCircle.setEnabled(false);
-					isStarted = true;
-					startButton.setIcon(new ImageIcon(getClass().getResource("resources/abort.png")));
-					System.out.println("Suche gestartet");
-					//TODO werte setzten
-					src = new RobotController(view.getField());
-					src.start();
+					startSearch();
 				}
 			}
 		}
 	}
 
+	public void stopSearch(){
+
+
+		if(src != null) src.stop();
+		selection.setEnabled(true);
+		remove.setEnabled(true);
+		addRobot.setEnabled(true);
+		addFinish.setEnabled(true);
+		addLine.setEnabled(true);
+		addCircle.setEnabled(true);
+		src.stop();
+		if(robotPosition != null) 
+		{
+			view.getField().setRobotPosition(robotPosition);
+			robotPosition = null;
+		}
+
+		isStarted = false;
+		startButton.setIcon(new ImageIcon(getClass().getResource("resources/search.png")));
+		System.out.println("Suche beendet");
+	}
+
+	public void startSearch()
+	{
+		selection.setEnabled(false);
+		remove.setEnabled(false);
+		addRobot.setEnabled(false);
+		addFinish.setEnabled(false);
+		addLine.setEnabled(false);
+		addCircle.setEnabled(false);
+		isStarted = true;
+		startButton.setIcon(new ImageIcon(getClass().getResource("resources/abort.png")));
+		System.out.println("Suche gestartet");
+		robotPosition = view.getField().getRobotPosition();
+		src = new RobotController(this, view.getField(), robotSpeed);
+		src.start();
+	}
 
 	/**
 	 * Start of the Programm
@@ -373,4 +390,6 @@ public class SearchRobotEditor {
 	public static void main(String[] args) {
 		new SearchRobotEditor();
 	}	
+
+
 }
