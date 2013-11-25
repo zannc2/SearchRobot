@@ -13,6 +13,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import robot.classes.strategies.Strategy_G;
+import robot.classes.strategies.Strategy_Z;
 
 public class RobotController implements Runnable {
 	private final int MOVE_SPEED;
@@ -184,9 +185,7 @@ public class RobotController implements Runnable {
 			scanField();
 
 			//Strategy zannc2
-			//			Strategy_Z strategy_z = new Strategy_Z(this, this.foundMatrix, this.fieldSize, this.field);
-			//			List<Position> movePath = strategy_z.computePath();
-
+			Strategy_Z strategy_z = new Strategy_Z(this, this.fieldSize, this.field);
 
 			//Strategy gfells4
 			Strategy_G strategy_g = new Strategy_G(this, this.foundMatrix, this.fieldSize, this.field);
@@ -195,10 +194,12 @@ public class RobotController implements Runnable {
 			if(!foundFinish)
 			{
 				movePath = strategy_g.computePath();
+//				movePath = strategy_z.computePath();
 			}
 			else
 			{
 				movePath = strategy_g.computePathToFinish();
+//				movePath = strategy_z.computePathToFinish(this.finish);
 			}
 			
 			//move to new Position with given movePath
@@ -289,6 +290,69 @@ public class RobotController implements Runnable {
 		}
 	}
 	
+
+//	private void move(List<Position> pl) {
+//		// bsp
+//		Position lastP = this.field.getRobotPosition();
+//		Iterator<Position> i = pl.listIterator();
+//		while(i.hasNext())
+//		{
+//			Position p = i.next();
+//			// move east
+//			if(p.getOriginX() > lastP.getOriginX())
+//			{
+//				this.field.setRobotDirection(Direction.EAST);
+//				int step = 1;
+//				while(step < 11)
+//				{
+//					this.field.setRobotPosition(new Position(lastP.getOriginX()+step, lastP.getOriginY()));
+//					step++;
+//					try { Thread.sleep(MOVE_SPEED); } 
+//					catch (InterruptedException e) { e.printStackTrace(); }
+//				}
+//			}
+//			// move west
+//			else if(p.getOriginX() < lastP.getOriginX())
+//			{
+//				this.field.setRobotDirection(Direction.WEST);
+//				int step = 1;
+//				while(step < 11)
+//				{
+//					this.field.setRobotPosition(new Position(lastP.getOriginX()-step, lastP.getOriginY()));
+//					step++;
+//					try { Thread.sleep(MOVE_SPEED); } 
+//					catch (InterruptedException e) { e.printStackTrace(); }
+//				}
+//			}
+//			//move south
+//			else if(p.getOriginY() > lastP.getOriginY())
+//			{
+//				this.field.setRobotDirection(Direction.SOUTH);
+//				int step = 1;
+//				while(step < 11)
+//				{
+//					this.field.setRobotPosition(new Position(lastP.getOriginX(), lastP.getOriginY()+step));
+//					step++;
+//					try { Thread.sleep(MOVE_SPEED); } 
+//					catch (InterruptedException e) { e.printStackTrace(); }
+//				}
+//			}
+//			else // move north
+//			{
+//				this.field.setRobotDirection(Direction.NORTH);
+//				int step = 1;
+//				while(step < 11)
+//				{
+//					this.field.setRobotPosition(new Position(lastP.getOriginX(), lastP.getOriginY()-step));
+//					step++;
+//					try { Thread.sleep(MOVE_SPEED); } 
+//					catch (InterruptedException e) { e.printStackTrace(); }
+//				}
+//			}
+//			lastP = p;
+//		}
+//	}
+	
 	public boolean isUnreachable() {
 		return unreachable;
 	}
@@ -296,5 +360,9 @@ public class RobotController implements Runnable {
 
 	public void setUnreachable(boolean unreachable) {
 		this.unreachable = unreachable;
+	}
+
+	public FieldMatrix getFoundMatrix() {
+		return this.foundMatrix;
 	}
 }
