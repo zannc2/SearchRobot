@@ -1,5 +1,6 @@
 package frontend.classes.items;
 
+import frontend.classes.view.Field;
 import frontend.interfaces.ItemHandler;
 import helper.Direction;
 import helper.Position;
@@ -30,12 +31,12 @@ public class Robot extends AbstractItem{
 	private Direction direction = Direction.WEST;
 
 	private List<ItemHandler> itemHandler = new ArrayList<ItemHandler>();
-	private Size fieldSize;
+	private Field field;
 
-	public Robot(Position p, Size s, Size fieldSize) {
+	public Robot(Position p, Size s, Field field) {
 		this.position = new Position((p.getOriginX()/10)*10, (p.getOriginY()/10)*10);
 		this.size = s;
-		this.fieldSize = fieldSize;
+		this.field = field;
 		
 		//TODO create hanlder
 	}
@@ -46,7 +47,7 @@ public class Robot extends AbstractItem{
 		g2.setStroke(new BasicStroke(1));
 		BufferedImage robot;
 		try {
-            robot = ImageIO.read(new File("src/frontend/classes/resources/draw_robot.png"));
+            robot = ImageIO.read(new File("src/frontend/classes/resources/draw_robot1.png"));
             AffineTransform tx = AffineTransform.getRotateInstance(direction.getDirection(), 5, 5);
             AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
             g2.drawImage(op.filter(robot, null), this.position.getOriginX(), this.position.getOriginY(), null);
@@ -57,7 +58,8 @@ public class Robot extends AbstractItem{
 
 	@Override
 	public void setPosition(Position p) {
-		if(p.getOriginX()>=0 && p.getOriginY() >= 0 && p.getOriginX() <= fieldSize.getWidth()-10 && p.getOriginY() <= fieldSize.getHeight()-10){
+		if(p.getOriginX()>=0 && p.getOriginY() >= 0 && p.getOriginX() <= field.getFieldSize().getWidth()-10 && p.getOriginY() 
+				<= field.getFieldSize().getHeight()-10){
 			this.position = p;
 		}
 		notifyItemChangedListeners();

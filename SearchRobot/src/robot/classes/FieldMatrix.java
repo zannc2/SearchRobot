@@ -32,11 +32,13 @@ public class FieldMatrix {
 				for(Item item:items){
 					if(fieldMatrix[i][j] == 0)
 					{
-						if(item.contains(new Position(i*this.gridSize + this.gridSize/4, j*this.gridSize + this.gridSize/4)) ||
-								item.contains(new Position(i*this.gridSize + this.gridSize/4, j*this.gridSize + (this.gridSize/4)*3)) ||
-								item.contains(new Position(i*this.gridSize + (this.gridSize/4)*3, j*this.gridSize + this.gridSize/4)) ||
-								item.contains(new Position(i*this.gridSize + (this.gridSize/4)*3, j*this.gridSize + (this.gridSize/4)*3))
+						if(item.contains(new Position(i*this.gridSize + this.gridSize/3, j*this.gridSize + this.gridSize/3)) ||
+								item.contains(new Position(i*this.gridSize + this.gridSize/3, j*this.gridSize + (this.gridSize/3)*2)) ||
+								item.contains(new Position(i*this.gridSize + (this.gridSize/3)*2, j*this.gridSize + this.gridSize/3)) ||
+								item.contains(new Position(i*this.gridSize + (this.gridSize/3)*2, j*this.gridSize + (this.gridSize/3)*2))
 								) {
+//						if(item.contains(new Position(i*this.gridSize + this.gridSize/2, j*this.gridSize + this.gridSize/2)))
+//						{
 							if(item instanceof Finish) fieldMatrix[i][j] = 2;
 							else if(item instanceof Robot) fieldMatrix[i][j] = 0;
 							else fieldMatrix[i][j] = 1;

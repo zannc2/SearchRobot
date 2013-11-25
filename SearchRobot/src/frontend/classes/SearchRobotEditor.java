@@ -6,10 +6,9 @@ import frontend.classes.items.LineTool;
 import frontend.classes.items.RemoveTool;
 import frontend.classes.items.RobotTool;
 import frontend.classes.items.selection.SelectionTool;
-import frontend.classes.view.Field;
 import frontend.classes.view.ViewImpl;
+import frontend.interfaces.Item;
 import frontend.interfaces.Tool;
-import helper.Position;
 import helper.Size;
 
 import java.awt.BorderLayout;
@@ -31,15 +30,15 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
-import javax.swing.RepaintManager;
 
 import robot.classes.RobotController;
 
@@ -47,25 +46,23 @@ public class SearchRobotEditor {
 
 	/** The name of the Programm */
 	private static final String PROGRAM_TITLE = "Search Robot";
-	private Size field_size = new Size(800,600);
+	private Size field_size = new Size(1200,800);
 	private static final Size ROBOT_SIZE = new Size(10, 10);
-	private int robotSpeed = 5;
+	private int robotSpeed = 10;
 
 	private JButton addRobot, addFinish, addLine, addCircle, startButton, selection, remove;
 	private JMenuBar menuBar;
 	private JMenu fileMenu, editMenu, helpMenu;
-	private JMenuItem openMenuItem, saveMenuItem, exitMenuItem, colorMenuItem, helpMenuItem;
+	private JMenuItem newMenuItem, openMenuItem, saveMenuItem, exitMenuItem, helpMenuItem, bgColorMenuItem, itemColorMenuItem, robotSpeedMenuItem;
 	private JPanel mainPanel;
 	private ViewImpl view;
 	private JToolBar toolBar;
 	private ActionListener buttonEvent;
-	private JScrollPane scrollPane;
-	private Help help;
 	private List<Tool> tools = new ArrayList<Tool>();
 	private JFrame frame;
 	private boolean isStarted;
 	private RobotController src;
-	private Position robotPosition;
+	private List<Item> items;
 
 	public SearchRobotEditor() {
 		initComponents();
@@ -78,9 +75,6 @@ public class SearchRobotEditor {
 		frame.setLayout(new BorderLayout());
 		frame.setResizable(false);
 
-		view = new ViewImpl(field_size, ROBOT_SIZE);
-		view.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-
 
 		/*************** JMenu ********************/
 		menuBar = new JMenuBar();
@@ -89,32 +83,61 @@ public class SearchRobotEditor {
 		fileMenu = new JMenu("Datei");
 		menuBar.add(fileMenu);
 
+		newMenuItem = new JMenuItem("Neu");
+		fileMenu.add(newMenuItem);
+		newMenuItem.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				NewDialog neu = new NewDialog(frame);
+				neu.setLocationRelativeTo(frame);
+				neu.setVisible(true);
+				Size newFieldSize = neu.getChoosedSize();
+
+				if(newFieldSize != null)
+				{
+					field_size = newFieldSize;
+					view.setField(null, newFieldSize);
+					frame.pack();
+				}
+			}
+		});
+
 		openMenuItem = new JMenuItem("Öffnen");
 		fileMenu.add(openMenuItem);
 		openMenuItem.addActionListener(new ActionListener() {
 
+			@SuppressWarnings("unchecked")
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
 				JFileChooser jfc = new JFileChooser();
-				int returnDialog = jfc.showOpenDialog(null);
-				if(returnDialog == JFileChooser.APPROVE_OPTION)
+				boolean done = false;
+				while(!done)
 				{
-					File f = jfc.getSelectedFile();
-					try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(f))) {
-
-						//						view = (ViewImpl) in.readObject();
-						view.setField((Field) in.readObject());
-						frame.repaint();
-						System.out.println("Deserialization succeeded");
-						System.out.println();
+					int returnDialog = jfc.showOpenDialog(null);
+					if(returnDialog == JFileChooser.APPROVE_OPTION)
+					{
+						File f = jfc.getSelectedFile();
+						try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(f))) {
+							Size fieldSize = (Size) in.readObject();
+							view.setField((List<Item>) in.readObject(), fieldSize);
+							field_size = fieldSize;
+							frame.pack();
+							System.out.println("Deserialization succeeded");
+							done = true;
+						}
+						catch (Exception ex) {
+							System.out.println(ex.getMessage());
+							System.out.println("Deserialization failed");
+							JOptionPane.showMessageDialog(null, "Bitte eine korrekte *.robot Datei auswählen!");
+						}
 					}
-					catch (Exception ex) {
-						System.out.println(ex.getMessage());
-						System.out.println("Deserialization failed");
-						System.out.println();
+					else
+					{
+						done = true;
 					}
-				}	
+				}
 			}
 		});
 
@@ -131,7 +154,8 @@ public class SearchRobotEditor {
 					System.out.println(jfc.getSelectedFile());
 					String s = jfc.getSelectedFile().toString().replaceAll(".robot", "") + ".robot";				
 					try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(s))) {
-						out.writeObject(view.getField());
+						out.writeObject(field_size);
+						out.writeObject(view.getField().getItems());
 						System.out.println("Serialization succeeded");
 					} catch (Exception e) {
 						System.out.println(e.getMessage());
@@ -152,21 +176,43 @@ public class SearchRobotEditor {
 
 
 		/************ Edit Menu *************/
-		editMenu = new JMenu("Bearbeiten");
+		editMenu = new JMenu("Einstellungen");
 		menuBar.add(editMenu);
 
-		colorMenuItem = new JMenuItem("Hintergrundfarbe �ndern");
-		editMenu.add(colorMenuItem);
-
-		/* funktioniert nicht mehr :-(
-		colorMenuItem.addActionListener(new ActionListener() {
+		bgColorMenuItem = new JMenuItem("Hintergrundfarbe");
+		editMenu.add(bgColorMenuItem);
+		bgColorMenuItem.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				frame.setBackground(JColorChooser.showDialog(null,  "W�hle die Farbe", view.getBackground()));
+				view.setBackground(JColorChooser.showDialog(null,  "Wähle die Farbe", view.getBackground()));
 			}
 		});
-		 */
+
+		itemColorMenuItem = new JMenuItem("Hindernissfarbe");
+		editMenu.add(itemColorMenuItem);		
+		itemColorMenuItem.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				view.setItemColor(JColorChooser.showDialog(null,  "Wähle die Farbe", view.getBackground()));
+			}
+		});
+
+		robotSpeedMenuItem = new JMenuItem("Robotergeschwindigkeit");
+		editMenu.add(robotSpeedMenuItem);		
+		robotSpeedMenuItem.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				SpeedDialog sd = new SpeedDialog(frame);
+				sd.setLocationRelativeTo(frame);
+				sd.setVisible(true);
+				robotSpeed = sd.getChoosedSpeed();
+
+			}
+		});
+
 		//TODO: Add Menu Items
 
 
@@ -180,23 +226,20 @@ public class SearchRobotEditor {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				help = new Help(frame);
+				HelpDialog help = new HelpDialog(frame);
 				help.setLocationRelativeTo(frame);
 				help.setVisible(true);
 
 				// TODO: help class design
 			}
 		});
-
-
-		//TODO: Add action listener
-
 		frame.setJMenuBar(menuBar);
 
-
-
-
 		/****************************** Main Panel ***********************/
+
+		// Create draw panel
+		view = new ViewImpl(field_size, ROBOT_SIZE, Color.BLACK);
+		view.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 		mainPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints gc = new GridBagConstraints();
@@ -206,7 +249,6 @@ public class SearchRobotEditor {
 		toolBar.setFloatable(false);
 		buttonEvent = new ButtonEvent();
 		addButtons(toolBar);
-		view.setTools(tools);
 
 
 		/******************* Draw Area *******************/
@@ -228,7 +270,7 @@ public class SearchRobotEditor {
 		mainPanel.add(view, gc);
 
 		frame.getContentPane().add(mainPanel, BorderLayout.CENTER);
-
+		frame.validate();
 		frame.pack();
 		frame.setLocationRelativeTo(null);
 	}
@@ -348,42 +390,66 @@ public class SearchRobotEditor {
 		}
 	}
 
+
+	/**
+	 * Stops the robot
+	 */
 	public void stopSearch(){
 
-
-		if(src != null) src.stop();
-		selection.setEnabled(true);
-		remove.setEnabled(true);
-		addRobot.setEnabled(true);
-		addFinish.setEnabled(true);
-		addLine.setEnabled(true);
-		addCircle.setEnabled(true);
-		src.stop();
-		if(robotPosition != null) 
+		if(isStarted)
 		{
-			view.getField().setRobotPosition(robotPosition);
-			robotPosition = null;
-		}
+			if(src != null)
+			{
+				src.stop();
+			}
 
-		isStarted = false;
-		startButton.setIcon(new ImageIcon(getClass().getResource("resources/search.png")));
-		System.out.println("Suche beendet");
+			selection.setEnabled(true);
+			remove.setEnabled(true);
+			addRobot.setEnabled(true);
+			addFinish.setEnabled(true);
+			addLine.setEnabled(true);
+			addCircle.setEnabled(true);
+			newMenuItem.setEnabled(true);
+			openMenuItem.setEnabled(true);
+			saveMenuItem.setEnabled(true);
+			robotSpeedMenuItem.setEnabled(true);
+			startButton.setIcon(new ImageIcon(getClass().getResource("resources/search.png")));
+
+			view.setField(items, field_size);
+
+			isStarted = false;
+		}
 	}
 
+	/**
+	 * Starts the robot
+	 */
 	public void startSearch()
 	{
-		selection.setEnabled(false);
-		remove.setEnabled(false);
-		addRobot.setEnabled(false);
-		addFinish.setEnabled(false);
-		addLine.setEnabled(false);
-		addCircle.setEnabled(false);
-		isStarted = true;
-		startButton.setIcon(new ImageIcon(getClass().getResource("resources/abort.png")));
-		System.out.println("Suche gestartet");
-		robotPosition = view.getField().getRobotPosition();
-		src = new RobotController(this, view.getField(), robotSpeed);
-		src.start();
+		if(view.hasRobotAndFinish() && !isStarted)
+		{
+			items = new ArrayList<>(view.getField().getItems());
+			selection.setEnabled(false);
+			remove.setEnabled(false);
+			addRobot.setEnabled(false);
+			addFinish.setEnabled(false);
+			addLine.setEnabled(false);
+			addCircle.setEnabled(false);
+			newMenuItem.setEnabled(false);
+			openMenuItem.setEnabled(false);
+			saveMenuItem.setEnabled(false);
+			robotSpeedMenuItem.setEnabled(false);
+			
+			startButton.setIcon(new ImageIcon(getClass().getResource("resources/abort.png")));
+			System.out.println("Suche gestartet");
+			src = new RobotController(this, view.getField(), robotSpeed);
+			src.start();
+			isStarted = true;
+		}
+		else
+		{
+			JOptionPane.showMessageDialog(null, "Bitte Roboter und Ziel setzen!");
+		}
 	}
 
 	/**
@@ -393,6 +459,7 @@ public class SearchRobotEditor {
 	public static void main(String[] args) {
 		new SearchRobotEditor();
 	}	
+
 
 
 }

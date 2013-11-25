@@ -1,27 +1,24 @@
 package robot.classes;
 
+import frontend.classes.SearchRobotEditor;
+import frontend.classes.view.Field;
 import helper.Direction;
 import helper.Position;
 import helper.Size;
 
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
 
 import robot.classes.strategies.Strategy_G;
-import robot.classes.strategies.Strategy_Z;
-import frontend.classes.SearchRobotEditor;
-import frontend.classes.view.Field;
 
 public class RobotController implements Runnable {
 	private final int MOVE_SPEED;
+	private final Position startPosition;
 	//size of steps
-	private final int EPSILON = 10;
+	private final int EPSILON = 5;
 	// field values
 	private final int UNKNOWN = 0;
 	private final int ITEM = 1;
@@ -54,6 +51,7 @@ public class RobotController implements Runnable {
 		this.field = f;
 		this.fieldSize = f.getFieldSize();
 		this.robotSize = f.getRobotSize();
+		this.startPosition = f.getRobotPosition();
 		this.fieldCopy = new FieldMatrix(this.fieldSize, this.robotSize, f);
 		this.foundMatrix = new FieldMatrix(this.fieldSize, this.robotSize);
 		this.MOVE_SPEED = robotSpeed;
@@ -68,7 +66,6 @@ public class RobotController implements Runnable {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	public synchronized void stop(){
 		if (thread != null)
 			thread = null;	
@@ -116,12 +113,14 @@ public class RobotController implements Runnable {
 
 		// degrees Between 0 and 180
 		for(double i = minDegree; i <= maxDegree; i=i+0.35) {
+			if(thread == null) return;
 			boolean whileB = true;
 			int factor = 1;
 			double x = Math.cos(Math.toRadians(i)) * this.EPSILON;
 			double y = Math.sin(Math.toRadians(i)) * this.EPSILON;
 
 			while(whileB){
+				if(thread == null) return;
 
 
 				Position p = new Position((int)(eyePosition.getOriginX() + (factor * x)), (int)(eyePosition.getOriginY() + (factor * y)));
@@ -140,13 +139,13 @@ public class RobotController implements Runnable {
 					if(foundMatrixFound == 0){					
 						int found = this.fieldCopy.contains(new Position(pixelP.getOriginX()/10, pixelP.getOriginY()/10));
 						if(found == this.ITEM) { // 1 = Item
-//							field.addItem(new Pixel(pixelP, Color.RED));
+							field.addItem(new Pixel(pixelP, Color.RED));
 							whileB = false;
 							//fill foundMatrix
 							this.foundMatrix.set(new Position((pixelP.getOriginX())/10, (pixelP.getOriginY())/10), this.ITEM);
 						}
 						else if(found == this.FINISH){ // 2 = Finish
-//							field.addItem(new Pixel(pixelP, Color.yellow));
+							field.addItem(new Pixel(pixelP, Color.yellow));
 							whileB = false;
 							//fill foundMatrix
 							this.foundMatrix.set(new Position(pixelP.getOriginX()/10, pixelP.getOriginY()/10), this.FINISH);
@@ -161,23 +160,14 @@ public class RobotController implements Runnable {
 						}
 					}
 				}
-				//								try {
-				//									Thread.sleep(1);
-				//								} catch (InterruptedException e) {
-				//									// TODO Auto-generated catch block
-				//									e.printStackTrace();
-				//								}
 				factor++;
 			}
-
 		}
-		//		System.out.println("DONE");
-		//foundMatrix.printArray();
 	}
 
 	@Override
 	public void run() {
-		long lastRound = System.currentTimeMillis();
+//		long lastRound = System.currentTimeMillis();
 
 		//first scan
 
@@ -186,14 +176,12 @@ public class RobotController implements Runnable {
 		{
 			this.field.setRobotDirection(Direction.NORTH);
 			scanField();
-			this.field.setRobotDirection(Direction.WEST);
+			this.field.setRobotDirection(Direction.EAST);
 			scanField();
 			this.field.setRobotDirection(Direction.SOUTH);
 			scanField();
-			this.field.setRobotDirection(Direction.EAST);
+			this.field.setRobotDirection(Direction.WEST);
 			scanField();
-
-			//compute next position (list of Positions for move)
 
 			//Strategy zannc2
 			//			Strategy_Z strategy_z = new Strategy_Z(this, this.foundMatrix, this.fieldSize, this.field);
@@ -203,6 +191,7 @@ public class RobotController implements Runnable {
 			//Strategy gfells4
 			Strategy_G strategy_g = new Strategy_G(this, this.foundMatrix, this.fieldSize, this.field);
 			List<Position> movePath;
+			
 			if(!foundFinish)
 			{
 				movePath = strategy_g.computePath();
@@ -210,17 +199,16 @@ public class RobotController implements Runnable {
 			else
 			{
 				movePath = strategy_g.computePathToFinish();
-				//			List<Position> movePath = strategy_g.computeFinishPath();
 			}
+			
 			//move to new Position with given movePath
 			move(movePath);
 
-			{// calculation of time for scanning, just for testing
-				long thisRound = System.currentTimeMillis();
-				float timeSinceLastRound = ((float)(thisRound-lastRound)/1000f);
-				lastRound = thisRound;
-				//System.out.println(timeSinceLastRound);
-			}
+//			{// calculation of time for scanning, just for testing
+//				long thisRound = System.currentTimeMillis();
+//				float timeSinceLastRound = ((float)(thisRound-lastRound)/1000f);
+//				lastRound = thisRound;
+//			}
 
 			if(isUnreachable()) 
 			{
@@ -228,25 +216,24 @@ public class RobotController implements Runnable {
 				editor.stopSearch();
 				System.out.println("Can not reach the Finish!");
 			}
-			else if (isFinished())
+			else if (isFinished() && thread != null)
 			{
 				JOptionPane.showMessageDialog(null, "Der Roboter hat das Ziel erreicht!");
 				editor.stopSearch();
-				System.out.println("Can not reach the Finish!");
+				System.out.println("Finish!!!");
 			}
-				
-			//			this.foundFinish = true;
-			//if(this.foundFinish)	stop();
 		}
+		this.field.setRobotPosition(startPosition);
 	}
 
 	private void move(List<Position> pl) {
-		Position lastP = new Position(field.getRobotPosition().getOriginX(), field.getRobotPosition().getOriginY());
 		Iterator<Position> i = pl.listIterator();
-		while(i.hasNext())
+		Position lastP = null;
+		while(i.hasNext() && thread != null)
 		{
+			if(lastP == null) lastP = i.next();
+			
 			Position p = i.next();
-			int startX, endX, startY, endY;
 			// move east
 			if(p.getOriginX() > lastP.getOriginX())
 			{
@@ -301,165 +288,7 @@ public class RobotController implements Runnable {
 			lastP = p;
 		}
 	}
-	//	private void move(List<Position> pl) {
-	//		// bsp
-	//		Position lastP = this.field.getRobotPosition();
-	//		Iterator<Position> i = pl.listIterator();
-	//		while(i.hasNext())
-	//		{
-	//			Position p = i.next();
-	//			// move east
-	//			if(p.getOriginX() > lastP.getOriginX())
-	//			{
-	//				this.field.setRobotDirection(Direction.EAST);
-	//				int step = 1;
-	//				while(step < 11)
-	//				{
-	//					this.field.setRobotPosition(new Position(lastP.getOriginX()+step, lastP.getOriginY()));
-	//					step++;
-	//					try { Thread.sleep(MOVE_SPEED); } 
-	//					catch (InterruptedException e) { e.printStackTrace(); }
-	//				}
-	//			}
-	//			// move west
-	//			else if(p.getOriginX() < lastP.getOriginX())
-	//			{
-	//				this.field.setRobotDirection(Direction.WEST);
-	//				int step = 1;
-	//				while(step < 11)
-	//				{
-	//					this.field.setRobotPosition(new Position(lastP.getOriginX()-step, lastP.getOriginY()));
-	//					step++;
-	//					try { Thread.sleep(MOVE_SPEED); } 
-	//					catch (InterruptedException e) { e.printStackTrace(); }
-	//				}
-	//			}
-	//			//move south
-	//			else if(p.getOriginY() > lastP.getOriginY())
-	//			{
-	//				this.field.setRobotDirection(Direction.SOUTH);
-	//				int step = 1;
-	//				while(step < 11)
-	//				{
-	//					this.field.setRobotPosition(new Position(lastP.getOriginX(), lastP.getOriginY()+step));
-	//					step++;
-	//					try { Thread.sleep(MOVE_SPEED); } 
-	//					catch (InterruptedException e) { e.printStackTrace(); }
-	//				}
-	//			}
-	//			else // move north
-	//			{
-	//				this.field.setRobotDirection(Direction.NORTH);
-	//				int step = 1;
-	//				while(step < 11)
-	//				{
-	//					this.field.setRobotPosition(new Position(lastP.getOriginX(), lastP.getOriginY()-step));
-	//					step++;
-	//					try { Thread.sleep(MOVE_SPEED); } 
-	//					catch (InterruptedException e) { e.printStackTrace(); }
-	//				}
-	//			}
-	//			lastP = p;
-	//		}
-	//	}
-
-
-
-
-	public List<Position> computePathToFinish(Position finishP) {
-		List<Position> movePath = new LinkedList<>();
-
-		Position robotP = new Position(this.field.getRobotPosition().getOriginX()/this.EPSILON,
-				this.field.getRobotPosition().getOriginY()/this.EPSILON);
-		//		System.out.println("Finish found: " + finishP);
-		//		System.out.println("Robot Position: " + robotP);
-
-		int deltaX = finishP.getOriginX() - robotP.getOriginX();
-		int deltaY = finishP.getOriginY() - robotP.getOriginY();
-		//		System.out.println("deltaX: " + deltaX + " deltaY: " + deltaY);
-
-		double angle = Math.toDegrees(Math.atan(((double)deltaY)/((double)deltaX)));
-		//		System.out.println("winkel: " + angle);
-
-		double x = this.EPSILON / Math.tan(Math.toRadians(angle));
-		double y = Math.tan(Math.toRadians(angle)) * this.EPSILON;
-
-
-		double newX = robotP.getOriginX() *this.EPSILON;
-		double newY = robotP.getOriginY() *this.EPSILON;
-
-		boolean repeat = true;
-
-		if(deltaX < 0 && deltaY < 0){
-			if(x >= this.EPSILON) {
-				x = -this.EPSILON;
-				y = -y;
-			}
-			else {
-				y = -this.EPSILON;
-				x = -x;
-			}
-			//			System.out.println("x: " + x + " y: " + y);
-
-			while(repeat) {
-				newX = newX + x;
-				newY = newY + y;
-
-				movePath.add(new Position((int)newX, (int)newY));
-				if(newY <= (finishP.getOriginY()*this.EPSILON) && newX <= (finishP.getOriginX()*this.EPSILON)) repeat = false;
-			}
-		}
-		else if(deltaX >= 0 && deltaY < 0) {
-			if(x <= -this.EPSILON) x = this.EPSILON;
-			else {
-				y = -this.EPSILON;
-				x = -x;
-			}
-			//			System.out.println("x: " + x + " y: " + y);
-
-			while(repeat) {
-				newX = newX + x;
-				newY = newY + y;
-
-				movePath.add(new Position((int)newX, (int)newY));
-				if(newY <= (finishP.getOriginY()*this.EPSILON) && newX >= (finishP.getOriginX()*this.EPSILON)) repeat = false;
-			}
-		}
-		else if(deltaX < 0 && deltaY >= 0){
-			if(x <= -this.EPSILON) {
-				x = -this.EPSILON;
-				y = -y;
-			}
-			else y = this.EPSILON;
-			//			System.out.println("x: " + x + " y: " + y);
-
-			while(repeat) {
-				newX = newX + x;
-				newY = newY + y;
-
-				movePath.add(new Position((int)newX, (int)newY));
-				if(newY >= (finishP.getOriginY()*this.EPSILON) && newX <= (finishP.getOriginX()*this.EPSILON)) repeat = false;
-			}
-		}
-		else {
-			//deltaX && deltaY >=0
-			if(x >= this.EPSILON) x = this.EPSILON;
-			else y = this.EPSILON;
-			//			System.out.println("x: " + x + " y: " + y);
-
-			while(repeat) {
-				newX = newX + x;
-				newY = newY + y;
-
-				movePath.add(new Position((int)newX, (int)newY));
-				if(newY >= (finishP.getOriginY()*this.EPSILON) && newX >= (finishP.getOriginX()*this.EPSILON)) repeat = false;
-			}
-		}
-		//		System.out.println("movePath: " + movePath);
-		return movePath;
-	}
-
-
+	
 	public boolean isUnreachable() {
 		return unreachable;
 	}

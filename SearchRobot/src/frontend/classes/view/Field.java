@@ -29,7 +29,7 @@ public class Field implements Serializable{
 	
 	private FieldItemChangedListener l = new FieldItemChangedListener();
 	private final Size robotSize;
-	private final Size fieldSize;
+	private Size fieldSize;
 	
 	private class FieldItemChangedListener implements ItemChangedListener {
 
@@ -74,7 +74,7 @@ public class Field implements Serializable{
 	 * @return unmodifiable copy if items
 	 */
 	public List<Item> getItems() {
-		return Collections.unmodifiableList(this.items);
+		return Collections.unmodifiableList(items);
 	}
 	
 	/**
@@ -201,5 +201,9 @@ public class Field implements Serializable{
 	public Size getFieldSize()
 	{
 		return fieldSize;
+	}
+	
+	public void setFieldSize(Size s) {
+		this.fieldSize = s;
 	}
 }

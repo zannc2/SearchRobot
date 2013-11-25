@@ -3,9 +3,11 @@ package robot.classes.strategies;
 import frontend.classes.view.Field;
 import helper.Position;
 import helper.Size;
+
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+
 import robot.classes.FieldMatrix;
 import robot.classes.RobotController;
 
@@ -16,7 +18,6 @@ public class Strategy_G {
 	private final int UNKNOWN = 0;
 	private final int ITEM = 1;
 	private final int FINISH = 2;
-	private final int FREE = 3;
 
 	private Field field;
 	private int [][] visited;
@@ -113,14 +114,13 @@ public class Strategy_G {
 				// west
 				if(p.getOriginX() > 0)
 					computePath(new Position(p.getOriginX()-1, p.getOriginY()), depth);
-				// east
-				if(p.getOriginX() < (fieldSize.getWidth()/10)-1)
-					computePath(new Position(p.getOriginX()+1, p.getOriginY()), depth);
 				// south
 				if(p.getOriginY() < (fieldSize.getHeight()/10)-1)
 					computePath(new Position(p.getOriginX(), p.getOriginY()+1), depth);
+				// east
+				if(p.getOriginX() < (fieldSize.getWidth()/10)-1)
+					computePath(new Position(p.getOriginX()+1, p.getOriginY()), depth);
 
-				// if 
 				if(depth+returnList.size() > shortestWay)
 				{
 					return;				
@@ -205,14 +205,13 @@ public class Strategy_G {
 				// west
 				if(p.getOriginX() > 0)
 					computePathToFinish(new Position(p.getOriginX()-1, p.getOriginY()), depth);
-				// east
-				if(p.getOriginX() < (fieldSize.getWidth()/10)-1)
-					computePathToFinish(new Position(p.getOriginX()+1, p.getOriginY()), depth);
 				// south
 				if(p.getOriginY() < (fieldSize.getHeight()/10)-1)
 					computePathToFinish(new Position(p.getOriginX(), p.getOriginY()+1), depth);
-
-				// if 
+				// east
+				if(p.getOriginX() < (fieldSize.getWidth()/10)-1)
+					computePathToFinish(new Position(p.getOriginX()+1, p.getOriginY()), depth);
+		
 				if(depth+returnList.size() > shortestWay)
 				{
 					return;				
