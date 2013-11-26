@@ -103,7 +103,6 @@ public class SearchRobotEditor {
 				{
 					field_size = newFieldSize;
 					view.setField(null, newFieldSize);
-
 				}
 				setJLabelText();
 				frame.pack();
@@ -263,7 +262,10 @@ public class SearchRobotEditor {
 		toolBar.add(jl);
 
 
+
 		/******************* Draw Area *******************/
+		//scrollPane = new JScrollPane(view, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
 
 		gc.gridx = 0;
 		gc.gridy = 0;
@@ -280,9 +282,9 @@ public class SearchRobotEditor {
 		mainPanel.add(view, gc);
 
 		frame.getContentPane().add(mainPanel, BorderLayout.CENTER);
+		frame.validate();
 		frame.pack();
 		frame.setLocationRelativeTo(null);
-		System.out.println("Done");
 	}
 
 
@@ -422,7 +424,7 @@ public class SearchRobotEditor {
 			addCircle.setBackground(BUTTON_COLOR);
 			selection.setBackground(BUTTON_COLOR);
 			remove.setBackground(BUTTON_COLOR);
-
+			
 			switch (selected) {
 			case 0:
 				selection.setBackground(BUTTON_PRESSED_COLOR);

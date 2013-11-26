@@ -47,8 +47,6 @@ public class RobotTool extends AbstractTool {
 				getField().addItem(this.item); 
 			}
 		} 
-		this.item = new Robot(p, size, field);
-		getField().addItem(this.item); 
 	}
 
 	@Override
