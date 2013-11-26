@@ -189,6 +189,7 @@ public class Strategy_G {
 				// set the shortest way and create a new list from here
 				shortestWay = depth;
 				returnList.clear();
+				returnList.add(p);
 				return;// returnList;
 			}
 			// if the value of this position is unknown or its an item -> return without changes
@@ -211,8 +212,8 @@ public class Strategy_G {
 				// east
 				if(p.getOriginX() < (fieldSize.getWidth()/10)-1)
 					computePathToFinish(new Position(p.getOriginX()+1, p.getOriginY()), depth);
-		
-				if(depth+returnList.size() > shortestWay)
+				
+				if(depth+returnList.size() > shortestWay+1)
 				{
 					return;				
 				}

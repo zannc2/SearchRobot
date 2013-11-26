@@ -168,7 +168,7 @@ public class RobotController implements Runnable {
 
 	@Override
 	public void run() {
-//		long lastRound = System.currentTimeMillis();
+		long startTime = System.currentTimeMillis();
 
 		//first scan
 
@@ -185,7 +185,7 @@ public class RobotController implements Runnable {
 			scanField();
 
 			//Strategy zannc2
-			Strategy_Z strategy_z = new Strategy_Z(this, this.fieldSize, this.field);
+		//	Strategy_Z strategy_z = new Strategy_Z(this, this.fieldSize, this.field);
 
 			//Strategy gfells4
 			Strategy_G strategy_g = new Strategy_G(this, this.foundMatrix, this.fieldSize, this.field);
@@ -200,8 +200,8 @@ public class RobotController implements Runnable {
 			{
 				movePath = strategy_g.computePathToFinish();
 //				movePath = strategy_z.computePathToFinish(this.finish);
+
 			}
-			
 			//move to new Position with given movePath
 			move(movePath);
 
@@ -219,12 +219,15 @@ public class RobotController implements Runnable {
 			}
 			else if (isFinished() && thread != null)
 			{
-				JOptionPane.showMessageDialog(null, "Der Roboter hat das Ziel erreicht!");
+				long endTime = System.currentTimeMillis();
+				float time = ((float)(endTime-startTime)/1000f);
+				JOptionPane.showMessageDialog(null, "Der Roboter hat das Ziel nach " + time + " Sekunden erreicht!");
 				editor.stopSearch();
 				System.out.println("Finish!!!");
 			}
 		}
 		this.field.setRobotPosition(startPosition);
+		
 	}
 
 	private void move(List<Position> pl) {
@@ -289,7 +292,7 @@ public class RobotController implements Runnable {
 			lastP = p;
 		}
 	}
-	
+
 
 //	private void move(List<Position> pl) {
 //		// bsp
@@ -353,6 +356,7 @@ public class RobotController implements Runnable {
 //		}
 //	}
 	
+
 	public boolean isUnreachable() {
 		return unreachable;
 	}

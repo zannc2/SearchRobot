@@ -24,21 +24,21 @@ public class RemoveTool extends AbstractTool {
 	public void mouseDown(Position p) 
 	{
 		List<Item> l = getField().getItems();
-		
+
 		for(int i = 0; i < l.size(); i++)
 		{
 			if(l.get(i).contains(p))
 			{
 				getField().removeItem(l.get(i));
-				getField().getView().setCursor(Cursor.getDefaultCursor());
+				getField().getView().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			}
 		}
-		
+
 	}
 
 	@Override
 	public void mouseDrag(Position p) {
-		// not needed
+
 	}
 
 	@Override
@@ -49,16 +49,24 @@ public class RemoveTool extends AbstractTool {
 	@Override
 	public void mouseOver(Position p) {
 		List<Item> l = getField().getItems();
+
+		boolean over = false;
 		
 		for(int i = 0; i < l.size(); i++)
 		{
 			if(l.get(i).contains(p))
 			{
-				getField().getView().setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
+				over = true;
 			}
-			else {
-				getField().getView().setCursor(Cursor.getDefaultCursor());
-			}
+		}
+		
+		if(over)
+		{
+			getField().getView().setCursor(new Cursor(Cursor.HAND_CURSOR));
+		}
+		else
+		{
+			getField().getView().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 		}
 	}
 

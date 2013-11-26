@@ -3,13 +3,13 @@ package frontend.classes.view;
 import helper.Position;
 import helper.Size;
 
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -37,18 +37,13 @@ public class ViewImpl extends JPanel implements View{
 	private static final long serialVersionUID = 1400303408929046896L;
 	private Field field;
 	private Tool tool;
-	private List<Tool> tools = new ArrayList<Tool>();
-	
 
-	public void setTools(List<Tool> tools) {
-		this.tools = tools;
-	}
-	
 	private List<Item> selection = new LinkedList<Item>(); 
 	private List<ItemHandler> handlers = new LinkedList<ItemHandler>();
-	
+
 	private ViewFieldChangedListener l = new ViewFieldChangedListener();
-	
+	private Color itemColor;
+
 	private class ViewFieldChangedListener implements FieldChangedListener {
 
 		/**
@@ -60,27 +55,34 @@ public class ViewImpl extends JPanel implements View{
 		public void fieldChanged(FieldChangedEvent e) {
 			repaint();
 		}
-		
+
 	}
-	
-	public ViewImpl(Size fieldSize, Size robotSize) {
+
+	public ViewImpl(Size fieldSize, Size robotSize, Color itemColor) {
 		super();
 		field = new Field(this, fieldSize, robotSize);
 		field.addListener(l);
 		tool = new SelectionTool(field);
-		
+		this.itemColor = itemColor;
+
 		this.setPreferredSize(new Dimension(fieldSize.getWidth(), fieldSize.getHeight()));
 		this.setMinimumSize(this.getPreferredSize());
 		this.setMaximumSize(this.getPreferredSize());
 		this.addMouseMotionListener(new ViewMouseMotionListener());
 		this.addMouseListener(new ViewMouseListener());
-		setOpaque(false);
 	}
-	
+
+
+	public void setItemColor(Color itemColor) {
+		this.itemColor = itemColor;
+		repaint();
+	}
+
 
 	@Override
-    public void paintComponent(Graphics g) {	
-		
+	public void paintComponent(Graphics g) {	
+		super.paintComponent(g);
+		g.setColor(itemColor);
 		// If there are selections, draw the selection's handles.
 		for (ItemHandler h : this.handlers) {
 			h.draw(g);
@@ -89,24 +91,24 @@ public class ViewImpl extends JPanel implements View{
 		{
 			this.field.getItems().get(i).draw(g);
 		}
-    }
+	}
 
 
 	@Override
 	public void setTool(Tool t)
 	{
 		System.out.println("Tool Changed");
-		
+
 		this.tool = t;
 		System.out.println(tool.getClass().toString());
 	}
-	
+
 	@Override
 	public Tool getTool()
 	{
 		return this.tool;
 	}
-	
+
 	private class ViewMouseMotionListener implements MouseMotionListener {
 
 		@Override
@@ -119,13 +121,13 @@ public class ViewImpl extends JPanel implements View{
 			getTool().mouseOver(new Position(e.getX(), e.getY()));
 		}
 	}
-	
+
 	private class ViewMouseListener implements MouseListener {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			
-			
+
+
 		}
 
 		@Override
@@ -156,7 +158,7 @@ public class ViewImpl extends JPanel implements View{
 				if(draw == true) t.mouseDown(new Position(e.getX(), e.getY()));
 			}
 			else{
-			t.mouseDown(new Position(e.getX(), e.getY()));
+				t.mouseDown(new Position(e.getX(), e.getY()));
 			};
 		}
 
@@ -164,21 +166,21 @@ public class ViewImpl extends JPanel implements View{
 		public void mouseReleased(MouseEvent e) {
 			getTool().mouseUp(new Position(e.getX(), e.getY()));
 		}
-	
+
 	}
 
 	public Field getField() {
 		return field;
 	}	
-	
+
 	/* Selection*/
-	
-	
+
+
 	@Override
 	public StateFactory getStateFactory() {
 		return new MyStateFactory();
 	}
-	
+
 	@Override
 	public void addToSelection(Item i) {
 		if (!this.selection.contains(i)) {
@@ -190,7 +192,7 @@ public class ViewImpl extends JPanel implements View{
 		}
 		repaint();
 	}
-	
+
 	@Override
 	public void removeFromSelection(Item i) {
 		this.selection.remove(i);
@@ -201,7 +203,7 @@ public class ViewImpl extends JPanel implements View{
 		}
 		repaint();
 	}
-	
+
 	@Override
 	public List<Item> getSelection() {
 		return this.selection;
@@ -214,25 +216,55 @@ public class ViewImpl extends JPanel implements View{
 		setCursor(Cursor.getDefaultCursor());
 		repaint();
 	}
+
 	@Override
 	public List<ItemHandler> getSelectionHandles() {
 		return this.handlers;
 	}
 
 
-	@Override
-	public void setField(Field f) {
-		this.field = f;
-		field.addListener(l);
-		for(Tool t: this.tools)
+	public void setField(List<Item> itemList, Size fieldSize) { 
+		List<Item> l = field.getItems();
+		int j = l.size();
+		for(int i = 0; i < j; i++)
 		{
-			t.setField(this.field);
+			field.removeItem(l.get(0));
 		}
-		
-		for(Item i:f.getItems()) {
-			System.out.println("handlers: " + i.getItemHandler());
+
+		if(itemList != null)
+		{
+			for(Item i: itemList)
+			{
+				field.addItem(i);
+			}
 		}
+		setFieldSize(fieldSize);
+		repaint();
+	}
+	
+
+	public void setFieldSize(Size fieldSize)
+	{
+		this.setPreferredSize(new Dimension(fieldSize.getWidth(), fieldSize.getHeight()));
+		this.setMinimumSize(this.getPreferredSize());
+		this.setMaximumSize(this.getPreferredSize());
+		field.setFieldSize(fieldSize);
+	}
+
+	public boolean hasRobotAndFinish()
+	{
+		List<Item> l = getField().getItems();
+		boolean robot = false;
+		boolean finish = false;
+
+		for(int i = 0; i < l.size(); i++){
+			Item item = l.get(i);
+			if(item instanceof Robot) robot = true;
+			if(item instanceof Finish) finish = true;
+		}
+
+		if(robot && finish) return true;
+		else return false;
 	}
 }
-
 

@@ -18,6 +18,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.peer.LightweightPeer;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -33,6 +34,7 @@ import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -45,9 +47,9 @@ import robot.classes.RobotController;
 public class SearchRobotEditor {
 
 	/** The name of the Programm */
-	private static final String PROGRAM_TITLE = "Search Robot";
-	private Size field_size = new Size(1200,800);
-	private static final Size ROBOT_SIZE = new Size(10, 10);
+	private final String PROGRAM_TITLE = "Search Robot";
+	private Size field_size = new Size(800,500);
+	private final Size ROBOT_SIZE = new Size(10, 10);
 	private int robotSpeed = 10;
 
 	private JButton addRobot, addFinish, addLine, addCircle, startButton, selection, remove;
@@ -63,6 +65,9 @@ public class SearchRobotEditor {
 	private boolean isStarted;
 	private RobotController src;
 	private List<Item> items;
+	private JLabel jl;
+	private final Color BUTTON_COLOR = new Color(238,238,238);
+	private final Color BUTTON_PRESSED_COLOR = Color.LIGHT_GRAY;
 
 	public SearchRobotEditor() {
 		initComponents();
@@ -98,8 +103,10 @@ public class SearchRobotEditor {
 				{
 					field_size = newFieldSize;
 					view.setField(null, newFieldSize);
-					frame.pack();
+
 				}
+				setJLabelText();
+				frame.pack();
 			}
 		});
 
@@ -125,6 +132,7 @@ public class SearchRobotEditor {
 							field_size = fieldSize;
 							frame.pack();
 							System.out.println("Deserialization succeeded");
+							setJLabelText();
 							done = true;
 						}
 						catch (Exception ex) {
@@ -209,7 +217,7 @@ public class SearchRobotEditor {
 				sd.setLocationRelativeTo(frame);
 				sd.setVisible(true);
 				robotSpeed = sd.getChoosedSpeed();
-
+				setJLabelText();
 			}
 		});
 
@@ -249,11 +257,13 @@ public class SearchRobotEditor {
 		toolBar.setFloatable(false);
 		buttonEvent = new ButtonEvent();
 		addButtons(toolBar);
+		toolBar.addSeparator();
+		jl = new JLabel();
+		setJLabelText();		
+		toolBar.add(jl);
 
 
 		/******************* Draw Area *******************/
-		//scrollPane = new JScrollPane(view, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-
 
 		gc.gridx = 0;
 		gc.gridy = 0;
@@ -270,9 +280,9 @@ public class SearchRobotEditor {
 		mainPanel.add(view, gc);
 
 		frame.getContentPane().add(mainPanel, BorderLayout.CENTER);
-		frame.validate();
 		frame.pack();
 		frame.setLocationRelativeTo(null);
+		System.out.println("Done");
 	}
 
 
@@ -281,11 +291,13 @@ public class SearchRobotEditor {
 		// Button Selection
 		selection = makeNavigationButton("selection", "Auswählen", "Auswählen", new Dimension(40, 40));
 		toolBar.add(selection);
+		selection.setBackground(BUTTON_COLOR);
 		tools.add(new SelectionTool(view.getField()));
 
 		// Button Remove
 		remove = makeNavigationButton("remove", "Löschen", "Löschen", new Dimension(40, 40));
 		toolBar.add(remove);
+		remove.setBackground(BUTTON_COLOR);
 		tools.add(new RemoveTool(view.getField()));
 
 		toolBar.addSeparator(new Dimension(10,0));
@@ -293,27 +305,32 @@ public class SearchRobotEditor {
 		// Button Robot
 		addRobot = makeNavigationButton("robot", "Start setzen", "Start", new Dimension(40, 40));
 		toolBar.add(addRobot);
+		addRobot.setBackground(BUTTON_COLOR);
 		tools.add(new RobotTool(view.getField(), ROBOT_SIZE));
 
 		// Button Finish
 		addFinish = makeNavigationButton("finish", "Ziel setzen", "Ziel", new Dimension(40, 40));
 		toolBar.add(addFinish);
+		addFinish.setBackground(BUTTON_COLOR);
 		tools.add(new FinishTool(view.getField()));
 
 		// Button Line
 		addLine = makeNavigationButton("line", "Hinderniss: Linie", "Linie", new Dimension(40, 40));
 		toolBar.add(addLine);
+		addLine.setBackground(BUTTON_COLOR);
 		tools.add(new LineTool(view.getField()));
 
 		// Button Circle
 		addCircle = makeNavigationButton("circle", "Hinderniss: Kreis", "Kreis", new Dimension(40, 40));
 		toolBar.add(addCircle);
+		addCircle.setBackground(BUTTON_COLOR);
 		tools.add(new CircleTool(view.getField()));
 
 		toolBar.addSeparator(new Dimension(20,0));
 
 		// Button Start
 		startButton = makeNavigationButton("search", "Suche starten", "Suche starten", new Dimension(90, 40));
+		startButton.setBackground(BUTTON_COLOR);
 		toolBar.add(startButton);
 	}
 
@@ -333,12 +350,14 @@ public class SearchRobotEditor {
 
 		if (imageURL != null) {                      //image found
 			button.setIcon(new ImageIcon(imageURL, altText));
+			button.setSelectedIcon(new ImageIcon(getClass().getResource("resources/remove_s.png")));
 		} else {                                     //no image found
 			button.setText(altText);
 			System.err.println("Resource not found: " + imgLocation);
 		}
 
 		button.setPreferredSize(size);
+
 		return button;
 	}
 
@@ -349,31 +368,37 @@ public class SearchRobotEditor {
 			if(e.getSource() == selection)
 			{
 				System.out.println("Selection Button");
+				setSelected(0);
 				view.setTool(tools.get(0));
 			}
 			else if(e.getSource() == remove)
 			{
 				System.out.println("Remove Button");
+				setSelected(1);
 				view.setTool(tools.get(1));
 			}
 			else if(e.getSource() == addRobot)
 			{
 				System.out.println("Roboter Button");
+				setSelected(2);
 				view.setTool(tools.get(2));
 			}
 			else if(e.getSource() == addFinish)
 			{
 				System.out.println("Ziel Button");
+				setSelected(3);
 				view.setTool(tools.get(3));
 			}
 			else if(e.getSource() == addLine)
 			{
 				view.setTool(tools.get(4));
+				setSelected(4);
 				System.out.println("Linie Tool Button");
 			}
 			else if(e.getSource() == addCircle)
 			{
 				System.out.println("Kreis Tool Button");
+				setSelected(5);
 				view.setTool(tools.get(5));
 			}
 			else if (e.getSource() == startButton)
@@ -386,6 +411,37 @@ public class SearchRobotEditor {
 				{
 					startSearch();
 				}
+			}
+		}
+
+		private void setSelected(int selected)
+		{
+			addRobot.setBackground(BUTTON_COLOR);
+			addFinish.setBackground(BUTTON_COLOR);
+			addLine.setBackground(BUTTON_COLOR);
+			addCircle.setBackground(BUTTON_COLOR);
+			selection.setBackground(BUTTON_COLOR);
+			remove.setBackground(BUTTON_COLOR);
+
+			switch (selected) {
+			case 0:
+				selection.setBackground(BUTTON_PRESSED_COLOR);
+				break;
+			case 1:
+				remove.setBackground(BUTTON_PRESSED_COLOR);
+				break;
+			case 2:
+				addRobot.setBackground(BUTTON_PRESSED_COLOR);
+				break;
+			case 3:
+				addFinish.setBackground(BUTTON_PRESSED_COLOR);
+				break;
+			case 4:
+				addLine.setBackground(BUTTON_PRESSED_COLOR);
+				break;
+			case 5:
+				addCircle.setBackground(BUTTON_PRESSED_COLOR);
+				break;
 			}
 		}
 	}
@@ -439,7 +495,7 @@ public class SearchRobotEditor {
 			openMenuItem.setEnabled(false);
 			saveMenuItem.setEnabled(false);
 			robotSpeedMenuItem.setEnabled(false);
-			
+
 			startButton.setIcon(new ImageIcon(getClass().getResource("resources/abort.png")));
 			System.out.println("Suche gestartet");
 			src = new RobotController(this, view.getField(), robotSpeed);
@@ -450,6 +506,11 @@ public class SearchRobotEditor {
 		{
 			JOptionPane.showMessageDialog(null, "Bitte Roboter und Ziel setzen!");
 		}
+	}
+
+	private void setJLabelText()
+	{
+		jl.setText("Zeichenfläche: " + field_size.getWidth()+ " x " + field_size.getHeight() + " / Robotergeschwindigkeit: " + 1000 / robotSpeed + " Pixel/Sekunde");
 	}
 
 	/**

@@ -1,5 +1,7 @@
 package frontend.classes.items;
 
+import java.util.List;
+
 import helper.Position;
 import helper.Size;
 import frontend.classes.view.Field;
@@ -19,9 +21,32 @@ public class RobotTool extends AbstractTool {
 	}
 
 	private Item item;
-	
+
 	@Override
 	public void mouseDown(Position p) {
+		Position newP = new Position((p.getOriginX()/10)*10, (p.getOriginY()/10)*10);
+		List<Item> items = field.getItems();
+		boolean draw = true;
+		for(int j = 0; j < items.size(); j++)
+		{
+			Item i = items.get(j);
+			if(i.contains(newP) || i.contains(new Position(newP.getOriginX() + size.getWidth(), newP.getOriginY())) ||
+					i.contains(new Position(newP.getOriginX(), newP.getOriginY() + size.getHeight())) ||
+					i.contains(new Position(newP.getOriginX() + size.getWidth(), newP.getOriginY() + size.getHeight())))
+			{
+				draw = false;
+			}
+		}
+
+		if(draw)
+		{
+			if(newP.getOriginX()>=0 && newP.getOriginY() >= 0 && newP.getOriginX() <= field.getFieldSize().getWidth()-10 && newP.getOriginY() 
+					<= field.getFieldSize().getHeight()-10)
+			{
+				this.item = new Robot(newP, size, field);
+				getField().addItem(this.item); 
+			}
+		} 
 		this.item = new Robot(p, size, field);
 		getField().addItem(this.item); 
 	}

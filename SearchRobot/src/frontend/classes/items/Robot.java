@@ -34,6 +34,7 @@ public class Robot extends AbstractItem{
 	private Field field;
 
 	public Robot(Position p, Size s, Field field) {
+
 		this.position = new Position((p.getOriginX()/10)*10, (p.getOriginY()/10)*10);
 		this.size = s;
 		this.field = field;

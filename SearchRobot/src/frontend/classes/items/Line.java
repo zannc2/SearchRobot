@@ -107,14 +107,14 @@ public class Line extends AbstractItem {
 
 	@Override
 	public boolean contains(Position p) {
-		return isCloseToLine(p, 7);
+		return isCloseToLine(p, 5);
 	}
 	
 
 
 	@Override
 	public boolean contains(Position p, int epsilon) {
-		return isCloseToLine(p, epsilon/2);
+		return isCloseToLine(p, 5);
 	}
 	
 	/**
@@ -124,6 +124,9 @@ public class Line extends AbstractItem {
 	 * @return
 	 */
 	private boolean isCloseToLine(Position p, int epsilon) {
+		int p1 = (int)Math.sqrt(Math.pow(this.position.getOriginX()-p.getOriginX(), 2) + Math.pow(this.position.getOriginY()-p.getOriginY(), 2));
+		int p2 = (int)Math.sqrt(Math.pow((this.size.getWidth() + this.position.getOriginX())-p.getOriginX(), 2) + Math.pow((this.size.getHeight() + this.position.getOriginY())-p.getOriginY(), 2));
+		if(p1 <= 6 || p2 <= 6) return true;
 		boolean rval = false;
 		Position a = this.position;
 		Position b = new Position(this.size.getWidth() + this.position.getOriginX(), 
