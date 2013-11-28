@@ -5,16 +5,15 @@ import helper.Direction;
 import helper.Position;
 import helper.Size;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import robot.classes.FieldMatrix;
-import robot.classes.Pixel;
 import robot.classes.RobotController;
+import robot.interfaces.Strategy;
 
-public class Strategy_Z {
+public class Strategy_Z implements Strategy{
 	private Size fieldSize;
 	private int EPSILON = 10;
 	// field values
@@ -35,6 +34,7 @@ public class Strategy_Z {
 		this.field = field;
 	}
 	
+	@Override
 	public List<Position> computePath() {	
 		System.out.println("Strategy_Z computePath()");
 		
@@ -477,5 +477,11 @@ public class Strategy_Z {
 		}
 		//		System.out.println("movePath: " + movePath);
 		return movePath;
+	}
+
+	@Override
+	public List<Position> computePathToFinish() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

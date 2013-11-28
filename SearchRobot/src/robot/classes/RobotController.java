@@ -13,7 +13,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import robot.classes.strategies.Strategy_G;
-import robot.classes.strategies.Strategy_Z;
+import robot.interfaces.Strategy;
 
 public class RobotController implements Runnable {
 	private final int MOVE_SPEED;
@@ -35,6 +35,7 @@ public class RobotController implements Runnable {
 	private boolean foundFinish;
 	private Position finish;
 	private boolean unreachable, isFinished;
+	private Strategy strategy;
 	public boolean isFinished() {
 		return isFinished;
 	}
@@ -57,6 +58,8 @@ public class RobotController implements Runnable {
 		this.foundMatrix = new FieldMatrix(this.fieldSize, this.robotSize);
 		this.MOVE_SPEED = robotSpeed;
 		this.editor = editor;
+		
+		setDetaultStrategie();
 	}
 
 
@@ -175,11 +178,10 @@ public class RobotController implements Runnable {
 	public void run() {
 		long startTime = System.currentTimeMillis();
 
-		//first scan
-
-
+		// start search Algorithmus
 		while(thread != null)
 		{
+			//first scan - Look in all directions
 			this.field.setRobotDirection(Direction.NORTH);
 			scanField();
 			this.field.setRobotDirection(Direction.EAST);
@@ -189,22 +191,15 @@ public class RobotController implements Runnable {
 			this.field.setRobotDirection(Direction.WEST);
 			scanField();
 
-			//Strategy zannc2
-		//	Strategy_Z strategy_z = new Strategy_Z(this, this.fieldSize, this.field);
-
-			//Strategy gfells4
-			Strategy_G strategy_g = new Strategy_G(this, this.foundMatrix, this.fieldSize, this.field);
 			List<Position> movePath;
 			
 			if(!foundFinish)
 			{
-				movePath = strategy_g.computePath();
-//				movePath = strategy_z.computePath();
+				movePath = this.strategy.computePath();
 			}
 			else
 			{
-				movePath = strategy_g.computePathToFinish();
-//				movePath = strategy_z.computePathToFinish(this.finish);
+				movePath = this.strategy.computePathToFinish();
 
 			}
 			//move to new Position with given movePath
@@ -233,6 +228,15 @@ public class RobotController implements Runnable {
 		}
 		this.field.setRobotPosition(startPosition);
 		
+	}
+	
+	/**
+	 * define the Default Strategie
+	 * @return
+	 */
+	private void setDetaultStrategie(){
+		this.strategy = new Strategy_G(this, this.foundMatrix, this.fieldSize, this.field);
+//		this.strategy = new Strategy_Z(this, this.fieldSize, this.field);
 	}
 
 	private void move(List<Position> pl) {

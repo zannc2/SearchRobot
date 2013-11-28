@@ -10,8 +10,9 @@ import java.util.List;
 
 import robot.classes.FieldMatrix;
 import robot.classes.RobotController;
+import robot.interfaces.Strategy;
 
-public class Strategy_G {
+public class Strategy_G implements Strategy{
 
 	private Size fieldSize;
 	// field values
@@ -37,6 +38,7 @@ public class Strategy_G {
 		this.robotController = robotController;
 	}
 
+	@Override
 	public List<Position> computePath() {
 		// get the robot position
 		Position robot = new Position(this.field.getRobotPosition().getOriginX()/10, 
@@ -134,6 +136,7 @@ public class Strategy_G {
 		}
 	}
 
+	@Override
 	public List<Position> computePathToFinish() {
 		// get the robot position
 		Position robot = new Position(this.field.getRobotPosition().getOriginX()/10, 
