@@ -154,8 +154,13 @@ public class RobotController implements Runnable {
 							finish = new Position(pixelP.getOriginX(), pixelP.getOriginY());
 						}
 						else { // If the position is free
-//							field.addItem(new Pixel(pixelP, Color.green));
-
+							field.addItem(new Pixel(pixelP, Color.green));
+//							try {
+//								Thread.sleep(20);
+//							} catch (InterruptedException e) {
+//								// TODO Auto-generated catch block
+//								e.printStackTrace();
+//							}
 							//fill foundMatrix
 							this.foundMatrix.set(new Position(pixelP.getOriginX()/10, pixelP.getOriginY()/10), this.FREE);
 						}

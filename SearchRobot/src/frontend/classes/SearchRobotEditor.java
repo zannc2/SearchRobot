@@ -18,7 +18,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.peer.LightweightPeer;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -41,6 +40,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
+import javax.swing.UIManager;
 
 import robot.classes.RobotController;
 
@@ -352,7 +352,7 @@ public class SearchRobotEditor {
 
 		if (imageURL != null) {                      //image found
 			button.setIcon(new ImageIcon(imageURL, altText));
-			button.setSelectedIcon(new ImageIcon(getClass().getResource("resources/remove_s.png")));
+//			button.setSelectedIcon(new ImageIcon(getClass().getResource("resources/remove_s.png")));
 		} else {                                     //no image found
 			button.setText(altText);
 			System.err.println("Resource not found: " + imgLocation);
@@ -418,7 +418,7 @@ public class SearchRobotEditor {
 
 		private void setSelected(int selected)
 		{
-			addRobot.setBackground(BUTTON_COLOR);
+			addRobot.setBackground(BUTTON_COLOR);			
 			addFinish.setBackground(BUTTON_COLOR);
 			addLine.setBackground(BUTTON_COLOR);
 			addCircle.setBackground(BUTTON_COLOR);
@@ -520,6 +520,13 @@ public class SearchRobotEditor {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		
+		try {
+		    UIManager.setLookAndFeel( UIManager.getCrossPlatformLookAndFeelClassName() );
+		 } catch (Exception e) {
+		            e.printStackTrace();
+		 }
+		
 		new SearchRobotEditor();
 	}	
 
