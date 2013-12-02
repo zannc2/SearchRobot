@@ -77,7 +77,8 @@ public class RobotController implements Runnable {
 
 	private void scanField() {
 		this.foundMatrix.set(new Position(this.field.getRobotPosition().getOriginX()/10, this.field.getRobotPosition().getOriginY()/10), this.FREE);
-//		field.addItem(new Pixel(new Position(this.field.getRobotPosition().getOriginX(), this.field.getRobotPosition().getOriginY()), Color.green));
+		if(editor.isShowGrid())
+			field.addItem(new Pixel(new Position(this.field.getRobotPosition().getOriginX(), this.field.getRobotPosition().getOriginY()), Color.green));
 		// The position of the robot eye(s)
 		Position eyePosition;
 		// direction of the robot
@@ -116,7 +117,7 @@ public class RobotController implements Runnable {
 		}
 
 		// degrees Between 0 and 180
-		for(double i = minDegree; i <= maxDegree; i=i+0.35) {
+		for(double i = minDegree; i <= maxDegree; i=i+1) {
 			if(thread == null) return;
 			boolean whileB = true;
 			int factor = 1;
@@ -143,13 +144,13 @@ public class RobotController implements Runnable {
 					if(foundMatrixFound == 0){					
 						int found = this.fieldCopy.contains(new Position(pixelP.getOriginX()/10, pixelP.getOriginY()/10));
 						if(found == this.ITEM) { // 1 = Item
-							field.addItem(new Pixel(pixelP, Color.RED));
+							if(editor.isShowGrid()) field.addItem(new Pixel(pixelP, Color.RED));
 							whileB = false;
 							//fill foundMatrix
 							this.foundMatrix.set(new Position((pixelP.getOriginX())/10, (pixelP.getOriginY())/10), this.ITEM);
 						}
 						else if(found == this.FINISH){ // 2 = Finish
-							field.addItem(new Pixel(pixelP, Color.yellow));
+							if(editor.isShowGrid()) field.addItem(new Pixel(pixelP, Color.yellow));
 							whileB = false;
 							//fill foundMatrix
 							this.foundMatrix.set(new Position(pixelP.getOriginX()/10, pixelP.getOriginY()/10), this.FINISH);
@@ -157,7 +158,7 @@ public class RobotController implements Runnable {
 							finish = new Position(pixelP.getOriginX(), pixelP.getOriginY());
 						}
 						else { // If the position is free
-							field.addItem(new Pixel(pixelP, Color.green));
+							if(editor.isShowGrid()) field.addItem(new Pixel(pixelP, Color.green));
 //							try {
 //								Thread.sleep(20);
 //							} catch (InterruptedException e) {

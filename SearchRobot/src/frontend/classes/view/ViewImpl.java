@@ -7,6 +7,10 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.RenderingHints.Key;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -18,6 +22,7 @@ import javax.swing.JPanel;
 
 import frontend.classes.items.Finish;
 import frontend.classes.items.FinishTool;
+import frontend.classes.items.RemoveTool;
 import frontend.classes.items.Robot;
 import frontend.classes.items.RobotTool;
 import frontend.classes.items.selection.MyStateFactory;
@@ -109,6 +114,17 @@ public class ViewImpl extends JPanel implements View{
 		return this.tool;
 	}
 
+	public void deleteSelectedItems() 
+	{
+		List<Item> l = getSelection();
+		int j = l.size();
+		for(int i = 0; i < j; i++)
+		{
+			field.removeItem(l.get(i));
+		}
+		clearSelection();
+	}
+
 	private class ViewMouseMotionListener implements MouseMotionListener {
 
 		@Override
@@ -157,7 +173,8 @@ public class ViewImpl extends JPanel implements View{
 				}
 				if(draw == true) t.mouseDown(new Position(e.getX(), e.getY()));
 			}
-			else{
+			else
+			{
 				t.mouseDown(new Position(e.getX(), e.getY()));
 			};
 		}
@@ -241,7 +258,7 @@ public class ViewImpl extends JPanel implements View{
 		setFieldSize(fieldSize);
 		repaint();
 	}
-	
+
 
 	public void setFieldSize(Size fieldSize)
 	{

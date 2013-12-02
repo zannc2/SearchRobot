@@ -18,6 +18,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -48,7 +50,7 @@ public class SearchRobotEditor {
 
 	/** The name of the Programm */
 	private final String PROGRAM_TITLE = "Search Robot";
-	private Size field_size = new Size(800,500);
+	private Size field_size = new Size(800, 500);
 	private final Size ROBOT_SIZE = new Size(10, 10);
 	private int robotSpeed = 10;
 
@@ -62,7 +64,7 @@ public class SearchRobotEditor {
 	private ActionListener buttonEvent;
 	private List<Tool> tools = new ArrayList<Tool>();
 	private JFrame frame;
-	private boolean isStarted;
+	private boolean isStarted, showGrid;
 	private RobotController src;
 	private List<Item> items;
 	private JLabel jl;
@@ -159,7 +161,7 @@ public class SearchRobotEditor {
 				if(returnDialog == JFileChooser.APPROVE_OPTION)
 				{
 					System.out.println(jfc.getSelectedFile());
-					String s = jfc.getSelectedFile().toString().replaceAll(".robot", "") + ".robot";				
+					String s = jfc.getSelectedFile().toString().replaceAll("\\.robot", "") + ".robot";				
 					try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(s))) {
 						out.writeObject(field_size);
 						out.writeObject(view.getField().getItems());
@@ -183,7 +185,7 @@ public class SearchRobotEditor {
 
 
 		/************ Edit Menu *************/
-		editMenu = new JMenu("Einstellungen");
+		editMenu = new JMenu("Bearbeiten");
 		menuBar.add(editMenu);
 
 		bgColorMenuItem = new JMenuItem("Hintergrundfarbe");
@@ -206,16 +208,18 @@ public class SearchRobotEditor {
 			}
 		});
 
-		robotSpeedMenuItem = new JMenuItem("Robotergeschwindigkeit");
+		robotSpeedMenuItem = new JMenuItem("Einstellungen");
 		editMenu.add(robotSpeedMenuItem);		
 		robotSpeedMenuItem.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				SpeedDialog sd = new SpeedDialog(frame);
+				SearchSettingsDialog sd = new SearchSettingsDialog(frame, robotSpeed, showGrid);
 				sd.setLocationRelativeTo(frame);
 				sd.setVisible(true);
+				
 				robotSpeed = sd.getChoosedSpeed();
+				showGrid = sd.isShowGrid();
 				setJLabelText();
 			}
 		});
@@ -294,6 +298,7 @@ public class SearchRobotEditor {
 		selection = makeNavigationButton("selection", "Auswählen", "Auswählen", new Dimension(40, 40));
 		toolBar.add(selection);
 		selection.setBackground(BUTTON_COLOR);
+		selection.addKeyListener(new ViewKeyListener());
 		tools.add(new SelectionTool(view.getField()));
 
 		// Button Remove
@@ -335,6 +340,25 @@ public class SearchRobotEditor {
 		startButton.setBackground(BUTTON_COLOR);
 		toolBar.add(startButton);
 	}
+	
+	private class ViewKeyListener implements KeyListener {
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			if(e.getKeyCode() == KeyEvent.VK_DELETE) 
+			{
+				view.deleteSelectedItems();
+			}
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {	
+		}
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+		}
+	}
 
 	protected JButton makeNavigationButton(String imageName,
 			String toolTipText,
@@ -367,27 +391,24 @@ public class SearchRobotEditor {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			view.clearSelection();
 			if(e.getSource() == selection)
 			{
-				System.out.println("Selection Button");
 				setSelected(0);
 				view.setTool(tools.get(0));
 			}
 			else if(e.getSource() == remove)
 			{
-				System.out.println("Remove Button");
 				setSelected(1);
 				view.setTool(tools.get(1));
 			}
 			else if(e.getSource() == addRobot)
 			{
-				System.out.println("Roboter Button");
 				setSelected(2);
 				view.setTool(tools.get(2));
 			}
 			else if(e.getSource() == addFinish)
 			{
-				System.out.println("Ziel Button");
 				setSelected(3);
 				view.setTool(tools.get(3));
 			}
@@ -395,11 +416,9 @@ public class SearchRobotEditor {
 			{
 				view.setTool(tools.get(4));
 				setSelected(4);
-				System.out.println("Linie Tool Button");
 			}
 			else if(e.getSource() == addCircle)
 			{
-				System.out.println("Kreis Tool Button");
 				setSelected(5);
 				view.setTool(tools.get(5));
 			}
@@ -499,7 +518,6 @@ public class SearchRobotEditor {
 			robotSpeedMenuItem.setEnabled(false);
 
 			startButton.setIcon(new ImageIcon(getClass().getResource("resources/abort.png")));
-			System.out.println("Suche gestartet");
 			src = new RobotController(this, view.getField(), robotSpeed);
 			src.start();
 			isStarted = true;
@@ -528,6 +546,10 @@ public class SearchRobotEditor {
 		 }
 		
 		new SearchRobotEditor();
+	}
+
+	public boolean isShowGrid() {
+		return showGrid;
 	}	
 
 

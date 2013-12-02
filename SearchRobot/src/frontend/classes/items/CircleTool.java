@@ -101,6 +101,11 @@ public class CircleTool extends AbstractTool {
 
 	@Override
 	public void mouseUp(Position p) {
+		
+		Rectangle r = getAWTRectangle();
+		i.setPosition(new Position((int)r.getX(), (int)r.getY()));
+		i.setSize(new Size((int)r.getWidth(), (int)r.getHeight()));
+		
 		List<Item> items = field.getItems();
 		for(int j = 0; j < items.size(); j++)
 		{
@@ -137,12 +142,6 @@ public class CircleTool extends AbstractTool {
 				{
 					field.removeItem(i);
 				}
-			}
-			else
-			{
-				Rectangle r = getAWTRectangle();
-				i.setPosition(new Position((int)r.getX(), (int)r.getY()));
-				i.setSize(new Size((int)r.getWidth(), (int)r.getHeight()));
 			}
 		}
 	}

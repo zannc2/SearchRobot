@@ -26,8 +26,6 @@ public class Strategy_G implements Strategy{
 	private int shortestWay;
 	private List<Position> returnList;
 	private boolean unknownFieldExist;
-
-
 	private RobotController robotController;
 	private boolean finishAcessible;
 
@@ -51,6 +49,9 @@ public class Strategy_G implements Strategy{
 
 		// create the list to return
 		returnList = new LinkedList<Position>();
+		
+		// set to false before searching
+		unknownFieldExist = false;
 
 		// compute the path, start with the robot position
 		computePath(new Position(robot.getOriginX(), robot.getOriginY()), 0);
@@ -96,7 +97,6 @@ public class Strategy_G implements Strategy{
 			{
 				// set unknown as true, its important to find out if there is still an unknown field or not
 				unknownFieldExist = true;
-				System.out.println(foundMatrix.contains(p));
 				// set the shortest way and create a new list from here
 				shortestWay = depth;
 				returnList.clear();
@@ -186,9 +186,8 @@ public class Strategy_G implements Strategy{
 			// if the value of position p is UNKNOWN & the its the less deepest unknown position till now
 			if(fieldValue == FINISH && depth < shortestWay)
 			{
-				// set unknown as true, its important to find out if there is still an unknown field or not
+				// set true, if a way to the finish exists
 				finishAcessible = true;
-				System.out.println(foundMatrix.contains(p));
 				// set the shortest way and create a new list from here
 				shortestWay = depth;
 				returnList.clear();
