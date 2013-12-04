@@ -29,7 +29,6 @@ public class Finish extends AbstractItem {
 	private Position position;
 	private Size size = new Size(20, 20);
 	
-	private List<ItemHandler> itemHandler = new ArrayList<ItemHandler>();
 	private Field field;
 	
 	public Finish(Position p, Field field) {
@@ -150,7 +149,8 @@ public class Finish extends AbstractItem {
 
 	@Override
 	public List<ItemHandler> getItemHandler() {
-		return this.itemHandler;
+		//not used here
+		return null;
 	}
 	
 	@Override

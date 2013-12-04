@@ -29,8 +29,9 @@ public class Robot extends AbstractItem{
 	private Position position;
 	private Size size;
 	private Direction direction = Direction.WEST;
+	
+	public int testV;
 
-	private List<ItemHandler> itemHandler = new ArrayList<ItemHandler>();
 	private Field field;
 
 	public Robot(Position p, Size s, Field field) {
@@ -124,7 +125,8 @@ public class Robot extends AbstractItem{
 
 	@Override
 	public List<ItemHandler> getItemHandler() {
-		return this.itemHandler;
+		//not used here
+		return null;
 	}
 
 	@Override
