@@ -12,7 +12,6 @@ public class Init extends SelectionToolState{
 
 	protected Init(SelectionTool context) {
 		super(context);
-		System.out.println("Init State");
 	}
 
 	@Override

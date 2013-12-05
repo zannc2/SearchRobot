@@ -11,7 +11,6 @@ public class DragHandle extends SelectionToolState{
 
 	protected DragHandle(SelectionTool context) {
 		super(context);
-		System.out.println("DragHandle state");
 	}
 
 	@Override

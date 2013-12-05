@@ -4,6 +4,7 @@ import helper.Position;
 import helper.Size;
 import helper.Vector;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;

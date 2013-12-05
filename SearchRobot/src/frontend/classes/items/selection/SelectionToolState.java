@@ -23,7 +23,6 @@ public abstract class SelectionToolState implements Serializable{
 	}
 	
 	final void mouseDown(Position p) {
-		System.out.println("Selection Tool State mouseDown");
 		mouseDownEvent(p);
 	}
 	
@@ -132,6 +131,10 @@ public abstract class SelectionToolState implements Serializable{
 
 	final protected void moveSelectedShapes(Position p) {
 		getContext().doMoveSelectedShapes(p);
+	}
+	
+	final protected void endMoveSelectedShapes(Position p) {
+		getContext().doEndMoveSelectedShapes(p);
 	}
 }
 

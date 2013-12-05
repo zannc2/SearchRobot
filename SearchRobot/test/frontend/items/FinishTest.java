@@ -17,7 +17,7 @@ public class FinishTest {
 	private int x = 10;
 	private int y = 11;
 	private Position p = new Position(x, y);
-	private Finish f = new Finish(p);
+	private Finish f = new Finish(p, null);
 	
 	private boolean test;
 	
@@ -51,7 +51,7 @@ public class FinishTest {
 		f.addItemChangedListener(listener);
 		Vector v = new Vector(10, 25);
 		Position newP = new Position(p.getOriginX() + 10, p.getOriginY() + 25);
-		Finish newFinish = new Finish(newP);
+		Finish newFinish = new Finish(newP, null);
 		f.move(v);
 		assertTrue(test);
 		assertEquals(f.getPosition(), newFinish.getPosition());

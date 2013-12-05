@@ -24,7 +24,7 @@ public class SelectionTool extends AbstractTool {
 		super(field);
 		this.factory = field.getView().getStateFactory();
 		setToolState(this.factory.createInitState(this));
-		System.out.println("create selection tool");
+//		System.out.println("create selection tool");
 	}
 	
 	private StateFactory factory;
@@ -40,8 +40,6 @@ public class SelectionTool extends AbstractTool {
 
 	public void mouseDown(Position p) 
 	{
-		System.out.println("selectionTool: mouseDown");
-
 		this.previousMouseDownPosition = p;
 		this.state.mouseDown(p);
 	}
@@ -224,6 +222,7 @@ public class SelectionTool extends AbstractTool {
 	final Position getPreviousMouseDragPosition() {
 		return this.previousMouseDownPosition;
 	}
+	private Vector previousDelta;
 
 	public void doMoveSelectedShapes(Position p) {
 		Position cPrevious = getPreviousMouseDragPosition();
@@ -232,8 +231,82 @@ public class SelectionTool extends AbstractTool {
 		}
 		Vector delta = new Vector(p.getOriginX() - cPrevious.getOriginX(),
 				p.getOriginY() - cPrevious.getOriginY());
+		this.previousDelta = delta;
 		for (Item i : getSelection()) {
 			i.move(delta);
+		}
+	}
+	
+	public void doEndMoveSelectedShapes(Position p){
+		System.out.println("doEndMoveSelectedShapes");
+		Position cPrevious = getPreviousMouseDragPosition();
+		if (cPrevious == null) {
+			cPrevious = p;
+		}
+		Vector delta = this.previousDelta;
+		for (Item i : getSelection()) {
+			if(getField().checkMoveItem(i, delta)) i.move(delta);
+			else{
+				Vector removeDelta = new Vector(-delta.getXComponent(), -delta.getYComponent());
+//				System.out.println("removeDelta: [" + removeDelta.getXComponent() + " ," + removeDelta.getYComponent() + "]");
+				System.out.println("delta: [" + delta.getXComponent() + " ," + delta.getYComponent() + "]");
+				
+				//detect shortest direction if removeDelta is null
+				if(removeDelta.getXComponent() == 0 && removeDelta.getYComponent() == 0) {
+					int stepEast = 0, stepSouth = 0, stepWest = 0, stepNorth = 0;
+					Vector east = new Vector(1, 0);
+					Vector south = new Vector(0, 1);
+					Vector west = new Vector(-1, 0);
+					Vector north = new Vector(0,-1);
+					
+					//detect east
+					while(!getField().checkMoveItem(i, east)) {
+						i.move(east);
+						stepEast++;
+					}
+					for(int j = stepEast; stepEast >= 0; stepEast--){
+						i.move(west);
+					}
+					
+					//detect south
+					while(!getField().checkMoveItem(i, south)) {
+						i.move(south);
+						stepSouth++;
+					}
+					for(int j = stepSouth; stepSouth >= 0; stepSouth--){
+						i.move(north);
+					}
+					
+					//detect west
+					while(!getField().checkMoveItem(i, west)) {
+						i.move(west);
+						stepWest++;
+					}
+					for(int j = stepWest; stepWest >= 0; stepWest--){
+						i.move(east);
+					}
+					
+					//detect north
+					while(!getField().checkMoveItem(i, north)) {
+						i.move(north);
+						stepNorth++;
+					}
+					for(int j = stepNorth; stepNorth >= 0; stepNorth--){
+						i.move(south);
+					}
+					
+					//set Vector vor minimum Step Direction
+					if(stepEast <= stepSouth && stepEast <= stepWest && stepEast <= stepNorth) removeDelta = east;
+					else if(stepSouth <= stepEast && stepSouth <= stepWest && stepSouth <= stepNorth) removeDelta = south;
+					else if(stepWest <= stepEast && stepWest <= stepSouth && stepWest <= stepNorth) removeDelta = south;
+					else if(stepNorth <= stepEast && stepNorth <= stepSouth && stepNorth <= stepWest) removeDelta = south;
+					
+				}
+				while(!getField().checkMoveItem(i, removeDelta)) {
+					i.move(removeDelta);
+				}
+				i.move(removeDelta);
+			}
 		}
 	}
 	

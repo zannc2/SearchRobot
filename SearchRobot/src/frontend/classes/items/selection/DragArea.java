@@ -12,7 +12,6 @@ public class DragArea extends SelectionToolState{
 
 	DragArea(SelectionTool context) {
 		super(context);
-//		System.out.println("DragArea State");
 	}
 	
 

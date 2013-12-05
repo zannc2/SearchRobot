@@ -148,7 +148,7 @@ public class Circle extends AbstractItem {
 		this.itemHandlers.get(2).setPosition(bottomLeft);;
 		Position bottomRight = new Position((int)(r.getX()+r.getWidth()), (int)(r.getY()+r.getHeight()));	
 		this.itemHandlers.get(3).setPosition(bottomRight);
-		System.out.println("Set Size");
+//		System.out.println("Set Size");
 	}
 
 	@Override

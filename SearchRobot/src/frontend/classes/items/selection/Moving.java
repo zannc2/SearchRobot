@@ -11,7 +11,6 @@ public class Moving extends SelectionToolState{
 
 	protected Moving(SelectionTool context) {
 		super(context);
-		System.out.println("moving State");
 	}
 
 	@Override
@@ -23,7 +22,7 @@ public class Moving extends SelectionToolState{
 	@Override
 	protected void mouseUpEvent(Position p) {
 		/**** Init ****/
-		moveSelectedShapes(p);
+		endMoveSelectedShapes(p);
 		setDefaultCursor();
 		setToolState(getNewInitState());
 	}
