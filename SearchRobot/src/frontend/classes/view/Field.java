@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import frontend.classes.items.Finish;
 import frontend.classes.items.Robot;
 import frontend.interfaces.FieldChangedListener;
 import frontend.interfaces.Item;
@@ -205,5 +206,114 @@ public class Field implements Serializable{
 	
 	public void setFieldSize(Size s) {
 		this.fieldSize = s;
+	}
+	
+	/**
+	 * check if Item can be moved by the Vector
+	 * Robot or Finish can not be on the same position than the other Items
+	 * @param i Item
+	 * @param delta Vector
+	 * @return true if Item can be moved 
+	 */
+	public boolean checkMoveItem(Item item, Vector delta) {
+		item.move(delta);
+		boolean free = checkIfPositionFree(item);
+		Vector removeDelta = new Vector(-delta.getXComponent(), -delta.getYComponent());
+		item.move(removeDelta);
+		return free;
+	}
+	
+	/**
+	 * Checks if the Item can be set on its Position
+	 * Robot or Finish can not be on the same position than the other Items
+	 * @param item Item
+	 * @return true if Item Position is Free
+	 */
+	public boolean checkIfPositionFree(Item item) {
+		// i is the robot
+		if(item instanceof Robot) {
+			Position robotP = item.getPosition();
+			Size sizeP = item.getSize();
+			List<Item> items = getItems();
+			for(int j = 0; j < items.size(); j++)
+			{
+				Item i = items.get(j);
+				if(!(i instanceof Robot)){
+					if(i.contains(robotP) || i.contains(new Position(robotP.getOriginX(), robotP.getOriginY() + sizeP.getHeight())) ||
+							i.contains(new Position(robotP.getOriginX() + sizeP.getWidth(), robotP.getOriginY())) ||
+							i.contains(new Position(robotP.getOriginX() + sizeP.getWidth(), robotP.getOriginY() + sizeP.getHeight())))
+					{	
+						return false;
+					}
+				}
+			}
+		}
+
+		//i is the finish
+		else if(item instanceof Finish) {
+			List<Item> items = getItems();
+			Position finishP = item.getPosition();
+			Size finishS = item.getSize();
+			for(int j = 0; j < items.size(); j++)
+			{
+				Item i = items.get(j);
+				if(!(i instanceof Finish)){
+					if(i.contains(finishP) || i.contains(new Position(finishP.getOriginX(), finishP.getOriginY() + finishS.getHeight()/2)) ||
+							i.contains(new Position(finishP.getOriginX(), finishP.getOriginY() + finishS.getHeight())) ||
+							i.contains(new Position(finishP.getOriginX() + finishS.getWidth()/2, finishP.getOriginY())) ||
+							i.contains(new Position(finishP.getOriginX() + finishS.getWidth()/2, finishP.getOriginY() + finishS.getHeight()/2)) ||
+							i.contains(new Position(finishP.getOriginX() + finishS.getWidth()/2, finishP.getOriginY() + finishS.getHeight())) ||
+							i.contains(new Position(finishP.getOriginX() + finishS.getWidth(), finishP.getOriginY())) ||
+							i.contains(new Position(finishP.getOriginX() + finishS.getWidth(), finishP.getOriginY() + finishS.getHeight()/2)) ||
+							i.contains(new Position(finishP.getOriginX() + finishS.getWidth(), finishP.getOriginY() + finishS.getHeight())))
+					{
+						return false;
+					}
+				}
+			}
+		}
+
+		//all other items
+		else {
+			List<Item> items = getItems();
+			for(int j = 0; j < items.size(); j++)
+			{
+				if(items.get(j) instanceof Robot)
+				{
+					Robot robot = (Robot) items.get(j);
+					Position robotP = robot.getPosition();
+					Size robotS = robot.getSize();
+					if(item.contains(new Position(robotP.getOriginX(), robotP.getOriginY())) ||
+							item.contains(new Position(robotP.getOriginX(), robotP.getOriginY() + robotS.getHeight())) ||
+							item.contains(new Position(robotP.getOriginX() + robotS.getWidth(), robotP.getOriginY())) ||
+							item.contains(new Position(robotP.getOriginX() + robotS.getWidth(), robotP.getOriginY() + robotS.getHeight())) ||
+							item.contains(new Position(robotP.getOriginX() + robotS.getWidth()/2, robotP.getOriginY())) ||
+							item.contains(new Position(robotP.getOriginX() + robotS.getWidth()/2, robotP.getOriginY() + robotS.getHeight())) ||
+							item.contains(new Position(robotP.getOriginX(), robotP.getOriginY() + robotS.getHeight()/2)) ||
+							item.contains(new Position(robotP.getOriginX() + robotS.getWidth(), robotP.getOriginY() + robotS.getHeight()/2)))
+					{
+						return false;
+					}
+				}
+				else if(items.get(j) instanceof Finish)
+				{
+					Finish finish = (Finish) items.get(j);
+					Position finishP = finish.getPosition();
+					Size finishS = finish.getSize();
+					if(item.contains(new Position(finishP.getOriginX(), finishP.getOriginY())) ||
+							item.contains(new Position(finishP.getOriginX(), finishP.getOriginY() + finishS.getHeight())) ||
+							item.contains(new Position(finishP.getOriginX() + finishS.getWidth(), finishP.getOriginY())) ||
+							item.contains(new Position(finishP.getOriginX() + finishS.getWidth(), finishP.getOriginY() + finishS.getHeight())) ||
+							item.contains(new Position(finishP.getOriginX() + finishS.getWidth()/2, finishP.getOriginY())) ||
+							item.contains(new Position(finishP.getOriginX() + finishS.getWidth()/2, finishP.getOriginY() + finishS.getHeight())) ||
+							item.contains(new Position(finishP.getOriginX(), finishP.getOriginY() + finishS.getHeight()/2)) ||
+							item.contains(new Position(finishP.getOriginX() + finishS.getWidth(), finishP.getOriginY() + finishS.getHeight()/2)))
+					{
+						return false;
+					}
+				}
+			}
+		}
+		return true;
 	}
 }

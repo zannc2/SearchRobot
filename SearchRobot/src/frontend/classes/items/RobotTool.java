@@ -25,37 +25,37 @@ public class RobotTool extends AbstractTool {
 	@Override
 	public void mouseDown(Position p) {
 		Position newP = new Position((p.getOriginX()/10)*10, (p.getOriginY()/10)*10);
-		List<Item> items = field.getItems();
-		boolean draw = true;
-		for(int j = 0; j < items.size(); j++)
+		if(newP.getOriginX()>=0 && newP.getOriginY() >= 0 && newP.getOriginX() <= field.getFieldSize().getWidth()-10 && newP.getOriginY() 
+				<= field.getFieldSize().getHeight()-10)
 		{
-			Item i = items.get(j);
-			if(i.contains(newP) || i.contains(new Position(newP.getOriginX() + size.getWidth(), newP.getOriginY())) ||
-					i.contains(new Position(newP.getOriginX(), newP.getOriginY() + size.getHeight())) ||
-					i.contains(new Position(newP.getOriginX() + size.getWidth(), newP.getOriginY() + size.getHeight())))
-			{
-				draw = false;
-			}
+			this.item = new Robot(newP, size, field);
+			getField().addItem(this.item); 
 		}
-
-		if(draw)
-		{
-			if(newP.getOriginX()>=0 && newP.getOriginY() >= 0 && newP.getOriginX() <= field.getFieldSize().getWidth()-10 && newP.getOriginY() 
-					<= field.getFieldSize().getHeight()-10)
-			{
-				this.item = new Robot(newP, size, field);
-				getField().addItem(this.item); 
-			}
-		} 
 	}
 
 	@Override
 	public void mouseDrag(Position p) {
+		//move robot
 
+		Position newP = new Position((p.getOriginX()/10)*10, (p.getOriginY()/10)*10);
+		if(newP.getOriginX()>=0 && newP.getOriginY() >= 0 && newP.getOriginX() <= field.getFieldSize().getWidth()-10 && newP.getOriginY() 
+				<= field.getFieldSize().getHeight()-10)
+		{
+			item.setPosition(newP);
+		}
 	}
 
 	@Override
 	public void mouseUp(Position p) {
+		Position newP = new Position((p.getOriginX()/10)*10, (p.getOriginY()/10)*10);
+		if(newP.getOriginX()>=0 && newP.getOriginY() >= 0 && newP.getOriginX() <= field.getFieldSize().getWidth()-10 && newP.getOriginY() 
+				<= field.getFieldSize().getHeight()-10)
+		{
+			item.setPosition(newP);
+		}
+		
+		//chech position
+		if(!field.checkIfPositionFree(item)) getField().removeItem(item);
 
 	}
 
