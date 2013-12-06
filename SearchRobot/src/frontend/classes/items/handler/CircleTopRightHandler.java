@@ -3,23 +3,26 @@ package frontend.classes.items.handler;
 import java.awt.Cursor;
 import java.awt.Rectangle;
 
+import frontend.classes.view.Field;
 import frontend.interfaces.Item;
 import helper.Position;
 import helper.Size;
 
 public class CircleTopRightHandler extends AbstractHandler {
 
-	/**
-	 * 
-	 */
+	private Position originalPosition;
+	private Size originalSize;
+	
 	private static final long serialVersionUID = -5439256066118986550L;
+	private Field field;
 	private Position position;
 	private Item owner;
 
 	private static final Cursor RESIZE_CURSOR = new Cursor(Cursor.NE_RESIZE_CURSOR);
 
-	public CircleTopRightHandler(Item owner, Position position) {
+	public CircleTopRightHandler(Item owner, Position position, Field field) {
 		super(owner, position);
+		this.field = field;
 		this.owner = owner;
 		this.position = position;
 	}
@@ -31,6 +34,8 @@ public class CircleTopRightHandler extends AbstractHandler {
 
 	@Override
 	public void startInteraction(Position p) {
+		this.originalPosition = this.owner.getPosition();
+		this.originalSize = this.owner.getSize();
 	}
 
 	@Override
@@ -74,6 +79,11 @@ public class CircleTopRightHandler extends AbstractHandler {
 	@Override
 	public void stopInteraction(Position p) {
 		this.dragInteraction(p);
+		
+		if(!this.field.checkIfPositionFree(this.owner)) {
+			this.owner.setPosition(this.originalPosition);
+			this.owner.setSize(this.originalSize);
+		}
 	}
 
 	private Rectangle getAWTRectangle(int w, int h) {

@@ -2,6 +2,7 @@ package frontend.classes.items;
 
 import frontend.classes.items.handler.LineEndHandler;
 import frontend.classes.items.handler.LineOriginHandler;
+import frontend.classes.view.Field;
 import frontend.interfaces.ItemHandler;
 import helper.Position;
 import helper.Size;
@@ -22,18 +23,20 @@ public class Line extends AbstractItem {
 	private static final long serialVersionUID = -5100543977628153129L;
 	private Position position;
 	private Size size;
+	private Field field;
 	
 	private List<ItemHandler> itemHandlers = new ArrayList<ItemHandler>();
 	
-	public Line(Position p) {
+	public Line(Position p, Field f) {
+		this.field = f;
 		this.position = p;
 		this.size = new Size(10, 10);
 		
 		/* Add handlers */
-		this.itemHandlers.add(new LineOriginHandler(this, p));
+		this.itemHandlers.add(new LineOriginHandler(this, p, this.field));
 		Position end = new Position(this.position.getOriginX() + this.size.getWidth(), 
 				this.position.getOriginY() + this.size.getHeight());
-		this.itemHandlers.add(new LineEndHandler(this, end));
+		this.itemHandlers.add(new LineEndHandler(this, end, this.field));
 	}
 
 	@Override

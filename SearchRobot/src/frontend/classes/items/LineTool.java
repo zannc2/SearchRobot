@@ -11,6 +11,8 @@ import frontend.interfaces.Item;
 
 public class LineTool extends AbstractTool {
 
+	private Item item;
+	private Field field;
 	/**
 	 * 
 	 */
@@ -19,14 +21,14 @@ public class LineTool extends AbstractTool {
 
 	public LineTool(Field field) {
 		super(field);
+		this.field = field;
 	}
 
-	private Item item;
 	
 
 	@Override
 	public void mouseDown(Position p) {
-		this.item = new Line(p);
+		this.item = new Line(p, this.field);
 		getField().addItem(this.item);
 		//System.out.println("Line Created and added to View");
 	}

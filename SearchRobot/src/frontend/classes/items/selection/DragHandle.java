@@ -12,6 +12,11 @@ public class DragHandle extends SelectionToolState{
 	protected DragHandle(SelectionTool context) {
 		super(context);
 	}
+	
+	@Override
+	protected void mouseDownEvent(Position p) {
+		getCurrentHandle().startInteraction(p);
+	}
 
 	@Override
 	protected void mouseDragEvent(Position p) {

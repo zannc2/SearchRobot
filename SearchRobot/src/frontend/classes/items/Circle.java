@@ -4,6 +4,7 @@ import frontend.classes.items.handler.CircleBottomLeftHandler;
 import frontend.classes.items.handler.CircleBottomRightHandler;
 import frontend.classes.items.handler.CircleTopLeftHandler;
 import frontend.classes.items.handler.CircleTopRightHandler;
+import frontend.classes.view.Field;
 import frontend.interfaces.ItemHandler;
 import helper.Position;
 import helper.Size;
@@ -27,22 +28,24 @@ public class Circle extends AbstractItem {
 	private static final long serialVersionUID = -2274073036259976650L;
 	private Position position;
 	private Size size;
+	private Field field;
 
 	private List<ItemHandler> itemHandlers = new ArrayList<ItemHandler>();
 
-	public Circle(Position p) {
+	public Circle(Position p, Field field) {
+		this.field = field;
 		this.position = p;
 		this.size = new Size(1, 1);
 
 		// Add handlers
-		this.itemHandlers.add(new CircleTopLeftHandler(this, p));
+		this.itemHandlers.add(new CircleTopLeftHandler(this, p, this.field));
 		Position topRight = new Position(this.position.getOriginX() + this.size.getWidth(), this.position.getOriginY());
-		this.itemHandlers.add(new CircleTopRightHandler(this, topRight));
+		this.itemHandlers.add(new CircleTopRightHandler(this, topRight, this.field));
 		Position bottomLeft = new Position(this.position.getOriginX(), this.position.getOriginY() + this.size.getHeight());
-		this.itemHandlers.add(new CircleBottomLeftHandler(this, bottomLeft));
+		this.itemHandlers.add(new CircleBottomLeftHandler(this, bottomLeft, this.field));
 		Position bottomRight = new Position(this.position.getOriginX() + this.size.getWidth(),
 				this.position.getOriginY() + this.size.getHeight());	
-		this.itemHandlers.add(new CircleBottomRightHandler(this, bottomRight));
+		this.itemHandlers.add(new CircleBottomRightHandler(this, bottomRight, this.field));
 	}
 
 	@Override

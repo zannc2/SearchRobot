@@ -27,7 +27,9 @@ public class Init extends SelectionToolState{
 			/**** drag Handle ****/
 			setCurrentHandle(getItemHandlerByPosition(p));
 			setItemHandleCursor(getItemHandlerByPosition(p).getCursor());
-			setToolState(getNewDragHandleState());
+			SelectionToolState dragHandle = getNewDragHandleState();
+			setToolState(dragHandle);
+			dragHandle.mouseDown(p);
 		}
 		else if(isOnSelectedItem(p)) {
 			/**** moving ****/

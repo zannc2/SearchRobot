@@ -18,13 +18,15 @@ public class CircleTool extends AbstractTool {
 
 	public CircleTool(Field field) {
 		super(field);
+		this.field = field;
 	}
 
+	private Field field;
 	private Item item;
 
 	@Override
 	public void mouseDown(Position p) {
-		this.item = new Circle(p);
+		this.item = new Circle(p, this.field);
 		getField().addItem(this.item);
 		//System.out.println("Circle Created and added to View");
 	}

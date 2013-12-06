@@ -1,5 +1,6 @@
 package frontend.classes.items.handler;
 
+import frontend.classes.view.Field;
 import frontend.interfaces.Item;
 import helper.Position;
 import helper.Size;
@@ -13,12 +14,16 @@ public class LineEndHandler extends AbstractHandler {
 	 */
 	private static final long serialVersionUID = -7023598776530603132L;
 	private Position position;
+	private Position originalPosition;
+	private Size originalSize;
 	private Item owner;
+	private Field field;
 	
 	private static final Cursor RESIZE_CURSOR = new Cursor(Cursor.S_RESIZE_CURSOR);
 
-	public LineEndHandler(Item owner, Position position) {
+	public LineEndHandler(Item owner, Position position, Field field) {
 		super(owner, position);
+		this.field = field;
 		this.owner = owner;
 		this.position = position;
 	}
@@ -30,20 +35,20 @@ public class LineEndHandler extends AbstractHandler {
 
 	@Override
 	public void startInteraction(Position p) {
-		System.out.println("end LineHandle - start");
+		this.originalPosition = this.owner.getPosition();
+		this.originalSize = this.owner.getSize();
 	}
 
 	@Override
 	public void dragInteraction(Position p) {
-		System.out.println("end LineHandle - drag");
-
+		
 		this.position = p;
 		super.setPosition(p);
 		int originX = this.owner.getPosition().getOriginX();
 		int originY = this.owner.getPosition().getOriginY();
 		
-		int newX = p.getOriginX();
-		int newY = p.getOriginY();
+		int newX = this.position.getOriginX();
+		int newY = this.position.getOriginY();
 		int newWidth = newX - originX;
 		int newHeight = newY - originY;
 		this.owner.setSize(new Size(newWidth, newHeight));
@@ -51,8 +56,12 @@ public class LineEndHandler extends AbstractHandler {
 
 	@Override
 	public void stopInteraction(Position p) {
-		System.out.println("end LineHandle - stop");
 		this.dragInteraction(p);
+		
+		if(!this.field.checkIfPositionFree(this.owner)) {
+			this.owner.setPosition(this.originalPosition);
+			this.owner.setSize(this.originalSize);
+		}
 	}
 
 }
