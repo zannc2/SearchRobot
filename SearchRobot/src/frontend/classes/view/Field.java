@@ -156,14 +156,6 @@ public class Field implements Serializable{
 	}
 	
 	/**
-	 * Move the robot width a given Vector
-	 * @param delta Vector
-	 */
-	public void moveRobot(Vector delta) {
-		if(this.robot != null) this.robot.move(delta);
-	}
-	
-	/**
 	 * This method sets the Robot to a new Position
 	 * @param p new position of the robt
 	 */

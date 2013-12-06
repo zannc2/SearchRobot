@@ -16,7 +16,7 @@ public class RobotTest {
 	private int x = 10;
 	private int y = 11;
 	private Position p = new Position(x, y);
-	private Robot r = new Robot(p, new Size(10,10));
+	private Robot r = new Robot(p, new Size(10,10), null);
 	
 	private boolean test;
 	
@@ -54,7 +54,7 @@ public class RobotTest {
 		r.addItemChangedListener(listener);
 		Vector v = new Vector(10, 25);
 		Position newP = new Position(p.getOriginX() + 10, p.getOriginY() + 25);
-		Robot newRobot = new Robot(newP, new Size(10, 10));
+		Robot newRobot = new Robot(newP, new Size(10, 10), null);
 		r.move(v);
 		assertTrue(test);
 		assertEquals(r.getPosition(), newRobot.getPosition());
