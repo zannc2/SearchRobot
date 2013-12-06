@@ -63,6 +63,9 @@ public class Circle extends AbstractItem {
 		
 		// set Handler topLeft
 		this.itemHandlers.get(0).setPosition(position);
+		this.itemHandlers.get(1).setPosition(new Position(position.getOriginX() + this.size.getWidth(), position.getOriginY()));
+		this.itemHandlers.get(2).setPosition(new Position(position.getOriginX(), position.getOriginY() + this.size.getHeight()));
+		this.itemHandlers.get(3).setPosition(new Position(position.getOriginX() + this.size.getWidth(), position.getOriginY() + this.size.getHeight()));
 	}
 
 	@Override

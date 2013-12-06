@@ -95,5 +95,9 @@ public abstract class AbstractHandler implements ItemHandler {
 	@Override
 	public void stopInteraction(Position p) {
 	}
+	
+	protected boolean checkIteractionPossible() {
+		return false;
+	}
 
 }

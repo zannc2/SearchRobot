@@ -36,9 +36,8 @@ public class FieldMatrix {
 								item.contains(new Position(i*this.gridSize + this.gridSize/3, j*this.gridSize + (this.gridSize/3)*2)) ||
 								item.contains(new Position(i*this.gridSize + (this.gridSize/3)*2, j*this.gridSize + this.gridSize/3)) ||
 								item.contains(new Position(i*this.gridSize + (this.gridSize/3)*2, j*this.gridSize + (this.gridSize/3)*2))
-								) {
-//						if(item.contains(new Position(i*this.gridSize + this.gridSize/2, j*this.gridSize + this.gridSize/2)))
-//						{
+								) 
+						{
 							if(item instanceof Finish) fieldMatrix[i][j] = 2;
 							else if(item instanceof Robot) fieldMatrix[i][j] = 0;
 							else fieldMatrix[i][j] = 1;
@@ -48,7 +47,6 @@ public class FieldMatrix {
 				}
 			}
 		}
-//		printArray();
 	}
 	
 	
@@ -58,16 +56,6 @@ public class FieldMatrix {
 	
 	public void set(Position p, int value) {
 		this.fieldMatrix[p.getOriginX()][p.getOriginY()] = value;
-	}
-	
-	public void printArray()
-	{
-		for(int j = 0; j < fieldMatrixHeight; j++) {
-			for(int i = 0; i < fieldMatrixWidth; i++){
-				System.out.print("[" + fieldMatrix[i][j] + "]");
-			}
-			System.out.println();
-		}
 	}
 	
 }

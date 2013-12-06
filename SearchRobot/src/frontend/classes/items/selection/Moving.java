@@ -2,7 +2,11 @@ package frontend.classes.items.selection;
 
 import helper.Position;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Moving extends SelectionToolState{
+	
 
 	/**
 	 * 

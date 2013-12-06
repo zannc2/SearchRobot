@@ -184,16 +184,6 @@ public class FieldTest {
 		assertFalse(this.field.checkIfPositionFree(finish));
 		
 		finish.setPosition(new Position(200, 200));
-		assertTrue(this.field.checkIfPositionFree(finish));		
-		
-		//checkMoveItem
-		finish.setPosition(new Position(110, 100));
 		assertTrue(this.field.checkIfPositionFree(finish));	
-		
-		Vector move = new Vector(-1, 0);
-		assertFalse(this.field.checkMoveItem(finish, move));
-		
-		move = new Vector(1, 0);
-		assertTrue(this.field.checkMoveItem(finish, move));
 	}
 }

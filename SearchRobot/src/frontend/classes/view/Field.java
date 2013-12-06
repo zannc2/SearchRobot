@@ -201,21 +201,6 @@ public class Field implements Serializable{
 	}
 	
 	/**
-	 * check if Item can be moved by the Vector
-	 * Robot or Finish can not be on the same position than the other Items
-	 * @param i Item
-	 * @param delta Vector
-	 * @return true if Item can be moved 
-	 */
-	public boolean checkMoveItem(Item item, Vector delta) {
-		item.move(delta);
-		boolean free = checkIfPositionFree(item);
-		Vector removeDelta = new Vector(-delta.getXComponent(), -delta.getYComponent());
-		item.move(removeDelta);
-		return free;
-	}
-	
-	/**
 	 * Checks if the Item can be set on its Position
 	 * Robot or Finish can not be on the same position than the other Items
 	 * @param item Item
