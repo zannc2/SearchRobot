@@ -246,23 +246,24 @@ public class SelectionTool extends AbstractTool {
 	}
 	
 	public void endMoveSelectedShapes(Position p){
-		System.out.println("doEndMoveSelectedShapes");
 		Position cPrevious = getPreviousMouseDragPosition();
 		if (cPrevious == null) {
 			cPrevious = p;
 		}
 		Vector delta = this.previousDelta;
-		boolean remove = false;
-		for (Item i : getSelection()) {
-			
-			i.move(delta);
-			if(!getField().checkIfPositionFree(i)) remove = true;
-		}
-		
-		if(remove) {
+		if(this.previousDelta != null) {
+			boolean undo = false;
 			for (Item i : getSelection()) {
-				i.setPosition((Position) this.originalPositions.get(i));
-				this.originalPositions.remove(i);
+				
+				i.move(delta);
+				if(!getField().checkIfPositionFree(i)) undo = true;
+			}
+			
+			if(undo) {
+				for (Item i : getSelection()) {
+					i.setPosition((Position) this.originalPositions.get(i));
+					this.originalPositions.remove(i);
+				}
 			}
 		}
 		this.originalPositions.clear();

@@ -175,7 +175,6 @@ public class ViewImpl extends JPanel implements View{
 			}
 			else
 			{
-				System.out.println("mouse pressed");
 				t.mouseDown(new Position(e.getX(), e.getY()));
 			};
 		}
