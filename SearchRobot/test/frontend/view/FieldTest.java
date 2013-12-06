@@ -1,19 +1,22 @@
 package frontend.view;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import helper.Direction;
 import helper.Position;
 import helper.Size;
+import helper.Vector;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import frontend.classes.items.Circle;
+import frontend.classes.items.Finish;
 import frontend.classes.items.Line;
 import frontend.classes.items.Robot;
 import frontend.classes.view.Field;
@@ -163,7 +166,8 @@ public class FieldTest {
 	 */
 	@Test 
 	public void testContains() {
-		
+		assertTrue(this.field.contains(this.robotPosition, 10));
+		assertFalse(this.field.contains(new Position(5, 5), 10));
 	}
 	
 	/**
@@ -172,6 +176,24 @@ public class FieldTest {
 	 */
 	@Test 
 	public void testCkecksFunction() {
+		//chekIfPositionFree
+		Item finish = new Finish(this.robotPosition, this.field);
+		assertFalse(this.field.checkIfPositionFree(finish));
 		
+		finish.setPosition(new Position(50, 70));
+		assertFalse(this.field.checkIfPositionFree(finish));
+		
+		finish.setPosition(new Position(200, 200));
+		assertTrue(this.field.checkIfPositionFree(finish));		
+		
+		//checkMoveItem
+		finish.setPosition(new Position(110, 100));
+		assertTrue(this.field.checkIfPositionFree(finish));	
+		
+		Vector move = new Vector(-1, 0);
+		assertFalse(this.field.checkMoveItem(finish, move));
+		
+		move = new Vector(1, 0);
+		assertTrue(this.field.checkMoveItem(finish, move));
 	}
 }
