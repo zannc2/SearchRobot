@@ -1,20 +1,5 @@
 package frontend.view;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import helper.Direction;
-import helper.Position;
-import helper.Size;
-import helper.Vector;
-
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.Before;
-import org.junit.Test;
-
 import frontend.classes.items.Circle;
 import frontend.classes.items.Finish;
 import frontend.classes.items.Line;
@@ -25,6 +10,17 @@ import frontend.classes.view.ViewImpl;
 import frontend.interfaces.FieldChangedListener;
 import frontend.interfaces.Item;
 import frontend.interfaces.View;
+import helper.Direction;
+import helper.Position;
+import helper.Size;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.*;
 
 public class FieldTest {
 	
@@ -35,7 +31,7 @@ public class FieldTest {
 	private Item robot;
 	private Position robotPosition;
 	private Direction robotDirection = Direction.WEST;
-	private List<Item> items = new ArrayList<Item>();
+	private List<Item> items = new ArrayList<>();
 	private Size robotSize = new Size(10, 10);
 	private Size fieldSize = new Size(600, 800);
 	private Color itemColor = Color.black;
@@ -56,12 +52,12 @@ public class FieldTest {
 		this.view = new ViewImpl(this.fieldSize, this.robotSize, this.itemColor);
 		this.field = new Field(this.view, this.fieldSize, this.robotSize);
 		
-		this.itemA = new Line(new Position(10, 10));
+		this.itemA = new Line(new Position(10, 10), null);
 		this.itemA.setSize(new Size(50, 25));
 		this.items.add(itemA);
 		this.field.addItem(itemA);
 		
-		this.itemB = new Circle(new Position(50,70));
+		this.itemB = new Circle(new Position(50,70), null);
 		this.itemB.setSize(new Size(20,20));
 		this.items.add(itemB);
 		this.field.addItem(itemB);

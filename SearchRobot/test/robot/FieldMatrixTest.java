@@ -1,24 +1,21 @@
 package robot;
 
-import static org.junit.Assert.fail;
-import helper.Direction;
-import helper.Position;
-import helper.Size;
-
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import frontend.classes.items.Circle;
 import frontend.classes.items.Line;
 import frontend.classes.items.Robot;
 import frontend.classes.view.Field;
 import frontend.classes.view.ViewImpl;
 import frontend.interfaces.Item;
 import frontend.interfaces.View;
+import helper.Position;
+import helper.Size;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.fail;
 
 public class FieldMatrixTest {
 	
@@ -38,12 +35,12 @@ public class FieldMatrixTest {
 		this.view = new ViewImpl(this.fieldSize, this.robotSize, this.itemColor);
 		this.field = new Field(this.view, this.fieldSize, this.robotSize);
 		
-		this.itemA = new Line(new Position(10, 10));
+		this.itemA = new Line(new Position(10, 10), null);
 		this.itemA.setSize(new Size(50, 10));
 		this.items.add(itemA);
 		this.field.addItem(itemA);
 		
-		this.itemB = new Line(new Position(50,70));
+		this.itemB = new Line(new Position(50,70), null);
 		this.itemB.setSize(new Size(10,50));
 		this.items.add(itemB);
 		this.field.addItem(itemB);
