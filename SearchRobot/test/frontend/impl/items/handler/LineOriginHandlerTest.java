@@ -38,12 +38,12 @@ public class LineOriginHandlerTest {
         this.field = new Field(this.view, this.fieldSize, this.robotSize);
         this.item = new Line(this.position, this.field);
 
-        this.handler = new LineEndHandler(this.item, this.position, this.field);
+        this.handler = new LineOriginHandler(this.item, this.position, this.field);
     }
 
     @Test
     public void testGetCursor() {
-        assertEquals(this.handler, new Cursor(Cursor.N_RESIZE_CURSOR));
+        assertEquals(this.handler.getCursor(), new Cursor(Cursor.N_RESIZE_CURSOR));
     }
 
     @Test

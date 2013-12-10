@@ -41,7 +41,6 @@ public class LineOriginHandler extends AbstractHandler {
 
 	@Override
 	public void dragInteraction(Position p) {
-        System.out.println("dragIteragtion");
         /* get end point*/
 		Position endPoint = new Position(
 				this.owner.getPosition().getOriginX() + this.owner.getSize().getWidth(),
@@ -59,7 +58,6 @@ public class LineOriginHandler extends AbstractHandler {
 
 	@Override
 	public void stopInteraction(Position p) {
-        System.out.println("stopIteraction");
         this.dragInteraction(p);
 		
 		if(!this.field.checkIfPositionFree(this.owner)) {
