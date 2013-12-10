@@ -19,11 +19,12 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by ca-za on 10.12.13.
  */
-public class LineOriginHandlerTest {
+public class LineEndHandlerTest {
     private View view;
     private Field field;
     private Item item;
-    private Position position = new Position(20, 50);
+    private Position itemPosition = new Position(20, 50);
+    private Position handlerPosition = new Position(20, 50);
     private Size robotSize = new Size(10, 10);
     private Size fieldSize = new Size(600, 800);
     private Size itemSize = new Size(0, 0);
@@ -31,14 +32,13 @@ public class LineOriginHandlerTest {
     private Color itemColor = Color.black;
 
     private ItemHandler handler;
-
     @Before
     public void setUp() {
         this.view = new ViewImpl(this.fieldSize, this.robotSize, this.itemColor);
         this.field = new Field(this.view, this.fieldSize, this.robotSize);
-        this.item = new Line(this.position, this.field);
+        this.item = new Line(this.itemPosition, this.field);
 
-        this.handler = new LineOriginHandler(this.item, this.position, this.field);
+        this.handler = new LineEndHandler(this.item, this.handlerPosition, this.field);
     }
 
     @Test
@@ -49,34 +49,32 @@ public class LineOriginHandlerTest {
     @Test
     public void testDragInteraction() {
         //set new Position
-        this.position = new Position(30, 60);
-        //calculate end Position
-        Position endPosition = new Position(this.position.getOriginX() + this.itemSize.getWidth(),
-                this.position.getOriginY() + this.itemSize.getHeight());
+        this.handlerPosition = new Position(30, 60);
+        //calculate origin Position
+        Position originPosition = this.item.getPosition();
         //calculate new Size
-        this.itemSize = new Size(endPosition.getOriginX() - this.position.getOriginX(),
-                endPosition.getOriginY() - this.position.getOriginY());
+        this.itemSize = new Size(this.itemPosition.getOriginX() - originPosition.getOriginX(),
+                this.itemPosition.getOriginY() - originPosition.getOriginY());
 
-        this.handler.dragInteraction(this.position);
+        this.handler.dragInteraction(this.itemPosition);
 
-        assertEquals(this.position, this.item.getPosition());
+        assertEquals(this.itemPosition, this.item.getPosition());
         assertEquals(this.item.getSize(), this.itemSize);
     }
 
     @Test
     public void testStopInteraction() {
         //set new Position
-        this.position = new Position(30, 60);
-        //calculate end Position
-        Position endPosition = new Position(this.position.getOriginX() + this.itemSize.getWidth(),
-                this.position.getOriginY() + this.itemSize.getHeight());
+        this.handlerPosition = new Position(30, 60);
+        //calculate origin Position
+        Position originPosition = this.item.getPosition();
         //calculate new Size
-        this.itemSize = new Size(endPosition.getOriginX() - this.position.getOriginX(),
-                endPosition.getOriginY() - this.position.getOriginY());
+        this.itemSize = new Size(this.itemPosition.getOriginX() - originPosition.getOriginX(),
+                this.itemPosition.getOriginY() - originPosition.getOriginY());
 
-        this.handler.stopInteraction(this.position);
+        this.handler.stopInteraction(this.itemPosition);
 
-        assertEquals(this.item.getPosition(), this.position);
+        assertEquals(this.item.getPosition(), this.itemPosition);
         assertEquals(this.item.getSize(), this.itemSize);
     }
 
@@ -87,12 +85,12 @@ public class LineOriginHandlerTest {
 
     @Test
     public void testSetGetPosition() {
-        assertEquals(this.handler.getPositioin(), this.position);
+        assertEquals(this.handler.getPositioin(), this.handlerPosition);
 
         //set new Position
-        this.position = new Position(70, 50);
-        this.handler.setPosition(this.position);
-        assertEquals(this.handler.getPositioin(), this.position);
+        this.handlerPosition = new Position(70, 50);
+        this.handler.setPosition(this.handlerPosition);
+        assertEquals(this.handler.getPositioin(), this.handlerPosition);
     }
 
     @Test
@@ -102,6 +100,6 @@ public class LineOriginHandlerTest {
 
     @Test
     public void testContains() {
-        assertTrue(this.handler.contains(this.position));
+        assertTrue(this.handler.contains(this.handlerPosition));
     }
 }
