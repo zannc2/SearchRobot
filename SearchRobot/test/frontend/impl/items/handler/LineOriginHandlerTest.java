@@ -42,11 +42,6 @@ public class LineOriginHandlerTest {
     }
 
     @Test
-    public void testGetCursor() {
-        //assertEquals(this.handler.getCursor(), new Cursor(Cursor.N_RESIZE_CURSOR));
-    }
-
-    @Test
     public void testDragInteraction() {
         //set new Position
         this.position = new Position(30, 60);
