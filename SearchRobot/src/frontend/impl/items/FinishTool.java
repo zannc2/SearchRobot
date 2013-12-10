@@ -1,9 +1,6 @@
 package frontend.impl.items;
 
 import helper.Position;
-
-import java.util.List;
-
 import frontend.impl.view.Field;
 import frontend.interfaces.Item;
 

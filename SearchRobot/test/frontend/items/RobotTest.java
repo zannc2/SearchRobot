@@ -2,8 +2,8 @@ package frontend.items;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import frontend.impl.items.Robot;
-import frontend.impl.view.ItemChangedEvent;
+import frontend.classes.items.Robot;
+import frontend.classes.view.ItemChangedEvent;
 import frontend.interfaces.ItemChangedListener;
 import helper.Position;
 import helper.Size;
