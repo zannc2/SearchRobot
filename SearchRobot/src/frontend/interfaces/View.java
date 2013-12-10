@@ -3,7 +3,7 @@ package frontend.interfaces;
 import java.awt.Cursor;
 import java.util.List;
 
-import frontend.classes.view.Field;
+import frontend.impl.view.Field;
 
 /**
  * A view manages all Items and Tools

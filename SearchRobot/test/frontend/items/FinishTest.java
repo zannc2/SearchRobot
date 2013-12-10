@@ -1,9 +1,9 @@
 package frontend.items;
 
 import static org.junit.Assert.*;
-import frontend.classes.items.Circle;
-import frontend.classes.items.Finish;
-import frontend.classes.view.ItemChangedEvent;
+import frontend.impl.items.Circle;
+import frontend.impl.items.Finish;
+import frontend.impl.view.ItemChangedEvent;
 import frontend.interfaces.ItemChangedListener;
 import frontend.items.CircleTest.MyListener;
 import helper.Position;

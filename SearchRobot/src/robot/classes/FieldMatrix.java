@@ -1,8 +1,8 @@
 package robot.classes;
 
-import frontend.classes.items.Finish;
-import frontend.classes.items.Robot;
-import frontend.classes.view.Field;
+import frontend.impl.items.Finish;
+import frontend.impl.items.Robot;
+import frontend.impl.view.Field;
 import frontend.interfaces.Item;
 import helper.Position;
 import helper.Size;

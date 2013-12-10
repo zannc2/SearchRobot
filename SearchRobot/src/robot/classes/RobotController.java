@@ -1,7 +1,7 @@
 package robot.classes;
 
-import frontend.classes.SearchRobotEditor;
-import frontend.classes.view.Field;
+import frontend.impl.SearchRobotEditor;
+import frontend.impl.view.Field;
 import helper.Direction;
 import helper.Position;
 import helper.Size;

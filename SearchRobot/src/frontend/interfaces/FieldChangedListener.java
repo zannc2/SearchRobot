@@ -3,7 +3,7 @@ package frontend.interfaces;
 import java.io.Serializable;
 import java.util.EventListener;
 
-import frontend.classes.view.FieldChangedEvent;
+import frontend.impl.view.FieldChangedEvent;
 
 /**
  * Listener for Field FieldChangedEvent

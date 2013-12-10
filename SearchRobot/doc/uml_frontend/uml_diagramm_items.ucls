@@ -10,8 +10,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <class id="2" language="java" name="frontend.classes.items.AbstractItem" project="SearchRobot" 
-    file="/SearchRobot/src/frontend/classes/items/AbstractItem.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="2" language="java" name="frontend.impl.items.AbstractItem" project="SearchRobot" 
+    file="/SearchRobot/src/frontend/impl/items/AbstractItem.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="195" y="445"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
@@ -19,8 +19,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="frontend.classes.items.Robot" project="SearchRobot" 
-    file="/SearchRobot/src/frontend/classes/items/Robot.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="3" language="java" name="frontend.impl.items.Robot" project="SearchRobot" 
+    file="/SearchRobot/src/frontend/impl/items/Robot.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="-326" y="817"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
@@ -28,8 +28,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="frontend.classes.items.Finish" project="SearchRobot" 
-    file="/SearchRobot/src/frontend/classes/items/Finish.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="4" language="java" name="frontend.impl.items.Finish" project="SearchRobot" 
+    file="/SearchRobot/src/frontend/impl/items/Finish.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="-65" y="772"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
@@ -37,8 +37,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="frontend.classes.items.Line" project="SearchRobot" 
-    file="/SearchRobot/src/frontend/classes/items/Line.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="5" language="java" name="frontend.impl.items.Line" project="SearchRobot" 
+    file="/SearchRobot/src/frontend/impl/items/Line.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="196" y="790"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
@@ -46,8 +46,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="frontend.classes.items.Circle" project="SearchRobot" 
-    file="/SearchRobot/src/frontend/classes/items/Circle.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="6" language="java" name="frontend.impl.items.Circle" project="SearchRobot" 
+    file="/SearchRobot/src/frontend/impl/items/Circle.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="457" y="790"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
@@ -64,8 +64,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="8" language="java" name="frontend.classes.items.selection.SelectionArea" project="SearchRobot" 
-    file="/SearchRobot/src/frontend/classes/items/selection/SelectionArea.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="8" language="java" name="frontend.impl.items.selection.SelectionArea" project="SearchRobot" 
+    file="/SearchRobot/src/frontend/impl/items/selection/SelectionArea.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1010" y="778"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      

@@ -1,11 +1,12 @@
 package frontend.items;
 
-import frontend.classes.items.Line;
-import frontend.classes.view.ItemChangedEvent;
+import frontend.impl.items.Line;
+import frontend.impl.view.ItemChangedEvent;
 import frontend.interfaces.ItemChangedListener;
 import helper.Position;
 import helper.Size;
 import helper.Vector;
+
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

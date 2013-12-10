@@ -3,7 +3,7 @@ package frontend.interfaces;
 import java.io.Serializable;
 import java.util.EventListener;
 
-import frontend.classes.view.ItemChangedEvent;
+import frontend.impl.view.ItemChangedEvent;
 
 /**
  * Listener for ItemChangedEvent

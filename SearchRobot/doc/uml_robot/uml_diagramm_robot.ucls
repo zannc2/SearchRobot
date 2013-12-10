@@ -100,8 +100,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="12" language="java" name="frontend.classes.view.Field" project="SearchRobot" 
-    file="/SearchRobot/src/frontend/classes/view/Field.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="12" language="java" name="frontend.impl.view.Field" project="SearchRobot" 
+    file="/SearchRobot/src/frontend/impl/view/Field.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1612" y="1288"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
@@ -109,8 +109,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="13" language="java" name="frontend.classes.view.Field.FieldItemChangedListener" project="SearchRobot" 
-    file="/SearchRobot/src/frontend/classes/view/Field.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="13" language="java" name="frontend.impl.view.Field.FieldItemChangedListener" project="SearchRobot" 
+    file="/SearchRobot/src/frontend/impl/view/Field.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1587" y="1624"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
@@ -118,8 +118,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="14" language="java" name="frontend.classes.items.AbstractItem" project="SearchRobot" 
-    file="/SearchRobot/src/frontend/classes/items/AbstractItem.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="14" language="java" name="frontend.impl.items.AbstractItem" project="SearchRobot" 
+    file="/SearchRobot/src/frontend/impl/items/AbstractItem.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="148" y="1332"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      

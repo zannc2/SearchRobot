@@ -10,7 +10,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.List;
 
-import frontend.classes.items.AbstractItem;
+import frontend.impl.items.AbstractItem;
 import frontend.interfaces.ItemHandler;
 
 public class Pixel extends AbstractItem {

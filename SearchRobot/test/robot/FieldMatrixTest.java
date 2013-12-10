@@ -1,13 +1,14 @@
 package robot;
 
-import frontend.classes.items.Line;
-import frontend.classes.items.Robot;
-import frontend.classes.view.Field;
-import frontend.classes.view.ViewImpl;
+import frontend.impl.items.Line;
+import frontend.impl.items.Robot;
+import frontend.impl.view.Field;
+import frontend.impl.view.ViewImpl;
 import frontend.interfaces.Item;
 import frontend.interfaces.View;
 import helper.Position;
 import helper.Size;
+
 import org.junit.Before;
 import org.junit.Test;
 

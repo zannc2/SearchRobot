@@ -2,7 +2,7 @@ package frontend.interfaces;
 
 import java.io.Serializable;
 
-import frontend.classes.view.Field;
+import frontend.impl.view.Field;
 import helper.Position;
 
 /**

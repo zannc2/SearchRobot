@@ -2,8 +2,8 @@ package frontend.interfaces;
 
 import java.io.Serializable;
 
-import frontend.classes.items.selection.SelectionTool;
-import frontend.classes.items.selection.SelectionToolState;
+import frontend.impl.items.selection.SelectionTool;
+import frontend.impl.items.selection.SelectionToolState;
 
 /**
  * A factory to create state object for the selection tool

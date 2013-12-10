@@ -1,6 +1,6 @@
 package robot.classes.strategies;
 
-import frontend.classes.view.Field;
+import frontend.impl.view.Field;
 import helper.Position;
 import helper.Size;
 
