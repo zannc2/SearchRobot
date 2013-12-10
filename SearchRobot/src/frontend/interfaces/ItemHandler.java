@@ -31,7 +31,7 @@ public interface ItemHandler extends Serializable{
 	 * Gets the Position of the Handler. 
 	 * @return Position
 	 */
-	public Position getPositioin();
+	public Position getPosition();
 	
 	/**
 	 * Gets the Size of the Handler.

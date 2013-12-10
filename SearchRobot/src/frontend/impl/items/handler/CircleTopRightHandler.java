@@ -40,7 +40,7 @@ public class CircleTopRightHandler extends AbstractHandler {
 
 	@Override
 	public void dragInteraction(Position p) {
-		// get origin Coordinates
+        // get origin Coordinates
 		Size origS = this.owner.getSize();
 		Position origP = this.owner.getPosition();
 

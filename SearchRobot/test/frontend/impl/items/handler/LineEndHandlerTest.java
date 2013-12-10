@@ -80,12 +80,12 @@ public class LineEndHandlerTest {
 
     @Test
     public void testSetGetPosition() {
-        assertEquals(this.handler.getPositioin(), this.handlerPosition);
+        assertEquals(this.handler.getPosition(), this.handlerPosition);
 
         //set new Position
         this.handlerPosition = new Position(70, 50);
         this.handler.setPosition(this.handlerPosition);
-        assertEquals(this.handler.getPositioin(), this.handlerPosition);
+        assertEquals(this.handler.getPosition(), this.handlerPosition);
     }
 
     @Test

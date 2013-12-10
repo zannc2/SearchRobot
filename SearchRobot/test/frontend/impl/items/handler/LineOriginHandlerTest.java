@@ -82,12 +82,12 @@ public class LineOriginHandlerTest {
 
     @Test
     public void testSetGetPosition() {
-        assertEquals(this.handler.getPositioin(), this.position);
+        assertEquals(this.handler.getPosition(), this.position);
 
         //set new Position
         this.position = new Position(70, 50);
         this.handler.setPosition(this.position);
-        assertEquals(this.handler.getPositioin(), this.position);
+        assertEquals(this.handler.getPosition(), this.position);
     }
 
     @Test

@@ -1,9 +1,8 @@
 package frontend.impl.items;
 
 import static org.junit.Assert.*;
-import frontend.classes.items.Circle;
-import frontend.classes.items.Finish;
-import frontend.classes.view.ItemChangedEvent;
+
+import frontend.impl.view.ItemChangedEvent;
 import frontend.interfaces.ItemChangedListener;
 import helper.Position;
 import helper.Size;
@@ -26,7 +25,7 @@ public class FinishTest {
 		public void itemChanged(ItemChangedEvent e) {
 			test = true;
 		}
-		
+
 	}
 
 	@Test

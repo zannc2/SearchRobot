@@ -46,7 +46,7 @@ public abstract class AbstractHandler implements ItemHandler {
 	}
 
 	@Override
-	public Position getPositioin() {
+	public Position getPosition() {
 		return this.position;
 	}
 
