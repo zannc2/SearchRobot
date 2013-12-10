@@ -8,6 +8,11 @@ import java.awt.Graphics;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * Item in the Field
+ * @author zannc2 & gfells 4
+ *
+ */
 public interface Item extends Serializable{
 	/**
 	 * Draws the Item in the Graphics

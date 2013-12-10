@@ -7,6 +7,11 @@ import frontend.classes.view.ItemChangedEvent;
 import frontend.interfaces.Item;
 import frontend.interfaces.ItemChangedListener;
 
+/**
+ * Implements the common methods and variables of all Items
+ * @author zannc2 & gfells4
+ *
+ */
 public abstract class AbstractItem implements Item {
 	
 	/**

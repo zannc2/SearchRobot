@@ -6,6 +6,11 @@ import frontend.classes.view.Field;
 import frontend.interfaces.Item;
 import frontend.interfaces.Tool;
 
+/**
+ * Implements the common methods and variables of all tools
+ * @author zannc2 & gfells4
+ *
+ */
 public abstract class AbstractTool implements Tool {
 
 	/**

@@ -7,6 +7,12 @@ import java.awt.Cursor;
 import java.awt.Graphics;
 import java.io.Serializable;
 
+/**
+ * Handler for the Items
+ * Handler are used to resize the Items 
+ * @author zannc2 & gfells4
+ *
+ */
 public interface ItemHandler extends Serializable{
 	
 	/**

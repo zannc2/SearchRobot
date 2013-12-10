@@ -102,8 +102,6 @@ public class ViewImpl extends JPanel implements View{
 	@Override
 	public void setTool(Tool t)
 	{
-		System.out.println("Tool Changed");
-
 		this.tool = t;
 		System.out.println(tool.getClass().toString());
 	}

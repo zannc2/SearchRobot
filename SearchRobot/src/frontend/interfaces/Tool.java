@@ -5,6 +5,11 @@ import java.io.Serializable;
 import frontend.classes.view.Field;
 import helper.Position;
 
+/**
+ * The tool defines the methods used to create items. 
+ * @author ca-za
+ *
+ */
 public interface Tool extends Serializable{
 	
 	/**

@@ -12,11 +12,12 @@ import java.awt.Stroke;
 import frontend.interfaces.Item;
 import frontend.interfaces.ItemHandler;
 
+/**
+ * Implements the common methods and variables of all ItemHanlders
+ * @author zannc2 & gfells4
+ *
+ */
 public abstract class AbstractHandler implements ItemHandler {
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 3242887632529170092L;
 
 	/** The size of the quadratic handle. */

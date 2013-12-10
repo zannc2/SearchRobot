@@ -5,9 +5,13 @@ import java.util.EventListener;
 
 import frontend.classes.view.ItemChangedEvent;
 
+/**
+ * Listener for ItemChangedEvent
+ * @author zannc2 & gfells4
+ *
+ */
 public interface ItemChangedListener extends EventListener, Serializable {
 
-	// TODO
 	public void itemChanged(ItemChangedEvent e);
 	
 }
