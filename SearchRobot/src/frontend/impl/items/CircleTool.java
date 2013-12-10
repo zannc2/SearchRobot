@@ -4,7 +4,6 @@ import helper.Position;
 import helper.Size;
 
 import java.awt.Rectangle;
-import java.util.List;
 
 import frontend.impl.view.Field;
 import frontend.interfaces.Item;
@@ -18,10 +17,8 @@ public class CircleTool extends AbstractTool {
 
 	public CircleTool(Field field) {
 		super(field);
-		this.field = field;
 	}
 
-	private Field field;
 	private Item item;
 
 	@Override
@@ -103,7 +100,7 @@ public class CircleTool extends AbstractTool {
 
 	@Override
 	public void mouseUp(Position p) {
-		
+		mouseDrag(p);
 		Rectangle r = getAWTRectangle();
 		item.setPosition(new Position((int)r.getX(), (int)r.getY()));
 		item.setSize(new Size((int)r.getWidth(), (int)r.getHeight()));

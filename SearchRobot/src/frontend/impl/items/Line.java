@@ -24,13 +24,14 @@ public class Line extends AbstractItem {
 	private Position position;
 	private Size size;
 	private Field field;
+	private static final int LINE_STROKE = 10;
 	
 	private List<ItemHandler> itemHandlers = new ArrayList<ItemHandler>();
 	
 	public Line(Position p, Field f) {
 		this.field = f;
 		this.position = p;
-		this.size = new Size(10, 10);
+		this.size = new Size(1,1);
 		
 		/* Add handlers */
 		this.itemHandlers.add(new LineOriginHandler(this, p, this.field));
@@ -43,7 +44,7 @@ public class Line extends AbstractItem {
 	public void draw(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		g2.setStroke(new BasicStroke(10));
+		g2.setStroke(new BasicStroke(LINE_STROKE));
 		g2.drawLine(this.position.getOriginX(), this.position.getOriginY(), 
 				this.position.getOriginX() + this.size.getWidth(), this.position.getOriginY() + this.size.getHeight());
 		//System.out.println("X-Pos: " + this.position.getOriginX() + " YPos: " + this.position.getOriginY() + " height: " + this.getSize().getHeight() + "Width: " + this.getSize().getWidth());
@@ -129,7 +130,7 @@ public class Line extends AbstractItem {
 	private boolean isCloseToLine(Position p, int epsilon) {
 		int p1 = (int)Math.sqrt(Math.pow(this.position.getOriginX()-p.getOriginX(), 2) + Math.pow(this.position.getOriginY()-p.getOriginY(), 2));
 		int p2 = (int)Math.sqrt(Math.pow((this.size.getWidth() + this.position.getOriginX())-p.getOriginX(), 2) + Math.pow((this.size.getHeight() + this.position.getOriginY())-p.getOriginY(), 2));
-		if(p1 <= 6 || p2 <= 6) return true;
+		if(p1 <= LINE_STROKE/2 || p2 <= LINE_STROKE/2) return true;
 		boolean rval = false;
 		Position a = this.position;
 		Position b = new Position(this.size.getWidth() + this.position.getOriginX(), 

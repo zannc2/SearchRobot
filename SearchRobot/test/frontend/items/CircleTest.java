@@ -1,7 +1,9 @@
 package frontend.items;
 
-import frontend.impl.items.Circle;
-import frontend.impl.view.ItemChangedEvent;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import frontend.classes.items.Circle;
+import frontend.classes.view.ItemChangedEvent;
 import frontend.interfaces.ItemChangedListener;
 import helper.Position;
 import helper.Size;
@@ -9,15 +11,12 @@ import helper.Vector;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 public class CircleTest {
 	
 	private int x = 10;
 	private int y = 11;
 	private Position p = new Position(x, y);
-	private Circle c = new Circle(p, null);
+	private Circle c = new Circle(p);
 	
 	private boolean test;
 	
@@ -69,7 +68,7 @@ public class CircleTest {
 		c.addItemChangedListener(listener);
 		Vector v = new Vector(10, 25);
 		Position newP = new Position(p.getOriginX() + 10, p.getOriginY() + 25);
-		Circle newCircle = new Circle(newP, null);
+		Circle newCircle = new Circle(newP);
 		c.move(v);
 		assertTrue(test);
 		assertEquals(c.getPosition(), newCircle.getPosition());

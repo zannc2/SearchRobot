@@ -1,15 +1,15 @@
 package frontend.items;
 
-import frontend.impl.items.Line;
-import frontend.impl.view.ItemChangedEvent;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import frontend.classes.items.Line;
+import frontend.classes.view.ItemChangedEvent;
 import frontend.interfaces.ItemChangedListener;
 import helper.Position;
 import helper.Size;
 import helper.Vector;
-import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 
 
 public class LineTest {
@@ -20,7 +20,7 @@ public class LineTest {
 	private int height = 7;
 	private Size s = new Size(width, height);
 	private Position p = new Position(x, y);
-	private Line l = new Line(p, null);
+	private Line l = new Line(p);
 
 	private boolean test;
 	
@@ -56,7 +56,7 @@ public class LineTest {
 		l.addItemChangedListener(listener);
 		Vector v = new Vector(10, 25);
 		Position newP = new Position(p.getOriginX() + 10, p.getOriginY() + 25);
-		Line newLine = new Line(newP, null);
+		Line newLine = new Line(newP);
 		l.move(v);
 		assertTrue(test);
 		assertEquals(l.getPosition(), newLine.getPosition());

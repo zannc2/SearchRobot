@@ -70,4 +70,10 @@ public interface View
 	 * @return all selected Hanlders
 	 */
 	public List<ItemHandler> getSelectionHandles();
+	
+	/**
+	 * returns the current cursor
+	 * @return cursor
+	 */
+	public Cursor getCursor();
 }

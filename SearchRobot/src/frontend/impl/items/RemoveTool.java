@@ -1,12 +1,11 @@
 package frontend.impl.items;
 
+import frontend.impl.view.Field;
+import frontend.interfaces.Item;
 import helper.Position;
 
 import java.awt.Cursor;
 import java.util.List;
-
-import frontend.impl.view.Field;
-import frontend.interfaces.Item;
 
 public class RemoveTool extends AbstractTool {
 
@@ -38,7 +37,7 @@ public class RemoveTool extends AbstractTool {
 
 	@Override
 	public void mouseDrag(Position p) {
-
+		// not needed
 	}
 
 	@Override
