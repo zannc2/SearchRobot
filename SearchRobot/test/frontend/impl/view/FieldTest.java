@@ -1,12 +1,9 @@
-package frontend.view;
+package frontend.impl.view;
 
 import frontend.impl.items.Circle;
 import frontend.impl.items.Finish;
 import frontend.impl.items.Line;
 import frontend.impl.items.Robot;
-import frontend.impl.view.Field;
-import frontend.impl.view.FieldChangedEvent;
-import frontend.impl.view.ViewImpl;
 import frontend.interfaces.FieldChangedListener;
 import frontend.interfaces.Item;
 import frontend.interfaces.View;

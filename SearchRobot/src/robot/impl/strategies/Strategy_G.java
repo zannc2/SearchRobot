@@ -1,4 +1,4 @@
-package robot.classes.strategies;
+package robot.impl.strategies;
 
 import frontend.impl.view.Field;
 import helper.Position;
@@ -8,8 +8,8 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import robot.classes.FieldMatrix;
-import robot.classes.RobotController;
+import robot.impl.FieldMatrix;
+import robot.impl.RobotController;
 import robot.interfaces.Strategy;
 
 public class Strategy_G implements Strategy{

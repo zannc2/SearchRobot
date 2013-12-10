@@ -44,7 +44,7 @@ import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.UIManager;
 
-import robot.classes.RobotController;
+import robot.impl.RobotController;
 
 public class SearchRobotEditor {
 

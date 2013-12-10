@@ -1,11 +1,10 @@
-package frontend.items;
+package frontend.impl.items;
 
 import static org.junit.Assert.*;
 import frontend.classes.items.Circle;
 import frontend.classes.items.Finish;
 import frontend.classes.view.ItemChangedEvent;
 import frontend.interfaces.ItemChangedListener;
-import frontend.items.CircleTest.MyListener;
 import helper.Position;
 import helper.Size;
 import helper.Vector;

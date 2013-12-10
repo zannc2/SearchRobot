@@ -1,4 +1,4 @@
-package robot.classes;
+package robot.impl;
 
 import frontend.impl.SearchRobotEditor;
 import frontend.impl.view.Field;
@@ -12,7 +12,7 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import robot.classes.strategies.Strategy_G;
+import robot.impl.strategies.Strategy_G;
 import robot.interfaces.Strategy;
 
 public class RobotController implements Runnable {
@@ -237,7 +237,6 @@ public class RobotController implements Runnable {
 	 */
 	private void setDetaultStrategie(){
 		this.strategy = new Strategy_G(this, this.foundMatrix, this.fieldSize, this.field);
-//		this.strategy = new Strategy_Z(this, this.fieldSize, this.field);
 	}
 
 	private void move(List<Position> pl) {
