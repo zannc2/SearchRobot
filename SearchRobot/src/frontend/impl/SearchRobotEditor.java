@@ -491,7 +491,7 @@ public class SearchRobotEditor {
 			openMenuItem.setEnabled(true);
 			saveMenuItem.setEnabled(true);
 			robotSpeedMenuItem.setEnabled(true);
-			startButton.setIcon(new ImageIcon(getClass().getResource("resources/search.png")));
+			startButton.setIcon(new ImageIcon(getClass().getResource("/search.png")));
 
 			view.setField(items, field_size);
 
@@ -518,7 +518,7 @@ public class SearchRobotEditor {
 			saveMenuItem.setEnabled(false);
 			robotSpeedMenuItem.setEnabled(false);
 
-			startButton.setIcon(new ImageIcon(getClass().getResource("resources/abort.png")));
+			startButton.setIcon(new ImageIcon(getClass().getResource("/abort.png")));
 			src = new RobotController(this, view.getField(), robotSpeed);
 			src.start();
 			isStarted = true;
