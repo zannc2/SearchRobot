@@ -46,7 +46,8 @@ public class Finish extends AbstractItem {
 		g2.setStroke(new BasicStroke(1));
 		Image finish;
 		try {
-            finish = ImageIO.read(new File("src/frontend/impl/resources/finish20x20.png"));
+            //finish = ImageIO.read(new File("src/frontend/impl/resources/finish20x20.png"));
+            finish = ImageIO.read(getClass().getResource("/finish20x20.png"));
             g2.drawImage(finish, this.position.getOriginX(), this.position.getOriginY(), null);
         } catch (IOException ex) {
             ex.printStackTrace();

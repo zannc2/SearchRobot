@@ -48,7 +48,8 @@ public class Robot extends AbstractItem{
 		g2.setStroke(new BasicStroke(1));
 		BufferedImage robot;
 		try {
-            robot = ImageIO.read(new File("src/frontend/impl/resources/draw_robot1.png"));
+            //robot = ImageIO.read(new File("src/frontend/impl/resources/draw_robot1.png"));
+            robot = ImageIO.read(getClass().getResource("/draw_robot1.png"));
             AffineTransform tx = AffineTransform.getRotateInstance(direction.getDirection(), 5, 5);
             AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
             g2.drawImage(op.filter(robot, null), this.position.getOriginX(), this.position.getOriginY(), null);
