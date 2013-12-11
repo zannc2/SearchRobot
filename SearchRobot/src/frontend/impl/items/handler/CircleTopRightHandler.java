@@ -47,7 +47,7 @@ public class CircleTopRightHandler extends AbstractHandler {
 		//get bottomLeft Position
 		Position bottomLeft = new Position(origP.getOriginX(), origP.getOriginY() + origS.getHeight());
 
-		// calculate new Size
+        // calculate new Size
 		int width = p.getOriginX() - origP.getOriginX();
 		int height = bottomLeft.getOriginY() - p.getOriginY();
 
@@ -58,7 +58,7 @@ public class CircleTopRightHandler extends AbstractHandler {
 			newS = new Size(width, width);
 		}
 		else {
-			newOrigin = new Position(bottomLeft.getOriginX(), bottomLeft.getOriginY()-height);	
+			newOrigin = new Position(bottomLeft.getOriginX(), bottomLeft.getOriginY()-height);
 			newS = new Size(height, height);
 		}
 
@@ -69,12 +69,12 @@ public class CircleTopRightHandler extends AbstractHandler {
 
 			//change Position and Size
 			Position newP = new Position((int) r.getX(), (int) r.getY());
-			this.position = newP;
-			super.setPosition(newP);
+			this.position = p;
+			super.setPosition(p);
 			this.owner.setPosition(newP);
 			this.owner.setSize(new Size((int) r.getWidth(), (int) r.getHeight()));
 		}
-	}
+    }
 
 	@Override
 	public void stopInteraction(Position p) {

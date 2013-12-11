@@ -47,8 +47,6 @@ public class CircleTopLeftHandler extends AbstractHandler {
 		//get bottomRight Position
 		Position bottomRight = new Position(origP.getOriginX() + origS.getWidth(), origP.getOriginY() + origS.getHeight());
 
-		System.out.println("dragIteraction: origP: " + origP + " origS: " + origS + " bottomRight: " + bottomRight + " newP: " + p);
-
 		//Calculate new Size
 		int width = bottomRight.getOriginX() - p.getOriginX();
 		int height = bottomRight.getOriginY() - p.getOriginY();

@@ -69,8 +69,8 @@ public class CircleBottomRightHandler extends AbstractHandler {
 
 			//change Position and Size
 			Position newP = new Position((int) r.getX(), (int) r.getY());
-			this.position = newP;
-			super.setPosition(newP);
+			this.position = p;
+			super.setPosition(p);
 			this.owner.setPosition(newP);
 			this.owner.setSize(new Size((int) r.getWidth(), (int) r.getHeight()));
 		}
