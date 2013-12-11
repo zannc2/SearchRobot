@@ -29,6 +29,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -365,7 +366,7 @@ public class SearchRobotEditor {
 			String altText,
 			Dimension size) {
 		//Look for the image.
-		String imgLocation = "resources/" + imageName
+		String imgLocation = "/" + imageName
 				+ ".png";
 		URL imageURL = getClass().getResource(imgLocation);
 
