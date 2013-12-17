@@ -1,0 +1,10 @@
+Testsuite: test.frontend.impl.items.selection.MyStateFactoryTest
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.222 sec
+------------- Standard Output ---------------
+frontend.impl.items.selection.DragArea@1b01ade9
+------------- ---------------- ---------------
+
+Testcase: testCreateDragAreaState took 0.002 sec
+Testcase: testCreateDragHandleState took 0 sec
+Testcase: testCreateInitState took 0 sec
+Testcase: testCreateMovingState took 0 sec

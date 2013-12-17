@@ -1,0 +1,27 @@
+Testsuite: test.frontend.impl.view.ViewImplTest
+Tests run: 11, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 0.35 sec
+------------- Standard Output ---------------
+class frontend.impl.items.LineTool
+------------- ---------------- ---------------
+
+Testcase: testSetFieldSize took 0.29 sec
+	FAILED
+expected:<Size[500 x 300]> but was:<java.awt.Dimension[width=0,height=0]>
+junit.framework.AssertionFailedError: expected:<Size[500 x 300]> but was:<java.awt.Dimension[width=0,height=0]>
+	at test.frontend.impl.view.ViewImplTest.testSetFieldSize(ViewImplTest.java:121)
+
+Testcase: testHasRobotAndFinish took 0.009 sec
+Testcase: testPaintComponentGraphics took 0 sec
+Testcase: testSetAndGetTool took 0.001 sec
+Testcase: testSelection took 0.008 sec
+Testcase: testGetField took 0.001 sec
+Testcase: testGetStateFactory took 0.001 sec
+Testcase: testGetSelectionHandles took 0.001 sec
+	FAILED
+Not yet implemented
+junit.framework.AssertionFailedError: Not yet implemented
+	at test.frontend.impl.view.ViewImplTest.testGetSelectionHandles(ViewImplTest.java:101)
+
+Testcase: testSetField took 0 sec
+Testcase: testViewImpl took 0 sec
+Testcase: testSetItemColor took 0.001 sec

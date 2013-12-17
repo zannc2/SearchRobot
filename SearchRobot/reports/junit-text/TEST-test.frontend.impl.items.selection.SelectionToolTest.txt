@@ -1,0 +1,23 @@
+Testsuite: test.frontend.impl.items.selection.SelectionToolTest
+Tests run: 20, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.253 sec
+
+Testcase: testClearSelection took 0.218 sec
+Testcase: testDoDiscardSelectionArea took 0 sec
+Testcase: testGetCurrentHandle took 0 sec
+Testcase: testSetCurrentHandle took 0 sec
+Testcase: testDoInitSelectionArea took 0 sec
+Testcase: testDoAdjustSelections took 0 sec
+Testcase: testDoSetSelectionAreaTo took 0 sec
+Testcase: testDoSetItemeHandleCursor took 0.001 sec
+Testcase: testIsOnEmptyArea took 0.001 sec
+Testcase: testGetSelection took 0 sec
+Testcase: testEndMoveSelectedItems took 0 sec
+Testcase: testDoAddToSelection took 0.001 sec
+Testcase: testDoSetMoveCursor took 0 sec
+Testcase: testGetPreviousMouseDragPosition took 0 sec
+Testcase: testDoMoveSelectedItems took 0 sec
+Testcase: testDoSetDefaultCursor took 0.003 sec
+Testcase: testGetItemHandlerByPosition took 0 sec
+Testcase: testIsOnItemHandle took 0.001 sec
+Testcase: testIsOnUnselectedItem took 0 sec
+Testcase: testIsOnSelectedItem took 0 sec

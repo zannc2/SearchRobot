@@ -1,0 +1,277 @@
+<?xml version="1.0"?>
+
+<!-- ===========================================================================
+     Build with the following targets:
+     
+     clean: removes generated .class files generated during previous compilation
+     clean-javadoc: removes javadoc related files 
+     clean-reports: removes reporst related files
+     clean-all: erases all the directories/files created by previous use
+     init: necessary before every use
+     compile: compile all the java sources
+     compile-debug: compile all the java sources with debug option to retain 
+                    line numbers for cobetura
+     run: run the application but not the tests
+     run-tests: run the unit test only and produce a short report (text)
+     instrument: instruments the .class for cobertura
+     cover-tests: executes the tests and produces a textual report
+     cover-reports: executes the tests and produces a code coverage reports
+                    in HTML format, see ${report.dir} directory
+     javadoc: used for the generation of java documentation, see {javadoc.dir}.
+
+     usage: ant <target>,  e.g. ant run-tests.
+     =========================================================================== -->
+
+<project name="Build file" default="compile" basedir=".">
+
+  <!-- build-specific properties -->
+  <property file="${user.home}/.ant.properties" />
+  <property file="build.properties" />
+
+  <property name="encoding" value="UTF-8" />
+
+  <!-- set global properties for this build -->
+  <property name="src.dir" value="src" />
+  <property name="lib.dir" value="lib" />
+  <property name="build.dir" value="build" />
+  
+  <property name="javadoc.dir" value="javadoc" />
+
+  <!-- Value used for producing the zip file -->
+  <property name="tmp.dir" value="enl" />
+
+  <property name="reports.dir" value="reports" />
+  
+  <property name="build.classes.dir" value="${build.dir}/classes" />
+  <property name="build.instrumented.dir" value="${build.dir}/instrumented" />
+
+  <property name="junit.xml.dir" value="${reports.dir}/junit-xml" />
+  <property name="junit.html.dir" value="${reports.dir}/junit-html" />
+  <property name="junit.text.dir" value="${reports.dir}/junit-text" />
+  <property name="coverage.xml.dir" value="${reports.dir}/cobertura-xml" />
+  <property name="cobertura.html.dir" value="${reports.dir}/cobertura-html" />
+
+  <property name="cobertura.data.file" value="cobertura.ser" />
+  
+  <!-- main class for run target -->
+  <!-- Useless because you do not have any main.class, tests only -->
+  <property name="main.class" value="mypackage.MyClass" />
+
+  <!-- =================================================================== -->
+  <!-- Class paths                                                         -->
+  <!-- =================================================================== -->
+
+  <path id="compile.classpath">
+    <fileset dir="${junit.dir}">
+      <include name="junit*.jar" />
+    </fileset>
+  </path>
+
+  <path id="run.classpath">
+    <pathelement location="${build.classes.dir}" />
+    <fileset dir="${junit.dir}">
+      <include name="junit*.jar" />
+    </fileset>
+  </path>
+
+  <path id="javadoc.src.path">
+    <pathelement location="${src.dir}" />
+  </path>
+
+  <!-- cobertura task definition -->
+  <path id="cobertura.classpath">
+    <fileset dir="${cobertura.dir}">
+      <include name="cobertura.jar" />
+      <include name="lib/**/*.jar" />
+    </fileset>
+  </path>
+  <taskdef classpathref="cobertura.classpath" resource="tasks.properties"/>
+
+  <!-- =================================================================== -->
+  <!-- Init targets                                                        -->
+  <!-- =================================================================== -->
+  <target name="init">
+  <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${build.dir}" />
+    <mkdir dir="${build.classes.dir}" />
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Compile with debug option to keep line number for test coverage     -->
+  <!-- =================================================================== -->
+  <target name="compile-debug" depends="clean-all, init" description="Compiles all Java sources">
+    <javac encoding="${encoding}"
+	   srcdir="${src.dir}"
+	   destdir="${build.classes.dir}"
+	   classpathref="compile.classpath"
+           includeantruntime="false" deprecation="on"
+	   debug="true" debuglevel="vars,lines,source">
+      <include name="**/*.java" />
+    </javac>
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Compile (default target)                                            -->
+  <!-- =================================================================== -->
+  <target name="compile" depends="init" description="Compiles all Java sources">
+    <javac srcdir="${src.dir}"
+	   destdir="${build.classes.dir}"
+	   classpathref="compile.classpath"
+           includeantruntime="false" deprecation="on">
+      <!-- debug="true" debuglevel="vars,lines,source" -->
+      <include name="**/*.java" />
+    </javac>
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Run and Run-tests targets                                           -->
+  <!-- =================================================================== -->
+  <target name="run" depends="compile" description="Runs the program">
+    <java classname="${main.class}" fork="true" classpathref="run.classpath" />
+  </target>
+
+  <target name="run-tests" depends="compile" description="Runs all the tests">
+    
+    <delete dir="${junit.text.dir}" />
+    <mkdir dir="${reports.dir}" />
+    <mkdir dir="${junit.text.dir}" />
+    
+    <junit printsummary="yes" haltonfailure="no" haltonerror="no" fork="yes">
+      <classpath refid="run.classpath" />
+      <formatter type="plain" />
+      <batchtest fork="yes" todir="${junit.text.dir}">
+        <fileset dir="${build.classes.dir}">
+          <include name="**/*Test.class" />
+        </fileset>
+      </batchtest>
+    </junit>
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Test Coverage                                                       -->
+  <!-- =================================================================== -->
+
+  <!-- Cobertura instrumentation -->
+  <target name="instrument" depends="compile-debug">
+    <delete quiet="false" failonerror="false">
+      <fileset dir="$build.instrumented.dir}" />
+    </delete>
+    <delete file="${cobertura.data.file}" />
+    
+    <cobertura-instrument todir="${build.instrumented.dir}">
+      <fileset dir="${build.classes.dir}">
+        <include name="**/*.class" />
+        <exclude name="**/*Test.class" />
+      </fileset>
+    </cobertura-instrument>
+  </target>
+
+  <!-- Run all tests with instrumented classes -->
+  <target name="cover-tests" depends="instrument">
+
+    <delete dir="${junit.text.dir}" />
+    <mkdir dir="${reports.dir}" />
+    <mkdir dir="${junit.text.dir}" />
+  
+    <junit printsummary="yes" haltonerror="no" haltonfailure="no" fork="yes">
+
+      <!-- IMPORTANT for Cobertura workaround with JAVA 7 -->
+      <jvmarg value="-XX:-UseSplitVerifier" />
+
+      <classpath location="${build.dir}" />
+      <classpath location="${build.instrumented.dir}" />
+      <classpath>
+        <path refid="cobertura.classpath"/>
+        <path refid="run.classpath" />
+      </classpath>
+      <formatter type="plain" />
+      <batchtest fork="yes" todir="${junit.text.dir}">
+        <fileset dir="${build.classes.dir}">
+          <include name="**/*Test.class"/>
+        </fileset>
+      </batchtest>
+    </junit>
+  </target>
+
+  <!-- Generates the test coverage report -->
+  <target name="cover-reports" depends="cover-tests">
+
+    <mkdir dir="${reports.dir}" />
+    <mkdir dir="${cobertura.html.dir}" />
+
+    <cobertura-report format="html" datafile="${cobertura.data.file}"
+                      destdir="${cobertura.html.dir}" srcdir="${src.dir}" />
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Documentation with JavaDoc                                          -->
+  <!-- =================================================================== -->
+  <target name="javadoc" description="Generate JavaDoc HTML pages"
+          depends="init">
+    <mkdir dir="${javadoc.dir}" />
+    <javadoc sourcepathref="javadoc.src.path"
+             classpathref="compile.classpath"
+	     packagenames="*"
+             destdir="${javadoc.dir}" author="true" use="true"
+             verbose="false" package="true">
+      <link href="http://download.oracle.com/javase/6/docs/api/" />
+      <!-- http://java.sun.com/j2se/1.5.0/docs/api/ -->
+      <link href="http://www.junit.org/junit/javadoc/4.5/" />
+    </javadoc>
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Zip targets                                                         -->
+  <!-- =================================================================== -->
+  <target name="zip" description="Builds the ZIP file with the required stuff">
+    <delete file="${project.zip.file}" />
+    <delete dir="${tmp.dir}" />
+    <mkdir dir="${tmp.dir}" />
+    <mkdir dir="${tmp.dir}/src" />
+    <mkdir dir="${tmp.dir}/doc" />
+    <copy file="build.xml" todir="${tmp.dir}" />
+    <copy file="build.properties" todir="${tmp.dir}" />
+    <copy file="README" todir="${tmp.dir}" />
+    <copy todir="${tmp.dir}/src">
+      <fileset dir="src" />
+    </copy>
+    <copy todir="${tmp.dir}/doc">
+      <fileset dir="doc" />
+    </copy>
+    <zip destfile="${project.zip.file}"
+         basedir="."
+         includes="${tmp.dir}/**">
+    </zip>
+    <delete dir="${tmp.dir}" />
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Clean targets                                                       -->
+  <!-- =================================================================== -->
+  <target name="clean" description="Removes generated class files">
+    <delete dir="${build.dir}" />
+  </target>
+
+  <target name="clean-reports" description="Removes generated reports files">
+    <delete dir="${reports.dir}" />
+  </target>
+
+  <target name="clean-javadoc" description="Removes generated Javadoc files">
+    <delete dir="${javadoc.dir}" />
+  </target>
+
+  <target name="clean-all" depends="clean, clean-reports, clean-javadoc"
+          description="Removes all generated artifacts">
+    <!-- all the temporary files -->
+    <delete dir="${tmp}" />
+    <delete file="${cobertura.data.file}" />
+    <!-- project zip file -->
+    <delete file="${project.zip.file}" />
+    <!-- all the files that end with a tilde (backcup version) -->
+    <delete>
+      <fileset dir="." defaultexcludes="no">
+        <filename name="*~" />
+      </fileset>
+    </delete>
+  </target>
+</project>

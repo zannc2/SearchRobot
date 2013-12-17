@@ -1,0 +1,21 @@
+Testsuite: test.robot.impl.RobotControllerTest
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.141 sec
+------------- Standard Error -----------------
+Resource not found: /selection.png
+Resource not found: /remove.png
+Resource not found: /robot.png
+Resource not found: /finish.png
+Resource not found: /line.png
+Resource not found: /circle.png
+Resource not found: /search.png
+Resource not found: /selection.png
+Resource not found: /remove.png
+Resource not found: /robot.png
+Resource not found: /finish.png
+Resource not found: /line.png
+Resource not found: /circle.png
+Resource not found: /search.png
+------------- ---------------- ---------------
+
+Testcase: testFinished took 1.001 sec
+Testcase: testUnreachable took 0.115 sec
