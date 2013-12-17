@@ -1,7 +1,6 @@
 package frontend.impl.items.handler;
 
 import frontend.impl.items.Circle;
-import frontend.impl.items.handler.CircleBottomLeftHandler;
 import frontend.impl.view.Field;
 import frontend.impl.view.ViewImpl;
 import frontend.interfaces.Item;
