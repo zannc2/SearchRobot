@@ -2,7 +2,7 @@ package frontend.impl.items;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-
+import frontend.impl.view.Field;
 import frontend.impl.view.ItemChangedEvent;
 import frontend.interfaces.ItemChangedListener;
 import helper.Position;
@@ -16,7 +16,7 @@ public class RobotTest {
 	private int x = 10;
 	private int y = 11;
 	private Position p = new Position(x, y);
-	private Robot r = new Robot(p, new Size(10,10), null);
+	private Robot r = new Robot(p, new Size(10,10), new Field(new Size(300, 300), null));
 	
 	private boolean test;
 	
@@ -35,7 +35,7 @@ public class RobotTest {
 	 */
 	@Test
 	public void testSize() {
-		Size s = new Size(8,8);
+		Size s = new Size(10,10);
 		assertEquals(r.getSize(), s);
 		s = new Size(20, 20);
 		r.setSize(s);

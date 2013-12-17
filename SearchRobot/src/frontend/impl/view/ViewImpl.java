@@ -7,10 +7,6 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.RenderingHints.Key;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -21,10 +17,7 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import frontend.impl.items.Finish;
-import frontend.impl.items.FinishTool;
-import frontend.impl.items.RemoveTool;
 import frontend.impl.items.Robot;
-import frontend.impl.items.RobotTool;
 import frontend.impl.items.selection.MyStateFactory;
 import frontend.impl.items.selection.SelectionTool;
 import frontend.interfaces.FieldChangedListener;
@@ -82,12 +75,16 @@ public class ViewImpl extends JPanel implements View{
 		this.itemColor = itemColor;
 		repaint();
 	}
-
+	
+	public Color getItemColor()
+	{
+		return this.itemColor;
+	}
 
 	@Override
 	public void paintComponent(Graphics g) {	
 		super.paintComponent(g);
-		g.setColor(itemColor);
+		g.setColor(getItemColor());
 		// If there are selections, draw the selection's handles.
 		for (ItemHandler h : this.handlers) {
 			h.draw(g);
@@ -152,29 +149,7 @@ public class ViewImpl extends JPanel implements View{
 
 		@Override
 		public void mousePressed(MouseEvent e) {
-			Tool t = getTool();
-			if(t instanceof RobotTool)
-			{
-				List<Item> l = getField().getItems();
-				boolean draw = true;
-				for(int i = 0; i < l.size(); i++){
-					if(l.get(i) instanceof Robot) draw = false;
-				}
-				if(draw == true) t.mouseDown(new Position(e.getX(), e.getY()));
-			}
-			else if(t instanceof FinishTool)
-			{
-				List<Item> l = getField().getItems();
-				boolean draw = true;
-				for(int i = 0; i < l.size(); i++){
-					if(l.get(i) instanceof Finish) draw = false;
-				}
-				if(draw == true) t.mouseDown(new Position(e.getX(), e.getY()));
-			}
-			else
-			{
-				t.mouseDown(new Position(e.getX(), e.getY()));
-			};
+			getTool().mouseDown(new Position(e.getX(), e.getY()));
 		}
 
 		@Override

@@ -1,7 +1,7 @@
 package frontend.impl.items;
 
 import static org.junit.Assert.*;
-
+import frontend.impl.view.Field;
 import frontend.impl.view.ItemChangedEvent;
 import frontend.interfaces.ItemChangedListener;
 import helper.Position;
@@ -15,7 +15,7 @@ public class FinishTest {
 	private int x = 10;
 	private int y = 11;
 	private Position p = new Position(x, y);
-	private Finish f = new Finish(p, null);
+	private Finish f = new Finish(p, new Field(new Size(200, 200), null));
 	
 	private boolean test;
 	
@@ -30,7 +30,7 @@ public class FinishTest {
 
 	@Test
 	public void testSize() {
-		Size s = new Size(8,8);
+		Size s = new Size(20,20);
 		assertEquals(f.getSize(), s);
 		s = new Size(20, 20);
 		f.setSize(s);

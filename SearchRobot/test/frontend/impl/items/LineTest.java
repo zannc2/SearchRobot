@@ -36,7 +36,7 @@ public class LineTest {
 	/* test set & get Size */
 	@Test
 	public void testGet() {
-		Size s2 = new Size(4, 4);
+		Size s2 = new Size(1, 1);
 		assertEquals(l.getSize(), s2);
 		l.setSize(s);
 		assertEquals(l.getSize(), s);

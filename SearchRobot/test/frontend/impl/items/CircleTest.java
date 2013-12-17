@@ -38,19 +38,15 @@ public class CircleTest {
 		assertEquals(c.getSize(), s);
 		s = new Size(10, 20);
 		c.setSize(s);
-		s = new Size(20, 20);
 		assertEquals(c.getSize(), s);
 		s = new Size(20, 10);
 		c.setSize(s);
-		s = new Size(10, 10);
 		assertEquals(c.getSize(), s);
 		s = new Size(11, 15);
 		c.setSize(s);
-		s = new Size(15, 15);
 		assertEquals(c.getSize(), s);
 		s = new Size(11, 14);
 		c.setSize(s);
-		s = new Size(11, 11);
 		assertEquals(c.getSize(), s);
 	}
 	

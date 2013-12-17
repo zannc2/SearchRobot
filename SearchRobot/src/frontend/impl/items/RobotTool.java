@@ -25,38 +25,67 @@ public class RobotTool extends AbstractTool {
 	@Override
 	public void mouseDown(Position p) {
 		Position newP = new Position((p.getOriginX()/10)*10, (p.getOriginY()/10)*10);
-		if(newP.getOriginX()>=0 && newP.getOriginY() >= 0 && newP.getOriginX() <= field.getFieldSize().getWidth()-10 && newP.getOriginY() 
-				<= field.getFieldSize().getHeight()-10)
+
+		List<Item> l = getField().getItems();
+
+		boolean newItem = true;
+		for(int i = 0; i < l.size(); i++){
+			if(l.get(i) instanceof Robot) newItem = false;
+		}
+
+		if(newItem)
 		{
-			this.item = new Robot(newP, size, field);
-			getField().addItem(this.item); 
+			if(newP.getOriginX()>=0 && newP.getOriginY() >= 0 && newP.getOriginX() <= field.getFieldSize().getWidth()-10 && newP.getOriginY() 
+					<= field.getFieldSize().getHeight()-10)
+			{
+				this.item = new Robot(newP, size, field);
+				getField().addItem(this.item); 
+				
+				if(!field.checkIfPositionFree(item)) 
+				{
+					field.removeItem(item);
+					this.item = null;
+				}
+			}
+		}
+		else
+		{
+			Position oldP = item.getPosition();
+			if(newP.getOriginX()>=0 && newP.getOriginY() >= 0 && newP.getOriginX() <= field.getFieldSize().getWidth()-10 && newP.getOriginY() 
+					<= field.getFieldSize().getHeight()-10)
+			{
+				item.setPosition(newP);
+				
+				if(!field.checkIfPositionFree(item)) 
+				{
+					item.setPosition(oldP);
+				}
+			}
 		}
 	}
 
 	@Override
 	public void mouseDrag(Position p) {
-		//move robot
-
-		Position newP = new Position((p.getOriginX()/10)*10, (p.getOriginY()/10)*10);
-		if(newP.getOriginX()>=0 && newP.getOriginY() >= 0 && newP.getOriginX() <= field.getFieldSize().getWidth()-10 && newP.getOriginY() 
-				<= field.getFieldSize().getHeight()-10)
-		{
-			item.setPosition(newP);
-		}
+//
+//		Position newP = new Position((p.getOriginX()/10)*10, (p.getOriginY()/10)*10);
+//		if(newP.getOriginX()>=0 && newP.getOriginY() >= 0 && newP.getOriginX() <= field.getFieldSize().getWidth()-10 && newP.getOriginY() 
+//				<= field.getFieldSize().getHeight()-10)
+//		{
+//			item.setPosition(newP);
+//		}
 	}
 
 	@Override
 	public void mouseUp(Position p) {
-		Position newP = new Position((p.getOriginX()/10)*10, (p.getOriginY()/10)*10);
-		if(newP.getOriginX()>=0 && newP.getOriginY() >= 0 && newP.getOriginX() <= field.getFieldSize().getWidth()-10 && newP.getOriginY() 
-				<= field.getFieldSize().getHeight()-10)
-		{
-			item.setPosition(newP);
-		}
-		
-		//chech position
-		if(!field.checkIfPositionFree(item)) getField().removeItem(item);
-
+//		Position newP = new Position((p.getOriginX()/10)*10, (p.getOriginY()/10)*10);
+//		if(newP.getOriginX()>=0 && newP.getOriginY() >= 0 && newP.getOriginX() <= field.getFieldSize().getWidth()-10 && newP.getOriginY() 
+//				<= field.getFieldSize().getHeight()-10)
+//		{
+//			item.setPosition(newP);
+//		}
+//
+//		//chech position
+//		if(!field.checkIfPositionFree(item)) getField().removeItem(item);
 	}
 
 	@Override
