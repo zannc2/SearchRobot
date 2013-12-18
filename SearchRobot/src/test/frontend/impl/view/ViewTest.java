@@ -3,7 +3,6 @@ package test.frontend.impl.view;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 import frontend.impl.items.Finish;
 import frontend.impl.items.Line;
 import frontend.impl.items.LineTool;
@@ -17,6 +16,7 @@ import helper.Position;
 import helper.Size;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -98,7 +98,10 @@ public class ViewTest {
 	
 	@Test
 	public void testGetSelectionHandles() {
-		fail("Not yet implemented");
+		assertTrue(vi.getSelectionHandles().size() == 0);
+		Item line1 = new Line(new Position(10, 10), new Field(null, null));
+		vi.addToSelection(line1);
+		assertFalse(vi.getSelectionHandles().size() == 0);
 	}
 
 	@Test
@@ -118,11 +121,10 @@ public class ViewTest {
 
 	@Test
 	public void testSetFieldSize() {
-		assertEquals(fieldSize, vi.getSize());
-		
+		assertEquals(new Dimension(fieldSize.getWidth(), fieldSize.getHeight()), vi.getPreferredSize());
 		Size newSize = new Size(400, 400);
 		vi.setFieldSize(newSize);
-		assertEquals(newSize, vi.getSize());
+		assertEquals(new Dimension(newSize.getWidth(), newSize.getHeight()), vi.getPreferredSize());
 	}
 
 	@Test
