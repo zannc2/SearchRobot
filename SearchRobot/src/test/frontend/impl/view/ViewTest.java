@@ -9,7 +9,7 @@ import frontend.impl.items.Line;
 import frontend.impl.items.LineTool;
 import frontend.impl.items.Robot;
 import frontend.impl.view.Field;
-import frontend.impl.view.ViewImpl;
+import frontend.impl.view.View;
 import frontend.interfaces.Item;
 import frontend.interfaces.StateFactory;
 import frontend.interfaces.Tool;
@@ -23,16 +23,16 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ViewImplTest {
+public class ViewTest {
 
 	Size robotSize, fieldSize; 
-	ViewImpl vi;
+	View vi;
 	
 	@Before
 	public void setup () {	
 		robotSize = new Size(10, 10);
 		fieldSize = new Size(500, 300);
-		vi =  new ViewImpl(fieldSize, robotSize, Color.BLACK);
+		vi =  new View(fieldSize, robotSize, Color.BLACK);
 	}
 	
 	

@@ -1,20 +1,14 @@
 package test.frontend.impl.items.selection;
 
-import frontend.impl.items.Line;
-import frontend.impl.items.selection.Init;
 import frontend.impl.items.selection.SelectionTool;
 import frontend.impl.items.selection.SelectionToolState;
 import frontend.impl.view.Field;
-import frontend.impl.view.ViewImpl;
+import frontend.impl.view.View;
 import frontend.interfaces.Item;
-import frontend.interfaces.View;
 import helper.Position;
 import helper.Size;
 
-import org.junit.Before;
 import org.junit.Test;
-
-import java.awt.*;
 
 /**
  * Created by ca-za on 13.12.13.

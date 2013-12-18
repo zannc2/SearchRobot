@@ -6,7 +6,7 @@ import frontend.impl.items.LineTool;
 import frontend.impl.items.RemoveTool;
 import frontend.impl.items.RobotTool;
 import frontend.impl.items.selection.SelectionTool;
-import frontend.impl.view.ViewImpl;
+import frontend.impl.view.View;
 import frontend.interfaces.Item;
 import frontend.interfaces.Tool;
 import helper.Size;
@@ -29,7 +29,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -60,7 +59,7 @@ public class SearchRobotEditor {
 	private JMenu fileMenu, editMenu, helpMenu;
 	private JMenuItem newMenuItem, openMenuItem, saveMenuItem, exitMenuItem, helpMenuItem, bgColorMenuItem, itemColorMenuItem, robotSpeedMenuItem;
 	private JPanel mainPanel;
-	private ViewImpl view;
+	private View view;
 	private JToolBar toolBar;
 	private ActionListener buttonEvent;
 	private List<Tool> tools = new ArrayList<Tool>();
@@ -250,7 +249,7 @@ public class SearchRobotEditor {
 		/****************************** Main Panel ***********************/
 
 		// Create draw panel
-		view = new ViewImpl(field_size, ROBOT_SIZE, Color.BLACK);
+		view = new View(field_size, ROBOT_SIZE, Color.BLACK);
 		view.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 		mainPanel = new JPanel(new GridBagLayout());

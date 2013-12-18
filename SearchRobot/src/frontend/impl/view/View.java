@@ -25,9 +25,8 @@ import frontend.interfaces.Item;
 import frontend.interfaces.ItemHandler;
 import frontend.interfaces.StateFactory;
 import frontend.interfaces.Tool;
-import frontend.interfaces.View;
 
-public class ViewImpl extends JPanel implements View{
+public class View extends JPanel{
 
 	/**
 	 * 
@@ -56,7 +55,7 @@ public class ViewImpl extends JPanel implements View{
 
 	}
 
-	public ViewImpl(Size fieldSize, Size robotSize, Color itemColor) {
+	public View(Size fieldSize, Size robotSize, Color itemColor) {
 		super();
 		field = new Field(this, fieldSize, robotSize);
 		field.addListener(l);
@@ -95,15 +94,12 @@ public class ViewImpl extends JPanel implements View{
 		}
 	}
 
-
-	@Override
 	public void setTool(Tool t)
 	{
 		this.tool = t;
 		System.out.println(tool.getClass().toString());
 	}
 
-	@Override
 	public Tool getTool()
 	{
 		return this.tool;
@@ -166,12 +162,10 @@ public class ViewImpl extends JPanel implements View{
 	/* Selection*/
 
 
-	@Override
 	public StateFactory getStateFactory() {
 		return new MyStateFactory();
 	}
 
-	@Override
 	public void addToSelection(Item i) {
 		if (!this.selection.contains(i)) {
 			this.selection.add(i);
@@ -183,7 +177,6 @@ public class ViewImpl extends JPanel implements View{
 		repaint();
 	}
 
-	@Override
 	public void removeFromSelection(Item i) {
 		this.selection.remove(i);
 		for (Iterator<ItemHandler> it = this.handlers.iterator(); it.hasNext();) {
@@ -194,12 +187,10 @@ public class ViewImpl extends JPanel implements View{
 		repaint();
 	}
 
-	@Override
 	public List<Item> getSelection() {
 		return this.selection;
 	}
 
-	@Override
 	public void clearSelection() {
 		this.selection.clear();
 		this.handlers.clear();
@@ -207,7 +198,6 @@ public class ViewImpl extends JPanel implements View{
 		repaint();
 	}
 
-	@Override
 	public List<ItemHandler> getSelectionHandles() {
 		return this.handlers;
 	}

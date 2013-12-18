@@ -13,9 +13,8 @@ import org.junit.Test;
 import frontend.impl.items.Line;
 import frontend.impl.items.RemoveTool;
 import frontend.impl.view.Field;
-import frontend.impl.view.ViewImpl;
+import frontend.impl.view.View;
 import frontend.interfaces.Item;
-import frontend.interfaces.View;
 
 
 public class RemoveToolTest {
@@ -25,7 +24,7 @@ public class RemoveToolTest {
 
 	@Before
 	public void setup () {	
-		view = new ViewImpl(new Size(600, 300), new Size(10, 10), Color.RED);
+		view = new View(new Size(600, 300), new Size(10, 10), Color.RED);
 		field = view.getField();
 	}
 

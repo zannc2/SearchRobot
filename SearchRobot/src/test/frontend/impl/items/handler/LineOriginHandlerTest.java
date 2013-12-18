@@ -1,22 +1,21 @@
 package test.frontend.impl.items.handler;
 
-import frontend.impl.items.Line;
-import frontend.impl.items.handler.LineOriginHandler;
-import frontend.impl.view.Field;
-import frontend.impl.view.ViewImpl;
-import frontend.interfaces.Item;
-import frontend.interfaces.ItemHandler;
-import frontend.interfaces.View;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import helper.Position;
 import helper.Size;
+
+import java.awt.Color;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import java.awt.*;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import frontend.impl.items.Line;
+import frontend.impl.items.handler.LineOriginHandler;
+import frontend.impl.view.Field;
+import frontend.impl.view.View;
+import frontend.interfaces.Item;
+import frontend.interfaces.ItemHandler;
 
 /**
  * Created by ca-za on 10.12.13.
@@ -36,7 +35,7 @@ public class LineOriginHandlerTest {
 
     @Before
     public void setUp() {
-        this.view = new ViewImpl(this.fieldSize, this.robotSize, this.itemColor);
+        this.view = new View(this.fieldSize, this.robotSize, this.itemColor);
         this.field = new Field(this.view, this.fieldSize, this.robotSize);
         this.item = new Line(this.position, this.field);
 

@@ -1,23 +1,19 @@
 package test.frontend.impl.items.selection;
 
-import frontend.impl.items.Line;
-import frontend.impl.items.selection.MyStateFactory;
-import frontend.impl.items.selection.SelectionTool;
-import frontend.impl.items.selection.SelectionToolState;
-import frontend.impl.view.Field;
-import frontend.impl.view.ViewImpl;
-import frontend.interfaces.Item;
-import frontend.interfaces.View;
 import helper.Position;
 import helper.Size;
+
+import java.awt.Color;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import java.awt.*;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import frontend.impl.items.Line;
+import frontend.impl.items.selection.SelectionTool;
+import frontend.impl.items.selection.SelectionToolState;
+import frontend.impl.view.Field;
+import frontend.impl.view.View;
+import frontend.interfaces.Item;
 
 /**
  * Created by ca-za on 13.12.13.
@@ -46,7 +42,7 @@ public class SelectionToolTest {
 
     @Before
     public void setUp() {
-        this.view = new ViewImpl(new Size(600, 300), new Size(10, 10), Color.BLACK);
+        this.view = new View(new Size(600, 300), new Size(10, 10), Color.BLACK);
         this.field = new Field(this.view, new Size(600, 300), new Size(10, 10));
         this.selectionTool = new SelectionTool(this.field);
         this.state = new MockState(this.selectionTool);

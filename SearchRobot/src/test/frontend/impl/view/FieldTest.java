@@ -1,27 +1,28 @@
 package test.frontend.impl.view;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import helper.Direction;
+import helper.Position;
+import helper.Size;
+
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.Test;
+
 import frontend.impl.items.Circle;
 import frontend.impl.items.Finish;
 import frontend.impl.items.Line;
 import frontend.impl.items.Robot;
 import frontend.impl.view.Field;
 import frontend.impl.view.FieldChangedEvent;
-import frontend.impl.view.ViewImpl;
+import frontend.impl.view.View;
 import frontend.interfaces.FieldChangedListener;
 import frontend.interfaces.Item;
-import frontend.interfaces.View;
-import helper.Direction;
-import helper.Position;
-import helper.Size;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.Assert.*;
 
 public class FieldTest {
 	
@@ -50,7 +51,7 @@ public class FieldTest {
 	
 	@Before
     public void setUp() {
-		this.view = new ViewImpl(this.fieldSize, this.robotSize, this.itemColor);
+		this.view = new View(this.fieldSize, this.robotSize, this.itemColor);
 		this.field = new Field(this.view, this.fieldSize, this.robotSize);
 		
 		this.itemA = new Line(new Position(10, 10), null);

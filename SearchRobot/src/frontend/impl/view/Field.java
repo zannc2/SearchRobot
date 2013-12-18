@@ -3,7 +3,6 @@ package frontend.impl.view;
 import helper.Direction;
 import helper.Position;
 import helper.Size;
-import helper.Vector;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -15,7 +14,6 @@ import frontend.impl.items.Robot;
 import frontend.interfaces.FieldChangedListener;
 import frontend.interfaces.Item;
 import frontend.interfaces.ItemChangedListener;
-import frontend.interfaces.View;
 
 public class Field implements Serializable{
 	
