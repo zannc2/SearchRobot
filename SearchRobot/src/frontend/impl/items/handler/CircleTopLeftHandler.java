@@ -82,6 +82,8 @@ public class CircleTopLeftHandler extends AbstractHandler {
 		this.dragInteraction(p);
 		
 		if(!this.field.checkIfPositionFree(this.owner)) {
+			this.position = this.originalPosition;
+			super.setPosition(this.originalPosition);
 			this.owner.setPosition(this.originalPosition);
 			this.owner.setSize(this.originalSize);
 		}

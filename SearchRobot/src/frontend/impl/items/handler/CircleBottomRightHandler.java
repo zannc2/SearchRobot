@@ -11,6 +11,7 @@ import java.awt.Rectangle;
 public class CircleBottomRightHandler extends AbstractHandler {
 
 	private Position originalPosition;
+	private Position originalItemPosition;
 	private Size originalSize;
 	
 	private static final long serialVersionUID = 7085318201596784835L;
@@ -34,7 +35,8 @@ public class CircleBottomRightHandler extends AbstractHandler {
 
 	@Override
 	public void startInteraction(Position p) {
-		this.originalPosition = this.owner.getPosition();
+		this.originalPosition = this.position;
+		this.originalItemPosition = this.owner.getPosition();
 		this.originalSize = this.owner.getSize();
 	}
 
@@ -81,7 +83,9 @@ public class CircleBottomRightHandler extends AbstractHandler {
 		this.dragInteraction(p);
 		
 		if(!this.field.checkIfPositionFree(this.owner)) {
-			this.owner.setPosition(this.originalPosition);
+			this.position = this.originalPosition;
+			super.setPosition(this.originalPosition);
+			this.owner.setPosition(this.originalItemPosition);
 			this.owner.setSize(this.originalSize);
 		}
 	}

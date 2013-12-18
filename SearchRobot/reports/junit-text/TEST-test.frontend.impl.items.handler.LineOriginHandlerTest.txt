@@ -1,19 +1,9 @@
 Testsuite: test.frontend.impl.items.handler.LineOriginHandlerTest
-Tests run: 6, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 0.242 sec
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.245 sec
 
-Testcase: testDragInteraction took 0.122 sec
-	FAILED
-expected:<Size[-9 x -9]> but was:<Size[0 x 0]>
-junit.framework.AssertionFailedError: expected:<Size[-9 x -9]> but was:<Size[0 x 0]>
-	at test.frontend.impl.items.handler.LineOriginHandlerTest.testDragInteraction(LineOriginHandlerTest.java:60)
-
-Testcase: testStopInteraction took 0.002 sec
-	FAILED
-expected:<Size[-9 x -9]> but was:<Size[0 x 0]>
-junit.framework.AssertionFailedError: expected:<Size[-9 x -9]> but was:<Size[0 x 0]>
-	at test.frontend.impl.items.handler.LineOriginHandlerTest.testStopInteraction(LineOriginHandlerTest.java:77)
-
-Testcase: testGetOwner took 0 sec
+Testcase: testGetOwner took 0.128 sec
 Testcase: testSetGetPosition took 0 sec
 Testcase: testGetSize took 0 sec
-Testcase: testContains took 0.001 sec
+Testcase: testContains took 0 sec
+Testcase: testDragInteraction took 0.001 sec
+Testcase: testStopInteraction took 0.002 sec

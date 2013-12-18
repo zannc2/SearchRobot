@@ -1,5 +1,5 @@
 Testsuite: test.frontend.impl.items.FinishToolTest
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.157 sec
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.149 sec
 
-Testcase: testFinishTool took 0.022 sec
-Testcase: testMouseDown took 0.109 sec
+Testcase: testFinishTool took 0.02 sec
+Testcase: testMouseDown took 0.112 sec

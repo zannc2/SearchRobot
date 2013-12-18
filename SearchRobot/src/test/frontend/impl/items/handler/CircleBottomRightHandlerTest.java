@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import frontend.impl.items.Circle;
+import frontend.impl.items.Robot;
 import frontend.impl.items.handler.CircleBottomRightHandler;
 import frontend.impl.view.Field;
 import frontend.impl.view.View;
@@ -26,6 +27,8 @@ public class CircleBottomRightHandlerTest {
     private Item item;
     private Position itemPosition = new Position(20, 50);
     private Position handlerPosition = new Position(30, 60);
+    private Item robot;
+    private Position robotPosition = new Position(40,70);
     private Size robotSize = new Size(10, 10);
     private Size fieldSize = new Size(600, 800);
     private Size itemSize = new Size(10, 10);
@@ -40,6 +43,10 @@ public class CircleBottomRightHandlerTest {
         this.field = new Field(this.view, this.fieldSize, this.robotSize);
         this.item = new Circle(this.itemPosition, this.field);
         this.item.setSize(this.itemSize);
+        this.field.addItem(item);
+        
+        this.robot = new Robot(this.robotPosition, this.robotSize, this.field);
+        this.field.addItem(this.robot);
 
         this.handler = new CircleBottomRightHandler(this.item, this.handlerPosition, this.field);
     }
@@ -72,6 +79,14 @@ public class CircleBottomRightHandlerTest {
         assertEquals(this.itemPosition, this.item.getPosition());
         assertEquals(this.itemSize, this.item.getSize());
         assertEquals(this.handlerPosition, this.handler.getPosition());
+
+        //stop Iteraction not Posible because Item over Robot
+        this.handler.startInteraction(this.handlerPosition);
+        this.handler.dragInteraction(new Position(50, 80));
+        this.handler.stopInteraction(new Position(50, 80));
+        
+        assertEquals(this.handlerPosition, this.handler.getPosition());
+        assertEquals(this.itemSize, this.item.getSize());
     }
 
     @Test

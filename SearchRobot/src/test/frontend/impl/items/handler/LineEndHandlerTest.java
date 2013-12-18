@@ -67,8 +67,7 @@ public class LineEndHandlerTest {
 
     @Test
     public void testStopInteraction() {
-        
-        //stop Interaction does return resize
+        //stop Interaction does return resize because of Robot
     	this.handler.startInteraction(this.handlerPosition);
     	this.handler.dragInteraction(new Position(110, 50));
         this.handler.stopInteraction(new Position(110, 50));

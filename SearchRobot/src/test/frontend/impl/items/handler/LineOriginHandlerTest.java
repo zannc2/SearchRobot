@@ -52,15 +52,6 @@ public class LineOriginHandlerTest {
 
     @Test
     public void testDragInteraction() {
-        //stop Interaction does return resize
-    	this.handler.startInteraction(this.position);
-    	this.handler.dragInteraction(new Position(110, 50));
-        this.handler.stopInteraction(new Position(110, 50));
-        
-        assertEquals(this.position, this.handler.getPosition());
-        assertEquals(this.itemSize, this.item.getSize());
-        
-        //stop Iteraction possible
         //set new Position
         this.position = new Position(30, 60);
         //calculate end Position
@@ -80,6 +71,14 @@ public class LineOriginHandlerTest {
 
     @Test
     public void testStopInteraction() {
+        //stop Interaction does return resize
+    	this.handler.startInteraction(this.position);
+    	this.handler.dragInteraction(new Position(110, 50));
+        this.handler.stopInteraction(new Position(110, 50));
+        
+        assertEquals(this.position, this.handler.getPosition());
+        assertEquals(this.itemSize, this.item.getSize());
+        
         //set new Position
         this.position = new Position(30, 60);
         //calculate end Position

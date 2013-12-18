@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import frontend.impl.items.Circle;
+import frontend.impl.items.Robot;
 import frontend.impl.items.handler.CircleBottomLeftHandler;
 import frontend.impl.view.Field;
 import frontend.impl.view.View;
@@ -25,6 +26,8 @@ public class CircleBottomLeftHandlerTest {
     private Field field;
     private Item item;
     private Position itemPosition = new Position(20, 50);
+    private Item robot;
+    private Position robotPosition = new Position(10,70);
     private Position handlerPosition = new Position(20, 60);
     private Size robotSize = new Size(10, 10);
     private Size fieldSize = new Size(600, 800);
@@ -40,12 +43,17 @@ public class CircleBottomLeftHandlerTest {
         this.field = new Field(this.view, this.fieldSize, this.robotSize);
         this.item = new Circle(this.itemPosition, this.field);
         this.item.setSize(this.itemSize);
+        this.field.addItem(item);
+        
+        this.robot = new Robot(this.robotPosition, this.robotSize, this.field);
+        this.field.addItem(this.robot);
 
         this.handler = new CircleBottomLeftHandler(this.item, this.handlerPosition, this.field);
     }
 
     @Test
     public void testDragInteraction() {
+    	//stop Iteraction
         this.handlerPosition = new Position(10, 70);
         //calculate topRight Position
         Position topRight = new Position(this.itemPosition.getOriginX() + this.itemSize.getWidth(),
@@ -63,7 +71,6 @@ public class CircleBottomLeftHandlerTest {
         assertEquals(this.itemPosition, this.item.getPosition());
         assertEquals(this.itemSize, this.item.getSize());
         assertEquals(this.handlerPosition, this.handler.getPosition());
-
     }
 
     @Test
@@ -85,6 +92,14 @@ public class CircleBottomLeftHandlerTest {
         assertEquals(this.itemPosition, this.item.getPosition());
         assertEquals(this.itemSize, this.item.getSize());
         assertEquals(this.handlerPosition, this.handler.getPosition());
+
+        //stop Iteraction not Posible because Item over Robot
+        this.handler.startInteraction(this.handlerPosition);
+        this.handler.dragInteraction(new Position(0, 80));
+        this.handler.stopInteraction(new Position(0, 80));
+        
+        assertEquals(this.handlerPosition, this.handler.getPosition());
+        assertEquals(this.itemSize, this.item.getSize());
 
     }
 
