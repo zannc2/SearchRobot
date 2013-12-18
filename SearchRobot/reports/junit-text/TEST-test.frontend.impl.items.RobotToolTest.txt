@@ -1,5 +1,5 @@
 Testsuite: test.frontend.impl.items.RobotToolTest
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.132 sec
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.13 sec
 
-Testcase: testMouseDown took 0.106 sec
-Testcase: testRobotTool took 0 sec
+Testcase: testRobotTool took 0.005 sec
+Testcase: testMouseDown took 0.099 sec
