@@ -61,6 +61,8 @@ public class LineOriginHandler extends AbstractHandler {
         this.dragInteraction(p);
 		
 		if(!this.field.checkIfPositionFree(this.owner)) {
+			this.position = this.originalLinePosition;
+			super.setPosition(this.originalLinePosition);
 			this.owner.setPosition(this.originalLinePosition);
 			this.owner.setSize(this.originalSize);
 		}

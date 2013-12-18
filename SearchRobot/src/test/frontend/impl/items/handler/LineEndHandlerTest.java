@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import frontend.impl.items.Line;
+import frontend.impl.items.Robot;
 import frontend.impl.items.handler.LineEndHandler;
 import frontend.impl.view.Field;
 import frontend.impl.view.View;
@@ -26,9 +27,11 @@ public class LineEndHandlerTest {
     private Item item;
     private Position itemPosition = new Position(20, 50);
     private Position handlerPosition = new Position(20, 50);
+    private Item robot;
+    private Position robotPosition = new Position(70, 50);
     private Size robotSize = new Size(10, 10);
     private Size fieldSize = new Size(600, 800);
-    private Size itemSize = new Size(0, 0);
+    private Size itemSize = new Size(10, 10);
     private Size handleSize = new Size(16, 16);
     private Color itemColor = Color.black;
 
@@ -38,8 +41,12 @@ public class LineEndHandlerTest {
         this.view = new View(this.fieldSize, this.robotSize, this.itemColor);
         this.field = new Field(this.view, this.fieldSize, this.robotSize);
         this.item = new Line(this.itemPosition, this.field);
-
+        this.item.setSize(this.itemSize);
+        this.field.addItem(item);
         this.handler = new LineEndHandler(this.item, this.handlerPosition, this.field);
+        
+        this.robot = new Robot(this.robotPosition, this.robotSize, this.field);
+        this.field.addItem(this.robot);
     }
 
     @Test
@@ -60,6 +67,16 @@ public class LineEndHandlerTest {
 
     @Test
     public void testStopInteraction() {
+        
+        //stop Interaction does return resize
+    	this.handler.startInteraction(this.handlerPosition);
+    	this.handler.dragInteraction(new Position(110, 50));
+        this.handler.stopInteraction(new Position(110, 50));
+        
+        assertEquals(this.handlerPosition, this.handler.getPosition());
+        assertEquals(this.itemSize, this.item.getSize());
+        
+        //stop Iteraction possible
         //set new Position
         this.handlerPosition = new Position(30, 60);
         //calculate origin Position

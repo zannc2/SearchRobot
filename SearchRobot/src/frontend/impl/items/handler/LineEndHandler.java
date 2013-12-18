@@ -15,6 +15,7 @@ public class LineEndHandler extends AbstractHandler {
 	private static final long serialVersionUID = -7023598776530603132L;
 	private Position position;
 	private Position originalPosition;
+	private Position originalItemPosition;
 	private Size originalSize;
 	private Item owner;
 	private Field field;
@@ -35,7 +36,8 @@ public class LineEndHandler extends AbstractHandler {
 
 	@Override
 	public void startInteraction(Position p) {
-		this.originalPosition = this.owner.getPosition();
+		this.originalPosition = this.position;
+		this.originalItemPosition = this.owner.getPosition();
 		this.originalSize = this.owner.getSize();
 	}
 
@@ -59,7 +61,9 @@ public class LineEndHandler extends AbstractHandler {
 		this.dragInteraction(p);
 		
 		if(!this.field.checkIfPositionFree(this.owner)) {
-			this.owner.setPosition(this.originalPosition);
+			this.position = this.originalPosition;
+			super.setPosition(this.originalPosition);
+			this.owner.setPosition(this.originalItemPosition);
 			this.owner.setSize(this.originalSize);
 		}
 	}
