@@ -8,19 +8,21 @@ import frontend.impl.view.Field;
 import frontend.interfaces.Item;
 
 public class RobotTool extends AbstractTool {
-	private Size size;
-
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 448110753972659981L;
+	private static final long serialVersionUID = 1939680774689013637L;
+	
+	private Size size;
+	private Item item;
 
 	public RobotTool(Field field, Size s) {
 		super(field);
 		this.size = s;
 	}
 
-	private Item item;
+	
 
 	@Override
 	public void mouseDown(Position p) {

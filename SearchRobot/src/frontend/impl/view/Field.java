@@ -20,7 +20,8 @@ public class Field implements Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -4010939498931240714L;
+	private static final long serialVersionUID = -1864495520150922486L;
+	
 	private View view;
 	private List<Item> items = new ArrayList<Item>();
 	private List<FieldChangedListener> listeners = new ArrayList<FieldChangedListener>();

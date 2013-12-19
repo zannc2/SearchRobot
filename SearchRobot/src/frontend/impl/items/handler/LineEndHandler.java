@@ -8,11 +8,12 @@ import helper.Size;
 import java.awt.Cursor;
 
 public class LineEndHandler extends AbstractHandler {
-
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -7023598776530603132L;
+	private static final long serialVersionUID = 4240747856462608637L;
+	
 	private Position position;
 	private Position originalPosition;
 	private Position originalItemPosition;

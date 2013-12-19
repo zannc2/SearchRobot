@@ -1,6 +1,7 @@
 package frontend.impl.view;
 
 public class ItemChangedEvent {
+	
 	protected transient Object  source;
 
     /**

@@ -26,12 +26,14 @@ import frontend.interfaces.ItemHandler;
 import frontend.interfaces.StateFactory;
 import frontend.interfaces.Tool;
 
-public class View extends JPanel{
-
+public class View extends JPanel {
+	
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1400303408929046896L;
+	private static final long serialVersionUID = -317820392042833100L;
+	
 	private Field field;
 	private Tool tool;
 

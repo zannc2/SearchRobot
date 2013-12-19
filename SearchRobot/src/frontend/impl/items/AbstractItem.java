@@ -17,7 +17,8 @@ public abstract class AbstractItem implements Item {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1979293322187545428L;
+	private static final long serialVersionUID = -6766229224617420521L;
+	
 	private List<ItemChangedListener> listeners = new ArrayList<ItemChangedListener>();
 	
 

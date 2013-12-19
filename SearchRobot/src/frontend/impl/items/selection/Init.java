@@ -4,11 +4,10 @@ import helper.Position;
 
 public class Init extends SelectionToolState{
 
-	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1385970579527343812L;
+	private static final long serialVersionUID = 1987797483271556684L;
 
 	protected Init(SelectionTool context) {
 		super(context);

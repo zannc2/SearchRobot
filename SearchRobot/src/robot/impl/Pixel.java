@@ -13,10 +13,12 @@ import frontend.impl.items.AbstractItem;
 import frontend.interfaces.ItemHandler;
 
 public class Pixel extends AbstractItem {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
 	private Position position;
 	private Size size;
 	private Color color;

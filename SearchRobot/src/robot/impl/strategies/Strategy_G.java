@@ -162,7 +162,7 @@ public class Strategy_G implements Strategy{
 		else // if all reachable fields are discovered -> the finish is unreachable
 		{
 			returnList.clear();
-			computePath(new Position(robot.getOriginX(), robot.getOriginY()), 0);
+			computePath();
 		}
 		return returnList;
 	}

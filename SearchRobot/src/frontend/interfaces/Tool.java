@@ -10,7 +10,7 @@ import helper.Position;
  * @author ca-za
  *
  */
-public interface Tool extends Serializable{
+public interface Tool extends Serializable {
 	
 	/**
 	 * Handles mouse down events in the drawing view.

@@ -9,12 +9,12 @@ import java.io.Serializable;
 
 
 
-public abstract class SelectionToolState implements Serializable{
-
+public abstract class SelectionToolState implements Serializable {
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -6206941490429853065L;
+	private static final long serialVersionUID = -7801388581385239555L;
 	
 	private SelectionTool myContext;
 	

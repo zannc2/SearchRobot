@@ -2,16 +2,15 @@ package helper;
 
 import java.io.Serializable;
 
-public class Size implements Serializable{
 
+public class Size implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -1272203908120963516L;
-
+	
 	private int width;
-
 	private int height;
 	
 	public Size(int width, int height) {

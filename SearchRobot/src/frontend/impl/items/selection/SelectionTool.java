@@ -20,7 +20,7 @@ public class SelectionTool extends AbstractTool {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 3784532907310734414L;
+	private static final long serialVersionUID = 5585838914067568255L;
 
 	public SelectionTool(Field field) {
 		super(field);

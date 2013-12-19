@@ -16,11 +16,12 @@ import frontend.impl.items.AbstractItem;
 import frontend.interfaces.ItemHandler;
 
 public class SelectionArea extends AbstractItem {
-	
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -472640174915768573L;
+	private static final long serialVersionUID = 940976930726769873L;
+	
 	private Position position;
 	private Size size;
 	private Color penColor;

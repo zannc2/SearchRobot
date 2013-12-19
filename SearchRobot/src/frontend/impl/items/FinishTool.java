@@ -12,8 +12,7 @@ public class FinishTool extends AbstractTool {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 6250908523620856857L;
-
+	private static final long serialVersionUID = -4987041765338470637L;
 
 	public FinishTool(Field field) {
 		super(field);

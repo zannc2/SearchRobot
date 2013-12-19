@@ -10,11 +10,14 @@ import java.awt.Rectangle;
 
 public class CircleBottomRightHandler extends AbstractHandler {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4326352719765686576L;
+	
 	private Position originalPosition;
 	private Position originalItemPosition;
 	private Size originalSize;
-	
-	private static final long serialVersionUID = 7085318201596784835L;
 	private Field field;
 	private Position position;
 	private Item owner;
@@ -43,7 +46,6 @@ public class CircleBottomRightHandler extends AbstractHandler {
 	@Override
 	public void dragInteraction(Position p) {
 		// get origin Coordinates
-		Size origS = this.owner.getSize();
 		Position origP = this.owner.getPosition();
 
 		//get bottomLeft Position

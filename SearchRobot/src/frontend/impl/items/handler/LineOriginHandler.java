@@ -12,7 +12,8 @@ public class LineOriginHandler extends AbstractHandler {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -2242302675505928594L;
+	private static final long serialVersionUID = -7471669377112467058L;
+	
 	private Position position;
 	private Position originalLinePosition;
 	private Size originalSize;

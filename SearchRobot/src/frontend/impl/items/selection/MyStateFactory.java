@@ -8,7 +8,7 @@ public class MyStateFactory implements StateFactory {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -3013856088529493895L;
+	private static final long serialVersionUID = -4025141794203365232L;
 
 	@Override
 	public SelectionToolState createDragAreaState(SelectionTool context) {

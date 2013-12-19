@@ -2,12 +2,12 @@ package frontend.impl.items.selection;
 
 import helper.Position;
 
-public class DragHandle extends SelectionToolState{
+public class DragHandle extends SelectionToolState {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 7061646586902127359L;
+	private static final long serialVersionUID = 3020215542566739149L;
 
 	protected DragHandle(SelectionTool context) {
 		super(context);

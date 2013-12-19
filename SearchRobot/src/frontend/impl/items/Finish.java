@@ -10,12 +10,7 @@ import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -25,7 +20,8 @@ public class Finish extends AbstractItem {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 9221569467727804276L;
+	private static final long serialVersionUID = 8323053597903637271L;
+	
 	private Position position;
 	private Size size = new Size(20, 20);
 	

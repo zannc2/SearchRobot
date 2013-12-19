@@ -16,7 +16,8 @@ public abstract class AbstractTool implements Tool {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -8629131851697054206L;
+	private static final long serialVersionUID = -7143795048863567172L;
+	
 	protected Field field;
 	
 	public AbstractTool(Field field) {

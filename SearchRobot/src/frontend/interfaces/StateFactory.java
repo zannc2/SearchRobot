@@ -10,7 +10,7 @@ import frontend.impl.items.selection.SelectionToolState;
  * @author zannc2 & gfells4
  *
  */
-public interface StateFactory extends Serializable{
+public interface StateFactory extends Serializable {
 
 	public SelectionToolState createDragAreaState(SelectionTool context);
 	

@@ -1,6 +1,7 @@
 package frontend.impl.view;
 
 public class FieldChangedEvent {
+	
 	protected transient Object  source;
 
     /**

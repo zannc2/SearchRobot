@@ -9,11 +9,10 @@ import java.util.List;
 
 public class RemoveTool extends AbstractTool {
 
-
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -7187559079694994595L;
+	private static final long serialVersionUID = 4615825827692046264L;
 
 	public RemoveTool(Field field) {
 		super(field);

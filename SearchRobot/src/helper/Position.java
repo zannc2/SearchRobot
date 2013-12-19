@@ -4,14 +4,14 @@ import java.awt.Point;
 import java.io.Serializable;
 
 
-public class Position implements Serializable{
+public class Position implements Serializable {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -3217999343415393574L;
-
+	
 	private int originX;
-
 	private int originY;
 	
 	public Position(int originX, int originY) {

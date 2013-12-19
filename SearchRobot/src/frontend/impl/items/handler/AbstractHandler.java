@@ -18,7 +18,11 @@ import frontend.interfaces.ItemHandler;
  *
  */
 public abstract class AbstractHandler implements ItemHandler {
-	private static final long serialVersionUID = 3242887632529170092L;
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5587853189357362919L;
 
 	/** The size of the quadratic handle. */
 	public static final Size HANDLE_SIZE = new Size(16,16);

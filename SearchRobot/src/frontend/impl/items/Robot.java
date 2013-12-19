@@ -13,19 +13,18 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
 
 public class Robot extends AbstractItem{
-	
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 649366280258810993L;
+	private static final long serialVersionUID = -1654749892286238788L;
+	
 	private Position position;
 	private Size size;
 	private Direction direction = Direction.WEST;

@@ -11,8 +11,8 @@ public class LineTool extends AbstractTool {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -3403869222008259766L;
-
+	private static final long serialVersionUID = -6532113494936543327L;
+	
 	private Item item;
 
 	public LineTool(Field field) {

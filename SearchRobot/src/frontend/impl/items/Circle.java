@@ -25,7 +25,8 @@ public class Circle extends AbstractItem {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -2274073036259976650L;
+	private static final long serialVersionUID = 472334084409780059L;
+	
 	private Position position;
 	private Size size;
 	private Field field;

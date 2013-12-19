@@ -10,11 +10,14 @@ import helper.Size;
 
 public class CircleTopRightHandler extends AbstractHandler {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8895717234084626496L;
+	
 	private Position originalPosition;
 	private Position originalItemPosition;
 	private Size originalSize;
-	
-	private static final long serialVersionUID = -5439256066118986550L;
 	private Field field;
 	private Position position;
 	private Item owner;

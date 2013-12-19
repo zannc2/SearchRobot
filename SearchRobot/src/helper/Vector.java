@@ -1,8 +1,5 @@
 package helper;
 
-
-
-
 public class Vector {
 	private int xComponent;
 	private int yComponent;

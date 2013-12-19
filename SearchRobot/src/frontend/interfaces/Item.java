@@ -13,7 +13,7 @@ import java.util.List;
  * @author zannc2 & gfells 4
  *
  */
-public interface Item extends Serializable{
+public interface Item extends Serializable {
 	/**
 	 * Draws the Item in the Graphics
 	 * @param g A Graphics context

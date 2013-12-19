@@ -10,11 +10,14 @@ import java.awt.Rectangle;
 
 public class CircleBottomLeftHandler extends AbstractHandler {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7472469873528205205L;
+	
 	private Position originalPosition;
 	private Position originalItemPosition;
 	private Size originalSize;
-	
-	private static final long serialVersionUID = 7231749653609181674L;
 	private Position position;
 	private Item owner;
 	private Field field;

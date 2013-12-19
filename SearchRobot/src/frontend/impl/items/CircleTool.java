@@ -13,7 +13,7 @@ public class CircleTool extends AbstractTool {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -994596525815413661L;
+	private static final long serialVersionUID = -6764244882541005519L;
 
 	public CircleTool(Field field) {
 		super(field);
