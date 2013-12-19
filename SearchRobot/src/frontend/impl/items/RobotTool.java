@@ -8,12 +8,12 @@ import frontend.impl.view.Field;
 import frontend.interfaces.Item;
 
 public class RobotTool extends AbstractTool {
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1939680774689013637L;
-	
+
 	private Size size;
 	private Item item;
 
@@ -22,7 +22,7 @@ public class RobotTool extends AbstractTool {
 		this.size = s;
 	}
 
-	
+
 
 	@Override
 	public void mouseDown(Position p) {
@@ -32,7 +32,11 @@ public class RobotTool extends AbstractTool {
 
 		boolean newItem = true;
 		for(int i = 0; i < l.size(); i++){
-			if(l.get(i) instanceof Robot) newItem = false;
+			if(l.get(i) instanceof Robot) 
+			{
+				newItem = false;
+				this.item = l.get(i);
+			}
 		}
 
 		if(newItem)
@@ -42,25 +46,25 @@ public class RobotTool extends AbstractTool {
 			{
 				this.item = new Robot(newP, size, field);
 				getField().addItem(this.item); 
-				
-				if(!field.checkIfPositionFree(item)) 
+
+				if(!field.checkIfPositionFree(this.item)) 
 				{
-					field.removeItem(item);
+					field.removeItem(this.item);
 					this.item = null;
 				}
 			}
 		}
 		else
 		{
-			Position oldP = item.getPosition();
+			Position oldP = this.item.getPosition();
 			if(newP.getOriginX()>=0 && newP.getOriginY() >= 0 && newP.getOriginX() <= field.getFieldSize().getWidth()-10 && newP.getOriginY() 
 					<= field.getFieldSize().getHeight()-10)
 			{
-				item.setPosition(newP);
-				
-				if(!field.checkIfPositionFree(item)) 
+				this.item.setPosition(newP);
+
+				if(!field.checkIfPositionFree(this.item)) 
 				{
-					item.setPosition(oldP);
+					this.item.setPosition(oldP);
 				}
 			}
 		}
@@ -68,26 +72,26 @@ public class RobotTool extends AbstractTool {
 
 	@Override
 	public void mouseDrag(Position p) {
-//
-//		Position newP = new Position((p.getOriginX()/10)*10, (p.getOriginY()/10)*10);
-//		if(newP.getOriginX()>=0 && newP.getOriginY() >= 0 && newP.getOriginX() <= field.getFieldSize().getWidth()-10 && newP.getOriginY() 
-//				<= field.getFieldSize().getHeight()-10)
-//		{
-//			item.setPosition(newP);
-//		}
+		//
+		//		Position newP = new Position((p.getOriginX()/10)*10, (p.getOriginY()/10)*10);
+		//		if(newP.getOriginX()>=0 && newP.getOriginY() >= 0 && newP.getOriginX() <= field.getFieldSize().getWidth()-10 && newP.getOriginY() 
+		//				<= field.getFieldSize().getHeight()-10)
+		//		{
+		//			item.setPosition(newP);
+		//		}
 	}
 
 	@Override
 	public void mouseUp(Position p) {
-//		Position newP = new Position((p.getOriginX()/10)*10, (p.getOriginY()/10)*10);
-//		if(newP.getOriginX()>=0 && newP.getOriginY() >= 0 && newP.getOriginX() <= field.getFieldSize().getWidth()-10 && newP.getOriginY() 
-//				<= field.getFieldSize().getHeight()-10)
-//		{
-//			item.setPosition(newP);
-//		}
-//
-//		//chech position
-//		if(!field.checkIfPositionFree(item)) getField().removeItem(item);
+		//		Position newP = new Position((p.getOriginX()/10)*10, (p.getOriginY()/10)*10);
+		//		if(newP.getOriginX()>=0 && newP.getOriginY() >= 0 && newP.getOriginX() <= field.getFieldSize().getWidth()-10 && newP.getOriginY() 
+		//				<= field.getFieldSize().getHeight()-10)
+		//		{
+		//			item.setPosition(newP);
+		//		}
+		//
+		//		//chech position
+		//		if(!field.checkIfPositionFree(item)) getField().removeItem(item);
 	}
 
 	@Override

@@ -36,10 +36,8 @@ public class View extends JPanel {
 	
 	private Field field;
 	private Tool tool;
-
 	private List<Item> selection = new LinkedList<Item>(); 
 	private List<ItemHandler> handlers = new LinkedList<ItemHandler>();
-
 	private ViewFieldChangedListener l = new ViewFieldChangedListener();
 	private Color itemColor;
 
@@ -49,7 +47,10 @@ public class View extends JPanel {
 		 * 
 		 */
 		private static final long serialVersionUID = 1790883301541690796L;
-
+		
+		/**
+		 * Repaints the view
+		 */
 		@Override
 		public void fieldChanged(FieldChangedEvent e) {
 			repaint();
@@ -57,6 +58,13 @@ public class View extends JPanel {
 
 	}
 
+	/**
+	 * Constructor of the View class, generates a new field and adds the needed listeners
+	 * 
+	 * @param fieldSize	The field size
+	 * @param robotSize	The robot size
+	 * @param itemColor	The item color
+	 */
 	public View(Size fieldSize, Size robotSize, Color itemColor) {
 		super();
 		field = new Field(this, fieldSize, robotSize);
@@ -71,17 +79,29 @@ public class View extends JPanel {
 		this.addMouseListener(new ViewMouseListener());
 	}
 
-
+	/**¨
+	 * Setter for a new item color
+	 * 
+	 * @param itemColor The new item color
+	 */
 	public void setItemColor(Color itemColor) {
 		this.itemColor = itemColor;
 		repaint();
 	}
 	
+	/**
+	 * Getter for the item color
+	 * 
+	 * @return Returns the item color
+	 */
 	public Color getItemColor()
 	{
 		return this.itemColor;
 	}
 
+	/**
+	 * Override of the paintComponent method to draw the items on the field
+	 */
 	@Override
 	public void paintComponent(Graphics g) {	
 		super.paintComponent(g);
@@ -96,17 +116,29 @@ public class View extends JPanel {
 		}
 	}
 
+	/**
+	 * Setter for the selected tool
+	 * 
+	 * @param t The selected tool
+	 */
 	public void setTool(Tool t)
 	{
 		this.tool = t;
-		System.out.println(tool.getClass().toString());
 	}
 
+	/**
+	 * Getter for the currently selected tool 
+	 * 
+	 * @return	The selected tool
+	 */
 	public Tool getTool()
 	{
 		return this.tool;
 	}
 
+	/**
+	 * Deletes the items of the current selected items
+	 */
 	public void deleteSelectedItems() 
 	{
 		List<Item> l = getSelection();
@@ -118,6 +150,11 @@ public class View extends JPanel {
 		clearSelection();
 	}
 
+	/**
+	 * Mouse motion listener adapter
+	 * 
+	 * @author gfels4 & zannc1
+	 */
 	private class ViewMouseMotionListener implements MouseMotionListener {
 
 		@Override
@@ -131,13 +168,16 @@ public class View extends JPanel {
 		}
 	}
 
+	/**
+	 * Mouse listener adapter
+	 * 
+	 * @author gfels4 & zannc1
+	 *
+	 */
 	private class ViewMouseListener implements MouseListener {
 
 		@Override
-		public void mouseClicked(MouseEvent e) {
-
-
-		}
+		public void mouseClicked(MouseEvent e) {}
 
 		@Override
 		public void mouseEntered(MouseEvent e) {}
@@ -157,17 +197,29 @@ public class View extends JPanel {
 
 	}
 
+	/**
+	 * Getter for the field
+	 * 
+	 * @return The field
+	 */
 	public Field getField() {
 		return field;
 	}	
 
-	/* Selection*/
-
-
+	/**
+	 * Creates a new state factory
+	 * 
+	 * @return A new StateFactory
+	 */
 	public StateFactory getStateFactory() {
 		return new MyStateFactory();
 	}
 
+	/**
+	 * Adds an item to the selection and repaints
+	 * 
+	 * @param i The item to add
+	 */
 	public void addToSelection(Item i) {
 		if (!this.selection.contains(i)) {
 			this.selection.add(i);
@@ -179,6 +231,11 @@ public class View extends JPanel {
 		repaint();
 	}
 
+	/**
+	 * Removes an item from the selection and repaints
+	 * 
+	 * @param i The item to remove
+	 */
 	public void removeFromSelection(Item i) {
 		this.selection.remove(i);
 		for (Iterator<ItemHandler> it = this.handlers.iterator(); it.hasNext();) {
@@ -189,10 +246,18 @@ public class View extends JPanel {
 		repaint();
 	}
 
+	/**
+	 * Returns a list with the currently selected items
+	 * 
+	 * @return List of items
+	 */
 	public List<Item> getSelection() {
 		return this.selection;
 	}
 
+	/**
+	 * Clears the current selection, without deleting the items
+	 */
 	public void clearSelection() {
 		this.selection.clear();
 		this.handlers.clear();
@@ -200,11 +265,22 @@ public class View extends JPanel {
 		repaint();
 	}
 
+	/**
+	 * Returns the handlers of the current selected items
+	 * 
+	 * @return List of handlers
+	 */
 	public List<ItemHandler> getSelectionHandles() {
 		return this.handlers;
 	}
 
-
+	/**
+	 * Removes all items from the field and adds the items frotm the param itemList.
+	 * This method is used to load a new field
+	 * 
+	 * @param itemList	Items to add t the field
+	 * @param fieldSize	New field size
+	 */
 	public void setField(List<Item> itemList, Size fieldSize) { 
 		List<Item> l = field.getItems();
 		int j = l.size();
@@ -224,7 +300,11 @@ public class View extends JPanel {
 		repaint();
 	}
 
-
+	/**
+	 * Changes the field size
+	 * 
+	 * @param fieldSize New field size
+	 */
 	public void setFieldSize(Size fieldSize)
 	{
 		this.setPreferredSize(new Dimension(fieldSize.getWidth(), fieldSize.getHeight()));
@@ -233,6 +313,11 @@ public class View extends JPanel {
 		field.setFieldSize(fieldSize);
 	}
 
+	/**
+	 * Checks if the field contains a robot and a finish
+	 * 
+	 * @return true if a robot and a finish exists
+	 */
 	public boolean hasRobotAndFinish()
 	{
 		List<Item> l = getField().getItems();

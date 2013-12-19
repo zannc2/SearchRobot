@@ -26,12 +26,16 @@ public class FinishTool extends AbstractTool {
 		Position newP = new Position((p.getOriginX()/10)*10, (p.getOriginY()/10)*10);
 
 		List<Item> l = getField().getItems();
-		
+
 		boolean newItem = true;
 		for(int i = 0; i < l.size(); i++){
-			if(l.get(i) instanceof Finish) newItem = false;
+			if(l.get(i) instanceof Finish) 
+			{
+				newItem = false;
+				this.item = l.get(i);
+			}
 		}
-		
+
 		if(newItem)
 		{
 			if(newP.getOriginX()>=0 && newP.getOriginY() >= 0 && newP.getOriginX() <= field.getFieldSize().getWidth()-20 && newP.getOriginY() 
@@ -39,23 +43,23 @@ public class FinishTool extends AbstractTool {
 				this.item = new Finish(newP, field);
 				getField().addItem(this.item);
 
-				if(!field.checkIfPositionFree(item)) 
+				if(!field.checkIfPositionFree(this.item)) 
 				{
-					field.removeItem(item);
+					field.removeItem(this.item);
 					this.item = null;
 				}
 			}
 		}
 		else
 		{
-			Position oldP = item.getPosition();
+			Position oldP = this.item.getPosition();
 			if(newP.getOriginX()>=0 && newP.getOriginY() >= 0 && newP.getOriginX() <= field.getFieldSize().getWidth()-20 && newP.getOriginY() 
 					<= field.getFieldSize().getHeight()-20){
-				item.setPosition(newP);
-				
-				if(!field.checkIfPositionFree(item)) 
+				this.item.setPosition(newP);
+
+				if(!field.checkIfPositionFree(this.item)) 
 				{
-					item.setPosition(oldP);
+					this.item.setPosition(oldP);
 				}
 			}
 		}
