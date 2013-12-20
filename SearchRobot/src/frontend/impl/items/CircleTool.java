@@ -23,7 +23,7 @@ public class CircleTool extends AbstractTool {
 
 	@Override
 	public void mouseDown(Position p) {
-		this.item = new Circle(p, this.field);
+		this.item = new Circle(p, getField());
 		getField().addItem(this.item);
 		//System.out.println("Circle Created and added to View");
 	}
@@ -104,7 +104,7 @@ public class CircleTool extends AbstractTool {
 		Rectangle r = getAWTRectangle();
 		item.setPosition(new Position((int)r.getX(), (int)r.getY()));
 		item.setSize(new Size((int)r.getWidth(), (int)r.getHeight()));
-		if(!field.checkIfPositionFree(item)) field.removeItem(item);
+		if(!getField().checkIfPositionFree(item)) getField().removeItem(item);
 	}
 
 	@Override

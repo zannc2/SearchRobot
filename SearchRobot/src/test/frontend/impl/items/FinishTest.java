@@ -22,6 +22,11 @@ public class FinishTest {
 	
 	public class MyListener implements ItemChangedListener {
 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -4701496235786388421L;
+
 		@Override
 		public void itemChanged(ItemChangedEvent e) {
 			test = true;
@@ -42,6 +47,8 @@ public class FinishTest {
 	public void testContains() {
 		Position p2 = new Position(12, 13);
 		assertTrue(f.contains(p2));
+		Position p3 = new Position(40, 40);
+		assertFalse(f.contains(p3));
 	}
 
 	@Test
@@ -54,5 +61,26 @@ public class FinishTest {
 		f.move(v);
 		assertTrue(test);
 		assertEquals(f.getPosition(), newFinish.getPosition());
+	}
+	
+	@Test
+	public void testSetPositionOutside() {
+		assertEquals(p, f.getPosition());
+		Position pos = new Position(300, 300);
+		f.setPosition(pos);
+		
+		// still on the old position, cause 300/300 is outside of the field
+		assertEquals(p, f.getPosition());
+		
+		Position pos2 = new Position(-50, -50);
+		f.setPosition(pos2);
+		
+		// still on the old position, cause -50/-50 is outside of the field
+		assertEquals(p, f.getPosition());
+	}
+	
+	@Test
+	public void testGetItemHandler() {
+		assertTrue(f.getItemHandler() == null);
 	}
 }

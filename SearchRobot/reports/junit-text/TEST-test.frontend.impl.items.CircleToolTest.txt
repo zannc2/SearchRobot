@@ -1,9 +1,0 @@
-Testsuite: test.frontend.impl.items.CircleToolTest
-Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.186 sec
-
-Testcase: testMouseDrag took 0.121 sec
-Testcase: testNewCircleToBottomRight took 0.001 sec
-Testcase: testNewCircleToTopLeft took 0.001 sec
-Testcase: testNewCircleToTopRight took 0 sec
-Testcase: testNewCircleToBottomLeft took 0 sec
-Testcase: testNewTool took 0 sec

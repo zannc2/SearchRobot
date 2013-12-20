@@ -135,21 +135,7 @@ public class View extends JPanel {
 	{
 		return this.tool;
 	}
-
-	/**
-	 * Deletes the items of the current selected items
-	 */
-	public void deleteSelectedItems() 
-	{
-		List<Item> l = getSelection();
-		int j = l.size();
-		for(int i = 0; i < j; i++)
-		{
-			field.removeItem(l.get(i));
-		}
-		clearSelection();
-	}
-
+	
 	/**
 	 * Mouse motion listener adapter
 	 * 

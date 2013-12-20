@@ -1,7 +1,8 @@
 package test.frontend.impl.items;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import frontend.impl.items.CircleTool;
+import frontend.impl.items.Finish;
 import frontend.impl.view.Field;
 import helper.Position;
 import helper.Size;
@@ -112,5 +113,23 @@ public class CircleToolTest
 		ct.mouseUp(new Position(0,20));
 		assertEquals(new Position(0, 10), ct.getField().getItems().get(0).getPosition());
 		assertEquals(new Size(10, 10), ct.getField().getItems().get(0).getSize());
+	}
+	
+	/**
+	 * Test method forCreating a Circle from top right to bottom left
+	 */
+	@Test
+	public void testNewCircleOnAnExistingItem() {
+		// add one item (finish) on the field
+		field.addItem(new Finish(new Position(15,  15), field));		
+		assertTrue(field.getItems().size() == 1);
+		
+		CircleTool ct = new CircleTool(field);
+		// can not create circle over the finish
+		ct.mouseDown(new Position(10, 10));
+		ct.mouseUp(new Position(20,20));
+		
+		// still only one item on the field (finish)
+		assertTrue(field.getItems().size() == 1);
 	}
 }

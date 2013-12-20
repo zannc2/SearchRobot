@@ -18,7 +18,7 @@ public abstract class AbstractTool implements Tool {
 	 */
 	private static final long serialVersionUID = -7143795048863567172L;
 	
-	protected Field field;
+	private Field field;
 	
 	public AbstractTool(Field field) {
 		this.field = field;
@@ -30,11 +30,5 @@ public abstract class AbstractTool implements Tool {
 	
 	public List<Item> getItems() {
 		return this.field.getItems();
-	}
-	
-	@Override
-	public void setField(Field f)
-	{
-		this.field = f;
 	}
 }

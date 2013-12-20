@@ -23,6 +23,11 @@ public class RobotTest {
 	
 	public class MyListener implements ItemChangedListener {
 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 6007108255326488606L;
+
 		@Override
 		public void itemChanged(ItemChangedEvent e) {
 			test = true;
@@ -62,4 +67,24 @@ public class RobotTest {
 
 	}
 
+	@Test
+	public void testSetPositionOutside() {
+		assertEquals(p, r.getPosition());
+		Position pos = new Position(400, 400);
+		r.setPosition(pos);
+		
+		// still on the old position, cause 400/400 is outside of the field
+		assertEquals(p, r.getPosition());
+		
+		Position pos2 = new Position(-50, -50);
+		r.setPosition(pos2);
+		
+		// still on the old position, cause -50/-50 is outside of the field
+		assertEquals(p, r.getPosition());
+	}
+	
+	@Test
+	public void testGetItemHandler() {
+		assertTrue(r.getItemHandler() == null);
+	}
 }

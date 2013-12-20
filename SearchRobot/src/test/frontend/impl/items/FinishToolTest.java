@@ -1,11 +1,10 @@
 package test.frontend.impl.items;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import helper.Position;
 import helper.Size;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import frontend.impl.items.FinishTool;
@@ -41,7 +40,6 @@ public class FinishToolTest {
 		// set position from finish on a existing LineItem -> don't work
 		field.addItem(new Line(new Position(40, 40), field));
 		ft.mouseDown(new Position(40, 40));
-		assertEquals(new Position(20, 20), ft.getField().getItems().get(0).getPosition());
-		
+		assertEquals(new Position(20, 20), ft.getField().getItems().get(0).getPosition());		
 	}
 }

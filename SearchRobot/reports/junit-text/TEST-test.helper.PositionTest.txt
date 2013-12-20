@@ -1,5 +1,0 @@
-Testsuite: test.helper.PositionTest
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.032 sec
-
-Testcase: testOrigin took 0.014 sec
-Testcase: testEquals took 0 sec

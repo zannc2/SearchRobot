@@ -39,6 +39,11 @@ public class FieldTest {
 	private Color itemColor = Color.black;
 	
 	private class MockSheetChangedListener implements FieldChangedListener {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -6002288902293363578L;
+		
 		public int countCalled = 0;
 
 		@Override

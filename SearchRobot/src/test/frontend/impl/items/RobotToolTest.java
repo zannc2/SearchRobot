@@ -1,11 +1,10 @@
 package test.frontend.impl.items;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import helper.Position;
 import helper.Size;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import frontend.impl.items.Line;

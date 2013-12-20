@@ -24,6 +24,11 @@ public class CircleTest {
 	
 	public class MyListener implements ItemChangedListener {
 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -4546234894604589543L;
+
 		@Override
 		public void itemChanged(ItemChangedEvent e) {
 			test = true;
@@ -70,6 +75,11 @@ public class CircleTest {
 		c.move(v);
 		assertTrue(test);
 		assertEquals(c.getPosition(), newCircle.getPosition());
+	}
+	
+	@Test
+	public void testGetItemHandler() {
+		assertTrue(c.getItemHandler().size() == 4);
 	}
 
 }

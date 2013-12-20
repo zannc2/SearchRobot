@@ -41,15 +41,15 @@ public class RobotTool extends AbstractTool {
 
 		if(newItem)
 		{
-			if(newP.getOriginX()>=0 && newP.getOriginY() >= 0 && newP.getOriginX() <= field.getFieldSize().getWidth()-10 && newP.getOriginY() 
-					<= field.getFieldSize().getHeight()-10)
+			if(newP.getOriginX()>=0 && newP.getOriginY() >= 0 && newP.getOriginX() <= getField().getFieldSize().getWidth()-10 && newP.getOriginY() 
+					<= getField().getFieldSize().getHeight()-10)
 			{
-				this.item = new Robot(newP, size, field);
+				this.item = new Robot(newP, size, getField());
 				getField().addItem(this.item); 
 
-				if(!field.checkIfPositionFree(this.item)) 
+				if(!getField().checkIfPositionFree(this.item)) 
 				{
-					field.removeItem(this.item);
+					getField().removeItem(this.item);
 					this.item = null;
 				}
 			}
@@ -57,12 +57,12 @@ public class RobotTool extends AbstractTool {
 		else
 		{
 			Position oldP = this.item.getPosition();
-			if(newP.getOriginX()>=0 && newP.getOriginY() >= 0 && newP.getOriginX() <= field.getFieldSize().getWidth()-10 && newP.getOriginY() 
-					<= field.getFieldSize().getHeight()-10)
+			if(newP.getOriginX()>=0 && newP.getOriginY() >= 0 && newP.getOriginX() <= getField().getFieldSize().getWidth()-10 && newP.getOriginY() 
+					<= getField().getFieldSize().getHeight()-10)
 			{
 				this.item.setPosition(newP);
 
-				if(!field.checkIfPositionFree(this.item)) 
+				if(!getField().checkIfPositionFree(this.item)) 
 				{
 					this.item.setPosition(oldP);
 				}
@@ -72,26 +72,12 @@ public class RobotTool extends AbstractTool {
 
 	@Override
 	public void mouseDrag(Position p) {
-		//
-		//		Position newP = new Position((p.getOriginX()/10)*10, (p.getOriginY()/10)*10);
-		//		if(newP.getOriginX()>=0 && newP.getOriginY() >= 0 && newP.getOriginX() <= field.getFieldSize().getWidth()-10 && newP.getOriginY() 
-		//				<= field.getFieldSize().getHeight()-10)
-		//		{
-		//			item.setPosition(newP);
-		//		}
+		// Not needed
 	}
 
 	@Override
 	public void mouseUp(Position p) {
-		//		Position newP = new Position((p.getOriginX()/10)*10, (p.getOriginY()/10)*10);
-		//		if(newP.getOriginX()>=0 && newP.getOriginY() >= 0 && newP.getOriginX() <= field.getFieldSize().getWidth()-10 && newP.getOriginY() 
-		//				<= field.getFieldSize().getHeight()-10)
-		//		{
-		//			item.setPosition(newP);
-		//		}
-		//
-		//		//chech position
-		//		if(!field.checkIfPositionFree(item)) getField().removeItem(item);
+		// Not needed
 	}
 
 	@Override

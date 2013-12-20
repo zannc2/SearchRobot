@@ -26,6 +26,11 @@ public class LineTest {
 	
 	public class MyListener implements ItemChangedListener {
 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 5969703432068988412L;
+
 		@Override
 		public void itemChanged(ItemChangedEvent e) {
 			test = true;
@@ -62,6 +67,9 @@ public class LineTest {
 		assertEquals(l.getPosition(), newLine.getPosition());
 	}
 	
-	
+	@Test
+	public void testGetItemHandler() {
+		assertTrue(l.getItemHandler().size() == 2);
+	}
 
 }

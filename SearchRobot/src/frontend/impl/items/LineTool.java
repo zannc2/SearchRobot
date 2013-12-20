@@ -23,7 +23,7 @@ public class LineTool extends AbstractTool {
 
 	@Override
 	public void mouseDown(Position p) {
-		this.item = new Line(p, this.field);
+		this.item = new Line(p, getField());
 		getField().addItem(this.item);
 		//System.out.println("Line Created and added to View");
 	}
@@ -39,7 +39,7 @@ public class LineTool extends AbstractTool {
 	@Override
 	public void mouseUp(Position p) {
 		mouseDrag(p);
-		if(!field.checkIfPositionFree(item)) field.removeItem(item);
+		if(!getField().checkIfPositionFree(item)) getField().removeItem(item);
 	}
 
 	@Override

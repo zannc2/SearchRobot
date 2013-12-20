@@ -18,8 +18,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -298,7 +296,6 @@ public class SearchRobotEditor {
 		selection = makeNavigationButton("selection", "Auswählen", "Auswählen", new Dimension(40, 40));
 		toolBar.add(selection);
 		selection.setBackground(BUTTON_COLOR);
-		selection.addKeyListener(new ViewKeyListener());
 		tools.add(new SelectionTool(view.getField()));
 
 		// Button Remove
@@ -339,25 +336,6 @@ public class SearchRobotEditor {
 		startButton = makeNavigationButton("search", "Suche starten", "Suche starten", new Dimension(90, 40));
 		startButton.setBackground(BUTTON_COLOR);
 		toolBar.add(startButton);
-	}
-	
-	private class ViewKeyListener implements KeyListener {
-
-		@Override
-		public void keyPressed(KeyEvent e) {
-			if(e.getKeyCode() == KeyEvent.VK_DELETE) 
-			{
-				view.deleteSelectedItems();
-			}
-		}
-
-		@Override
-		public void keyReleased(KeyEvent e) {	
-		}
-
-		@Override
-		public void keyTyped(KeyEvent e) {
-		}
 	}
 
 	protected JButton makeNavigationButton(String imageName,

@@ -1,9 +1,8 @@
 package frontend.interfaces;
 
-import java.io.Serializable;
-
-import frontend.impl.view.Field;
 import helper.Position;
+
+import java.io.Serializable;
 
 /**
  * The tool defines the methods used to create items. 
@@ -39,7 +38,5 @@ public interface Tool extends Serializable {
 	 * @param p
 	 */
 	public void mouseOver(Position p);
-
-	public void setField(Field f);
 
 }
