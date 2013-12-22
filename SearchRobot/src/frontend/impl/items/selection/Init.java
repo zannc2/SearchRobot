@@ -9,7 +9,7 @@ public class Init extends SelectionToolState{
 	 */
 	private static final long serialVersionUID = 1987797483271556684L;
 
-	protected Init(SelectionTool context) {
+	public Init(SelectionTool context) {
 		super(context);
 	}
 

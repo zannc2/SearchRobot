@@ -20,7 +20,6 @@ public class DragArea extends SelectionToolState{
 		/**** Drag Area ****/
 		setSelectionAreaTo(p);
 		adjustSelections();
-		setToolState(getNewDragAreaState());
 	}
 	
 	@Override

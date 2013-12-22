@@ -130,11 +130,11 @@ public abstract class SelectionToolState implements Serializable {
 	}
 	
 	final protected void moveSelectedShapes(Position p) {
-		getContext().doMoveSelectedShapes(p);
+		getContext().doMoveSelectedItems(p);
 	}
 	
 	final protected void endMoveSelectedShapes(Position p) {
-		getContext().endMoveSelectedShapes(p);
+		getContext().endMoveSelectedItems(p);
 	}
 }
 

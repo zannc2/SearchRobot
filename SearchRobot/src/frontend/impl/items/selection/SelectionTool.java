@@ -62,11 +62,11 @@ public class SelectionTool extends AbstractTool {
 		this.state.mouseUp(p);
 	}
 	
-	void setToolState(SelectionToolState s) {
+	public void setToolState(SelectionToolState s) {
 		this.state = s;
 	}
 	
-	final void doSetSelectionAreaTo(Position p) {
+	public void doSetSelectionAreaTo(Position p) {
 		if (this.selectionArea != null) {
 			Position origP = this.selectionArea.getPosition();
 			Size newSize = new Size(p.getOriginX() - origP.getOriginX(), p.getOriginY() - origP.getOriginY());
@@ -74,11 +74,11 @@ public class SelectionTool extends AbstractTool {
 		}
 	}
 	
-	StateFactory getStateFactory() {
+	public StateFactory getStateFactory() {
 		return this.factory;
 	}
 	
-	final Item getItemByPosition(Position p) {
+	public Item getItemByPosition(Position p) {
 		// iterate over reverse stacking order
 		for (int i = getItems().size() - 1; i >= 0; i--) {
 			Item item = getItems().get(i);
@@ -89,11 +89,11 @@ public class SelectionTool extends AbstractTool {
 		return null;
 	}
 	
-	List<Item> getSelection() {
+	public List<Item> getSelection() {
 		return getField().getView().getSelection();
 	}
 	
-	final void doAdjustSelections() {
+	public void doAdjustSelections() {
 		for (Item i : getItems()) {
 			if (i != this.selectionArea) { 
 				if (isItemInSeletionArea(i)) {
@@ -108,7 +108,8 @@ public class SelectionTool extends AbstractTool {
 			}
 		}
 	}
-	final void doDiscardSelectionArea() {
+	
+	public void doDiscardSelectionArea() {
 		if (this.selectionArea != null) {
 			getField().removeItem(this.selectionArea);
 		}
@@ -131,27 +132,12 @@ public class SelectionTool extends AbstractTool {
 		}
 	}
 	
-	final ItemHandler getCurrentHandle() {
+	public ItemHandler getCurrentHandle() {
 		return this.currentHandle;
 	}
 	
-	final void setCurrentHandle(ItemHandler h) {
+	public void setCurrentHandle(ItemHandler h) {
 		this.currentHandle = h;
-	}
-
-	public boolean isOnUnselectedItem(Position p) {
-		// iterate over reverse stacking order
-		for (int i = getItems().size() - 1; i >= 0; i--) {
-			Item item = getItems().get(i);
-			if (item.contains(p)) {
-				if (getSelection().contains(item)) {
-					return false;
-				} else {
-					return true;
-				}
-			}
-		}
-		return false;
 	}
 
 	public void clearSelection() {
@@ -204,6 +190,21 @@ public class SelectionTool extends AbstractTool {
 		return false;
 	}
 
+	public boolean isOnUnselectedItem(Position p) {
+		// iterate over reverse stacking order
+		for (int i = getItems().size() - 1; i >= 0; i--) {
+			Item item = getItems().get(i);
+			if (item.contains(p)) {
+				if (getSelection().contains(item)) {
+					return false;
+				} else {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	public boolean isOnEmptyArea(Position p) {
 		for (Item i : getItems()) {
 			if (i.contains(p)) {
@@ -223,11 +224,12 @@ public class SelectionTool extends AbstractTool {
 		
 	}
 	
-	final Position getPreviousMouseDragPosition() {
+	public Position getPreviousMouseDragPosition() {
 		return this.previousMouseDownPosition;
 	}
 	
-	public void doMoveSelectedShapes(Position p) {
+	public void doMoveSelectedItems(Position p) {
+		
 		if(this.originalPositions.isEmpty()) {
 			for (Item i : getSelection()) {
 				this.originalPositions.put(i, i.getPosition());
@@ -245,28 +247,19 @@ public class SelectionTool extends AbstractTool {
 		}
 	}
 	
-	public void endMoveSelectedShapes(Position p){
-		Position cPrevious = getPreviousMouseDragPosition();
-		if (cPrevious == null) {
-			cPrevious = p;
+	public void endMoveSelectedItems(Position p){		
+		doMoveSelectedItems(p);
+		boolean undo = false;
+		for (Item i : getSelection()) {
+			if(!getField().checkIfPositionFree(i)) undo = true;
 		}
-		Vector delta = this.previousDelta;
-		if(this.previousDelta != null) {
-			boolean undo = false;
+		
+		if(undo) {
 			for (Item i : getSelection()) {
-				
-				i.move(delta);
-				if(!getField().checkIfPositionFree(i)) undo = true;
-			}
-			
-			if(undo) {
-				for (Item i : getSelection()) {
-					i.setPosition((Position) this.originalPositions.get(i));
-					this.originalPositions.remove(i);
-				}
+				i.setPosition((Position) this.originalPositions.get(i));
+				this.originalPositions.remove(i);
 			}
 		}
-		this.originalPositions.clear();
 		
 	}
 	
