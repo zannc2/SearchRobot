@@ -1,0 +1,98 @@
+<project name="Cobertura Coverage" basedir=".">
+ 
+    <!--  Project Source  Code -->
+    <property name="src.dir" value="src" />
+    <property name="build.dir" value="bin" />
+    <property name="teste.dir" value="src/test" />
+    <property name="lib.dir" value="lib" />
+    <property name="report.dir" value="reports" />
+ 
+    <!-- Project classpath -->
+    <path id="project.classpath">
+        <pathelement location="${bin.dir}" />
+        <fileset dir="${lib.dir}">
+            <include name="*.jar" />
+        </fileset>
+    </path>
+ 
+    <!-- Tested Class -->
+    <property name="DogFacadeTest" value="test.com.facade.DogFacadeTest" />
+ 
+	<!-- Clears the paths -->
+	<target name="01-CleannUp" description="Remove all generated files.">
+	    <delete dir="${build.dir}" />
+	    <delete file="cobertura.ser" />
+	    <delete dir="${report.dir}" />
+	 
+	    <mkdir dir="${build.dir}" />
+	    <mkdir dir="${report.dir}" />
+	</target>
+	
+	<!-- Compiles the Java code -->
+	<target name="02-Compile" depends="01-CleannUp" description="invoke compiler">
+	    <javac debug="true" debuglevel="vars,lines,source" srcdir="${src.dir}" destdir="${build.dir}">
+	        <classpath refid="project.classpath" />
+	    </javac>
+	    <!-- <copy file="${src.dir}/META-INF/persistence.xml" todir="${build.dir}/META-INF" /> -->
+	</target>
+	
+	<!-- Cobertura configs -->
+	<property name="cobertura.instrumented-classes.dir" value="${report.dir}/instrumented-classes" />
+	<property name="cobertura.data.file" value="cobertura.ser" />
+	<path id="cobertura.classpath">
+	    <fileset dir="${lib.dir}" includes="/*.jar" />
+	</path>
+	 
+	<!-- Points to the cobertura jar -->
+	<taskdef classpath="${lib.dir}/cobertura.jar" resource="tasks.properties" classpathref="cobertura.classpath" />
+	 
+	<!-- Instruments the classes -->
+	<target name="03-Instrument" depends="02-Compile">
+	    <delete quiet="false" failonerror="false">
+	        <fileset dir="${cobertura.instrumented-classes.dir}" />
+	    </delete>
+	    <delete file="${cobertura.data.file}" />
+	    <cobertura-instrument todir="${cobertura.instrumented-classes.dir}">
+	        <fileset dir="${build.dir}">
+	            <include name="**/*.class" />
+	            <exclude name="**/*Test.class" />
+	        </fileset>
+	    </cobertura-instrument>
+	    <copy todir="${cobertura.instrumented-classes.dir}">
+	        <fileset dir="${src.dir}" casesensitive="yes">
+	            <patternset id="resources.ps" />
+	        </fileset>
+	    </copy>
+	</target>
+	
+	<!-- Set up the instrumented classes path -->
+	<path id="cover-test.classpath">
+	    <fileset dir="${lib.dir}" includes="**/*.jar" />
+	    <pathelement location="${cobertura.instrumented-classes.dir}" />
+	    <pathelement location="${build.dir}" />
+	</path>
+	 
+	<!-- Run the JUnit test -->
+	<target name="04-RunTest" depends="03-Instrument" >
+	    <junit printsummary="yes" haltonerror="no" haltonfailure="no"  fork="yes">
+	        <batchtest>
+	            <fileset dir="${build.dir}" includes="**/*Test.class" />
+	        </batchtest>
+	        <classpath refid="cover-test.classpath" />
+	    	<formatter type="plain" usefile="false" />
+	    </junit>
+	    <delete file="transaction.log" />
+	</target>
+	
+	<!-- Creates the Cobertura report -->
+	<target name="00-CreateReport" depends="04-RunTest">
+	    <cobertura-report srcdir="${cobertura.data.file}" destdir="${report.dir}">
+	        <fileset dir="${src.dir}">
+	            <include name="**/*.java" />
+	        </fileset>
+	    </cobertura-report>
+	 
+	    <delete dir="${report.dir}/instrumented-classes" />
+	    <delete file="cobertura.ser"  />
+	</target>
+</project>

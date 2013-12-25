@@ -130,7 +130,6 @@ public class SearchRobotEditor {
 							view.setField((List<Item>) in.readObject(), fieldSize);
 							field_size = fieldSize;
 							frame.pack();
-							System.out.println("Deserialization succeeded");
 							setJLabelText();
 							done = true;
 						}
@@ -163,10 +162,8 @@ public class SearchRobotEditor {
 					try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(s))) {
 						out.writeObject(field_size);
 						out.writeObject(view.getField().getItems());
-						System.out.println("Serialization succeeded");
 					} catch (Exception e) {
 						System.out.println(e.getMessage());
-						System.out.println("Serialization failed");
 					}
 				}
 			}
