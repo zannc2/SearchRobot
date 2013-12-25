@@ -372,8 +372,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="42" language="java" name="frontend.impl.items.selection.SelectionToolState" project="SearchRobot" 
-    file="/SearchRobot/src/frontend/impl/items/selection/SelectionToolState.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="42" language="java" name="frontend.impl.items.selection.AbstractState" project="SearchRobot" 
+    file="/SearchRobot/src/frontend/impl/items/selection/AbstractState.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="-1563" y="1176"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      

@@ -12,7 +12,7 @@ import robot.impl.FieldMatrix;
 import robot.impl.RobotController;
 import robot.interfaces.Strategy;
 
-public class Strategy_G implements Strategy{
+public class DefaultStrategy implements Strategy{
 
 	private Size fieldSize;
 	// field values
@@ -29,7 +29,7 @@ public class Strategy_G implements Strategy{
 	private RobotController robotController;
 	private boolean finishAcessible;
 
-	public Strategy_G(RobotController robotController, FieldMatrix foundMatrix, Size fieldSize, Field field) {
+	public DefaultStrategy(RobotController robotController, FieldMatrix foundMatrix, Size fieldSize, Field field) {
 		this.foundMatrix = foundMatrix;
 		this.fieldSize = fieldSize;
 		this.field = field;

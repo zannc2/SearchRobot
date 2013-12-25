@@ -17,7 +17,7 @@ import frontend.impl.items.selection.Init;
 import frontend.impl.items.selection.MyStateFactory;
 import frontend.impl.items.selection.SelectionArea;
 import frontend.impl.items.selection.SelectionTool;
-import frontend.impl.items.selection.SelectionToolState;
+import frontend.impl.items.selection.AbstractState;
 import frontend.impl.view.Field;
 import frontend.impl.view.View;
 import frontend.interfaces.Item;

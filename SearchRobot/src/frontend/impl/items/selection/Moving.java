@@ -2,7 +2,7 @@ package frontend.impl.items.selection;
 
 import helper.Position;
 
-public class Moving extends SelectionToolState{
+public class Moving extends AbstractState{
 
 	/**
 	 * 

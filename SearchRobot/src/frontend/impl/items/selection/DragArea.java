@@ -3,7 +3,7 @@ package frontend.impl.items.selection;
 import helper.Position;
 
 
-public class DragArea extends SelectionToolState{
+public class DragArea extends AbstractState{
 
 	/**
 	 * 

@@ -2,7 +2,7 @@ package frontend.impl.items.selection;
 
 import helper.Position;
 
-public class Init extends SelectionToolState{
+public class Init extends AbstractState{
 
 	/**
 	 * 
@@ -26,7 +26,7 @@ public class Init extends SelectionToolState{
 			/**** drag Handle ****/
 			setCurrentHandle(getItemHandlerByPosition(p));
 			setItemHandleCursor(getItemHandlerByPosition(p).getCursor());
-			SelectionToolState dragHandle = getNewDragHandleState();
+			AbstractState dragHandle = getNewDragHandleState();
 			setToolState(dragHandle);
 			dragHandle.mouseDown(p);
 		}

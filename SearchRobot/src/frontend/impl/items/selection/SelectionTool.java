@@ -30,7 +30,7 @@ public class SelectionTool extends AbstractTool {
 	}
 	
 	private StateFactory factory;
-	private SelectionToolState state = null;
+	private AbstractState state = null;
 
 	private Item selectionArea;
 	Position lastP;
@@ -62,7 +62,7 @@ public class SelectionTool extends AbstractTool {
 		this.state.mouseUp(p);
 	}
 	
-	public void setToolState(SelectionToolState s) {
+	public void setToolState(AbstractState s) {
 		this.state = s;
 	}
 	

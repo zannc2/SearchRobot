@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 
 
-public abstract class SelectionToolState implements Serializable {
+public abstract class AbstractState implements Serializable {
 	
 	/**
 	 * 
@@ -18,7 +18,7 @@ public abstract class SelectionToolState implements Serializable {
 	
 	private SelectionTool myContext;
 	
-	protected SelectionToolState(SelectionTool context) {
+	protected AbstractState(SelectionTool context) {
 		this.myContext = context;
 	}
 	
@@ -52,7 +52,7 @@ public abstract class SelectionToolState implements Serializable {
 		// Default implementation, intentionally left empty.
 	}
 	
-	final protected void setToolState(SelectionToolState newState) {
+	final protected void setToolState(AbstractState newState) {
 		getContext().setToolState(newState);
 	}
 	
@@ -62,18 +62,18 @@ public abstract class SelectionToolState implements Serializable {
 	final protected void setSelectionAreaTo(Position p) {
 		getContext().doSetSelectionAreaTo(p);
 	}
-	final protected SelectionToolState getNewDragAreaState() {
+	final protected AbstractState getNewDragAreaState() {
 		return getContext().getStateFactory().createDragAreaState(getContext());
 	}
 	
-	final protected SelectionToolState getNewDragHandleState() {
+	final protected AbstractState getNewDragHandleState() {
 		return getContext().getStateFactory().createDragHandleState(
 				getContext());
 	}
-	final protected SelectionToolState getNewInitState() {
+	final protected AbstractState getNewInitState() {
 		return getContext().getStateFactory().createInitState(getContext());
 	}
-	final protected SelectionToolState getNewMovingState() {
+	final protected AbstractState getNewMovingState() {
 		return getContext().getStateFactory().createMovingState(getContext());
 	}
 	final protected Item getItemByCoord(Position p) {
