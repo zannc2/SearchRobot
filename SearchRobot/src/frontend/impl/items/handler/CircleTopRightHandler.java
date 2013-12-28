@@ -1,12 +1,11 @@
 package frontend.impl.items.handler;
 
-import java.awt.Cursor;
-import java.awt.Rectangle;
-
 import frontend.impl.view.Field;
 import frontend.interfaces.Item;
 import helper.Position;
 import helper.Size;
+
+import java.awt.Cursor;
 
 public class CircleTopRightHandler extends AbstractHandler {
 
@@ -70,7 +69,7 @@ public class CircleTopRightHandler extends AbstractHandler {
 		if(newS.getHeight() > 15)
 		{
 			this.position = newOrigin;
-			java.awt.Rectangle r = getAWTRectangle(newS.getWidth(), newS.getHeight());
+			java.awt.Rectangle r = Size.getAWTRectangle(newS, this.position);
 
 			//change Position and Size
 			Position newP = new Position((int) r.getX(), (int) r.getY());
@@ -92,67 +91,4 @@ public class CircleTopRightHandler extends AbstractHandler {
 			this.owner.setSize(this.originalSize);
 		}
 	}
-
-	private Rectangle getAWTRectangle(int w, int h) {
-		Rectangle r = null;
-		int width = w;
-		int height = h;
-		if (width >= 0) {
-			if (height >= 0) {
-
-				if(width > height)
-				{
-					r = new Rectangle(this.position.getOriginX(), this.position
-							.getOriginY(), width, width);
-				}
-				else
-				{
-					r = new Rectangle(this.position.getOriginX(), this.position
-							.getOriginY(), height, height);
-				}
-
-			} else {
-				// width >= 0 && height < 0
-				if(Math.abs(width) > Math.abs(height))
-				{
-					r = new Rectangle(this.position.getOriginX(), this.position
-							.getOriginY() - width, width, width);
-				}
-				else
-				{
-					r = new Rectangle(this.position.getOriginX(), this.position
-							.getOriginY() + height, -height, -height);
-				}
-			}
-		} else {
-			if (height >= 0) {
-				if(Math.abs(width) > Math.abs(height))
-				{
-					r = new Rectangle(this.position.getOriginX() + width, this.position
-							.getOriginY(), -width, -width);
-				}
-				else
-				{
-					r = new Rectangle(this.position.getOriginX() - height, this.position
-							.getOriginY(), height, height);
-				}
-			} else {
-				// width < 0 && height < 0
-				if(Math.abs(width) > Math.abs(height))
-				{
-					r = new Rectangle(this.position.getOriginX() + width, this.position
-							.getOriginY()
-							+ width, -width, -width);
-				}
-				else
-				{
-					r = new Rectangle(this.position.getOriginX() + height, this.position
-							.getOriginY()
-							+ height, -height, -height);
-				}
-			}
-		}
-		return r;
-	}
-
 }

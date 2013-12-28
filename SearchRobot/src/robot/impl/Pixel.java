@@ -48,8 +48,7 @@ public class Pixel extends AbstractItem {
 
 	@Override
 	public Position getPosition() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.position;
 	}
 
 	@Override
@@ -60,8 +59,7 @@ public class Pixel extends AbstractItem {
 
 	@Override
 	public Size getSize() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.size;
 	}
 
 	@Override

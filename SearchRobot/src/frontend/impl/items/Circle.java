@@ -53,7 +53,7 @@ public class Circle extends AbstractItem {
 	public void draw(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		Rectangle r = getAWTRectangle();
+		Rectangle r = Size.getAWTRectangle(this.size, this.position);
 		g2.fill(new Ellipse2D.Double(r.getX(), r.getY(),
 				r.getWidth(), r.getHeight()));
 //		g2.fill(new Ellipse2D.Double(this.position.getOriginX(), this.position.getOriginY(),
@@ -146,7 +146,7 @@ public class Circle extends AbstractItem {
 		notifyItemChangedListeners();
 		
 		// set Handlers
-		Rectangle r = getAWTRectangle();
+		Rectangle r = Size.getAWTRectangle(this.size, this.position);
 		Position topLeft = new Position((int)r.getX(), (int)r.getY());
 		this.itemHandlers.get(1).setPosition(topLeft);
 		Position topRight = new Position((int)(r.getX() + r.getWidth()), (int)r.getY());
@@ -162,67 +162,4 @@ public class Circle extends AbstractItem {
 	public Size getSize() {
 		return this.size;
 	}
-
-	private Rectangle getAWTRectangle() {
-		Rectangle r = null;
-		int width = size.getWidth();
-		int height = size.getHeight();
-		if (width >= 0) {
-			if (height >= 0) {
-				
-				if(width > height)
-				{
-					r = new Rectangle(this.position.getOriginX(), this.position
-							.getOriginY(), width, width);
-				}
-				else
-				{
-					r = new Rectangle(this.position.getOriginX(), this.position
-							.getOriginY(), height, height);
-				}
-				
-			} else {
-				// width >= 0 && height < 0
-				if(Math.abs(width) > Math.abs(height))
-				{
-					r = new Rectangle(this.position.getOriginX(), this.position
-							.getOriginY() - width, width, width);
-				}
-				else
-				{
-					r = new Rectangle(this.position.getOriginX(), this.position
-							.getOriginY() + height, -height, -height);
-				}
-			}
-		} else {
-			if (height >= 0) {
-				if(Math.abs(width) > Math.abs(height))
-				{
-					r = new Rectangle(this.position.getOriginX() + width, this.position
-						.getOriginY(), -width, -width);
-				}
-				else
-				{
-					r = new Rectangle(this.position.getOriginX() - height, this.position
-							.getOriginY(), height, height);
-				}
-			} else {
-				// width < 0 && height < 0
-				if(Math.abs(width) > Math.abs(height))
-				{
-				r = new Rectangle(this.position.getOriginX() + width, this.position
-						.getOriginY()
-						+ width, -width, -width);
-				}
-				else
-				{
-					r = new Rectangle(this.position.getOriginX() + height, this.position
-							.getOriginY()
-							+ height, -height, -height);
-				}
-			}
-		}
-		return r;
-	}
-
 }

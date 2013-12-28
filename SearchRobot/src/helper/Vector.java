@@ -1,6 +1,13 @@
 package helper;
 
-public class Vector {
+import java.io.Serializable;
+
+public class Vector implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4167398541378044638L;
 	private int xComponent;
 	private int yComponent;
 	

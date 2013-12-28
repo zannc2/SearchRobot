@@ -35,73 +35,11 @@ public class CircleTool extends AbstractTool {
 		int actualY = item.getPosition().getOriginY();
 		item.setSize(new Size(p.getOriginX() - actualX, p.getOriginY() -  actualY));
 	}
-	
-	private Rectangle getAWTRectangle() {
-		Rectangle r = null;
-		int width = item.getSize().getWidth();
-		int height = item.getSize().getHeight();
-		if (width >= 0) {
-			if (height >= 0) {
-				
-				if(width > height)
-				{
-					r = new Rectangle(item.getPosition().getOriginX(), item.getPosition()
-							.getOriginY(), width, width);
-				}
-				else
-				{
-					r = new Rectangle(item.getPosition().getOriginX(), item.getPosition()
-							.getOriginY(), height, height);
-				}
-				
-			} else {
-				// width >= 0 && height < 0
-				if(Math.abs(width) > Math.abs(height))
-				{
-					r = new Rectangle(item.getPosition().getOriginX(), item.getPosition()
-							.getOriginY() - width, width, width);
-				}
-				else
-				{
-					r = new Rectangle(item.getPosition().getOriginX(), item.getPosition()
-							.getOriginY() + height, -height, -height);
-				}
-			}
-		} else {
-			if (height >= 0) {
-				if(Math.abs(width) > Math.abs(height))
-				{
-					r = new Rectangle(item.getPosition().getOriginX() + width, item.getPosition()
-						.getOriginY(), -width, -width);
-				}
-				else
-				{
-					r = new Rectangle(item.getPosition().getOriginX() - height, item.getPosition()
-							.getOriginY(), height, height);
-				}
-			} else {
-				// width < 0 && height < 0
-				if(Math.abs(width) > Math.abs(height))
-				{
-				r = new Rectangle(item.getPosition().getOriginX() + width, item.getPosition()
-						.getOriginY()
-						+ width, -width, -width);
-				}
-				else
-				{
-					r = new Rectangle(item.getPosition().getOriginX() + height, item.getPosition()
-							.getOriginY()
-							+ height, -height, -height);
-				}
-			}
-		}
-		return r;
-	}
 
 	@Override
 	public void mouseUp(Position p) {
 		mouseDrag(p);
-		Rectangle r = getAWTRectangle();
+		Rectangle r = Size.getAWTRectangle(item.getSize(), item.getPosition());
 		item.setPosition(new Position((int)r.getX(), (int)r.getY()));
 		item.setSize(new Size((int)r.getWidth(), (int)r.getHeight()));
 		if(!getField().checkIfPositionFree(item)) getField().removeItem(item);

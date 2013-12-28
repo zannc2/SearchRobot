@@ -72,7 +72,7 @@ public class SelectionArea extends AbstractItem {
 
 	@Override
 	public boolean contains(Position p) {
-		return getAWTRectangle().contains(p.getAWTPoint());
+		return contains(p, 0);
 	}
 
 	@Override
@@ -111,8 +111,7 @@ public class SelectionArea extends AbstractItem {
 
 	@Override
 	public boolean contains(Position p, int epsilon) {
-		// not used
-		return false;
+		return getAWTRectangle().contains(p.getAWTPoint());
 	}
 
 }
