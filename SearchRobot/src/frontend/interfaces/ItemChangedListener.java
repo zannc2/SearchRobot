@@ -12,6 +12,11 @@ import frontend.impl.view.ItemChangedEvent;
  */
 public interface ItemChangedListener extends EventListener, Serializable {
 
+	/**
+	 * Called when something changed in the item (e.g. resized, moved....)
+	 * 
+	 * @param e The event object which contains the source of the event
+	 */
 	public void itemChanged(ItemChangedEvent e);
 	
 }
