@@ -220,36 +220,88 @@ public abstract class AbstractState implements Serializable {
 	final protected boolean isOnUnselectedItem(Position p) {
 		return getContext().isOnUnselectedItem(p);
 	}
-	final protected void setMoveCursor() {
-		getContext().doSetMoveCursor();
-	}
+	
+	
+	/**
+	 * Helper method to check if position is on a item handler
+	 * @param p asked position
+	 * @return true if position is on a item handler
+	 */
 	final protected boolean isOnItemHandle(Position p) {
 		return getContext().isOnItemHandle(p);
 	}
 	
+	/**
+	 * Returns the item handler on this position.
+	 * @param p asked position
+	 * @return handler on the asket position
+	 */
 	final protected ItemHandler getItemHandlerByPosition(Position p) {
 		return getContext().getItemHandlerByPosition(p);
 	}
-	final protected void setItemHandleCursor(Cursor cur) {
-		getContext().doSetItemeHandleCursor(cur);
-	}
+	
+	/**
+	 * helper method to check if position is on a selected item
+	 * @param p asked position
+	 * @return true if the position is on a selected item
+	 */
 	protected final boolean isOnSelectedItem(Position p) {
 		return getContext().isOnSelectedItem(p);
 	}
+	
+	/**
+	 * helper method to check if position is on empty area 
+	 * @param p asked position
+	 * @return true if position is on empty area
+	 */
 	final protected boolean isOnEmptyArea(Position p) {
 		return getContext().isOnEmptyArea(p);
 	}
+	
+	/**
+	 * Initializes the selection area by calling corresponding method on the
+	 * state context.
+	 * @param p Position of the mouse
+	 */
 	final protected void initSelectionArea(Position p) {
 		getContext().doInitSelectionArea(p);
 	}
+	
+	/**
+	 * helper method to set the cursor to defaul
+	 */
 	final protected void setDefaultCursor() {
 		getContext().doSetDefaultCursor();
 	}
+
+	/**
+	 * helper method to set the cursor to move
+	 */
+	final protected void setMoveCursor() {
+		getContext().doSetMoveCursor();
+	}
 	
+	/**
+	 * helper method to set the cursor defined by the item handler
+	 * @param cur
+	 */
+	final protected void setItemHandleCursor(Cursor cur) {
+		getContext().doSetItemeHandleCursor(cur);
+	}
+	
+	/**
+	 * helper method that moves the selected items
+	 * @param p Position of the mouse
+	 */
 	final protected void moveSelectedShapes(Position p) {
 		getContext().doMoveSelectedItems(p);
 	}
 	
+	/**
+	 * helper method of finishing the move of selected items
+	 * It checks if the new item position is available
+	 * @param p Position of the mouse
+	 */
 	final protected void endMoveSelectedShapes(Position p) {
 		getContext().endMoveSelectedItems(p);
 	}
