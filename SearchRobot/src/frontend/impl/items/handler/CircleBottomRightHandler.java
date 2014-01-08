@@ -7,11 +7,14 @@ import helper.Size;
 
 import java.awt.Cursor;
 
+/**
+ * This is the bottom right handler of the Circle. 
+ * It extends the AbstractHandler. 
+ * @author zannc2 & gfells4
+ *
+ */
 public class CircleBottomRightHandler extends AbstractHandler {
-
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 4326352719765686576L;
 	
 	private Position originalPosition;
@@ -23,6 +26,12 @@ public class CircleBottomRightHandler extends AbstractHandler {
 
 	private static final Cursor RESIZE_CURSOR = new Cursor(Cursor.SE_RESIZE_CURSOR);
 
+	/**
+	 * Constructor which defines the field, owner and position of the handler.
+	 * @param owner Item
+	 * @param position
+	 * @param field
+	 */
 	public CircleBottomRightHandler(Item owner, Position position, Field field) {
 		super(owner, position);
 		this.field = field;

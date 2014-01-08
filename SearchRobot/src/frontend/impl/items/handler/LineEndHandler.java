@@ -7,11 +7,14 @@ import helper.Size;
 
 import java.awt.Cursor;
 
+/**
+ * This is the end handler of the line. 
+ * It extends the AbstractHandler. 
+ * @author zannc2 & gfells4
+ *
+ */
 public class LineEndHandler extends AbstractHandler {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 4240747856462608637L;
 	
 	private Position position;
@@ -23,6 +26,12 @@ public class LineEndHandler extends AbstractHandler {
 	
 	private static final Cursor RESIZE_CURSOR = new Cursor(Cursor.S_RESIZE_CURSOR);
 
+	/**
+	 * Constructor which defines the field, owner and position of the handler.
+	 * @param owner Item
+	 * @param position
+	 * @param field
+	 */
 	public LineEndHandler(Item owner, Position position, Field field) {
 		super(owner, position);
 		this.field = field;

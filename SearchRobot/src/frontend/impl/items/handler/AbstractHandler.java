@@ -18,22 +18,27 @@ import frontend.interfaces.ItemHandler;
  *
  */
 public abstract class AbstractHandler implements ItemHandler {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -5587853189357362919L;
 
-	/** The size of the quadratic handle. */
+	/**
+	 * The size of the quadratic handle
+	 */
 	public static final Size HANDLE_SIZE = new Size(16,16);
 	
-	/** The size of the pen. */
+	/**
+	 * The size of the pen
+	 */
 	public static final int PEN_SIZE = 1;
 
 	
 	private Position position;
 	private Item owner;
 	
+	/**
+	 * Constructor which defines the owner and the position of the Handler
+	 * @param owner
+	 * @param position
+	 */
 	protected AbstractHandler(Item owner, Position position) {
 		this.owner = owner;
 		this.position = position;
@@ -99,10 +104,6 @@ public abstract class AbstractHandler implements ItemHandler {
 
 	@Override
 	public void stopInteraction(Position p) {
-	}
-	
-	protected boolean checkIteractionPossible() {
-		return false;
 	}
 
 }

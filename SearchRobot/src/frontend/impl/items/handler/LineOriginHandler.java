@@ -7,11 +7,14 @@ import helper.Size;
 
 import java.awt.Cursor;
 
+/**
+ * This is the origin handler of the line. 
+ * It extends the AbstractHandler. 
+ * @author zannc2 & gfells4
+ *
+ */
 public class LineOriginHandler extends AbstractHandler {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -7471669377112467058L;
 	
 	private Position position;
@@ -22,6 +25,12 @@ public class LineOriginHandler extends AbstractHandler {
 	
 	private static final Cursor RESIZE_CURSOR = new Cursor(Cursor.N_RESIZE_CURSOR);
 	
+	/**
+	 * Constructor which defines the field, owner and position of the handler.
+	 * @param owner Item
+	 * @param position
+	 * @param field
+	 */
 	public LineOriginHandler(Item owner, Position position, Field field) {
 		super(owner, position);
 		this.field = field;
