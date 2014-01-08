@@ -2,11 +2,15 @@ package frontend.impl.items.selection;
 
 import helper.Position;
 
+/**
+ * Implementation of the AbstractState. The Init state is the beginning state of the 
+ * selection. This state manages the start events of the user and creates the corresponding
+ * state. 
+ * @author zannc2 & gfells4
+ *
+ */
 public class Init extends AbstractState{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1987797483271556684L;
 
 	public Init(SelectionTool context) {

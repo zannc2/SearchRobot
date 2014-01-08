@@ -33,7 +33,7 @@ public class SelectionTool extends AbstractTool {
 	private AbstractState state = null;
 
 	private Item selectionArea;
-	Position lastP;
+	private Position lastP;
 	
 	private Position previousMouseDownPosition;
 	public static final Cursor MOVE_CURSOR = new Cursor(Cursor.HAND_CURSOR);
