@@ -15,6 +15,13 @@ import frontend.interfaces.FieldChangedListener;
 import frontend.interfaces.Item;
 import frontend.interfaces.ItemChangedListener;
 
+/**
+ * This is the class which manages the items. If an item is created, deleted or changed,
+ * this class will be notified and notifies the view class to redraw
+ * 
+ * @author zannc2 & gfels4
+ *
+ */
 public class Field implements Serializable{
 	
 	/**
@@ -26,11 +33,15 @@ public class Field implements Serializable{
 	private List<Item> items = new ArrayList<Item>();
 	private List<FieldChangedListener> listeners = new ArrayList<FieldChangedListener>();
 	private Robot robot;
-	
 	private FieldItemChangedListener l = new FieldItemChangedListener();
 	private final Size robotSize;
 	private Size fieldSize;
 	
+	/**
+	 * Inner class to handle ItemChangedEvents
+	 * @author zannc2 & gfels4
+	 *
+	 */
 	private class FieldItemChangedListener implements ItemChangedListener {
 
 		/**
@@ -40,16 +51,22 @@ public class Field implements Serializable{
 
 		@Override
 		public void itemChanged(ItemChangedEvent e) {
-//			System.out.println("ViewItemChangedListener");
 			notifyFieldChangedListeners();
 		}
 		
 	}
 	
+	/**
+	 * Constructor sets the field size and the robot size
+	 * 
+	 * @param fieldsize the size of this field
+	 * @param robotSize the size of the robot
+	 */
 	public Field(Size fieldsize, Size robotSize) {
 		this.robotSize = robotSize;
 		this.fieldSize = fieldsize;
 	}
+	
 	/**
 	 * Constructor
 	 * @param v view
@@ -175,11 +192,21 @@ public class Field implements Serializable{
 		}
 	}
 	
+	/**
+	 * Getter for the field size
+	 * 
+	 * @return Size of the field
+	 */
 	public Size getFieldSize()
 	{
 		return fieldSize;
 	}
 	
+	/**
+	 * Sets a new size of this field
+	 * 
+	 * @param s The new size
+	 */
 	public void setFieldSize(Size s) {
 		this.fieldSize = s;
 	}
@@ -187,8 +214,9 @@ public class Field implements Serializable{
 	/**
 	 * Checks if the Item can be set on its Position
 	 * Robot or Finish can not be on the same position than the other Items
-	 * @param item Item
-	 * @return true if Item Position is Free
+	 * 
+	 * @param item Item to check
+	 * @return True if Item Position is Free
 	 */
 	public boolean checkIfPositionFree(Item item) {
 		// i is the robot

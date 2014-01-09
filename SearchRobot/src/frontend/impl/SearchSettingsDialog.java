@@ -15,6 +15,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * The dialog to choose different preferences of the program, e.g the speed of the robot
+ * 
+ * @author zannc2 & gfels4
+ *
+ */
 public class SearchSettingsDialog extends JDialog 
 {
 
@@ -28,6 +34,11 @@ public class SearchSettingsDialog extends JDialog
 	private JComboBox<String> jcb;
 	private JCheckBox checkBoxView;
 
+	/**
+	 * Constructor builds the search settings dialog
+	 * 
+	 * @param f The frame to which this dialog belongs
+	 */
 	public SearchSettingsDialog(JFrame f, int robotSpeed, boolean showGrid) {
 		super(f);
 
@@ -38,15 +49,13 @@ public class SearchSettingsDialog extends JDialog
 		choosedSpeed = robotSpeed;
 		this.showGrid = showGrid;
 
-		//		setPreferredSize(new Dimension(200, 100));
-		//		setMinimumSize(this.getPreferredSize());
-		//		setMaximumSize(this.getPreferredSize());
-
 		JPanel p = new JPanel(new GridBagLayout());
 		add(p, BorderLayout.CENTER);
 		JLabel labelSpeed = new JLabel("Robotergeschwindigkeit in Pixel/Sek: ");
 		jcb = new JComboBox<>(speed);
 		int selectedIndex = 0;
+		
+		// get the actual speed an set it as default selected
 		switch (choosedSpeed) {
 		case 40: selectedIndex = 0;
 		break;
@@ -59,8 +68,8 @@ public class SearchSettingsDialog extends JDialog
 		}
 		jcb.setSelectedIndex(selectedIndex);
 		
+		// settings for the robot view (user can see what the robot sees or not)
 		JLabel labelView = new JLabel("Robotersicht darstellen: ");
-		
 		checkBoxView = new JCheckBox();
 		checkBoxView.setSelected(showGrid);
 		
@@ -112,17 +121,30 @@ public class SearchSettingsDialog extends JDialog
 		pack();
 	}
 
-	public int getChoosedSpeed() {
+	/**
+	 * Getter for the new speed of the robot
+	 * 
+	 * @return the speed which the user has chosen
+	 */
+	public int getChosenSpeed() {
 		return choosedSpeed;
 	}
 
+	/**
+	 * Getter for the setting if the user can see what the robot sees or not
+	 * 
+	 * @return true if the robot-view for the user is activated
+	 */
 	public boolean isShowGrid() {
 		return showGrid;
 	}
 
-	public void setShowGrid(boolean showGrid) {
+	/**
+	 * Change the state of this setting
+	 * 
+	 * @param showGrid true if the robot view should be enabled
+	 */
+	private void setShowGrid(boolean showGrid) {
 		this.showGrid = showGrid;
 	}
-
-
 }

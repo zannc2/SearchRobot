@@ -11,6 +11,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * The dialog for the help, which reaches the user over the menu -> help
+ * 
+ * @author zannc2 & gfels4
+ *
+ */
 public class HelpDialog extends JDialog 
 {
 
@@ -19,6 +25,12 @@ public class HelpDialog extends JDialog
 	 */
 	private static final long serialVersionUID = 56835094942683956L;
 	private Size choosedSize;
+	
+	/**
+	 * Constructor builds the help dialog
+	 * 
+	 * @param f The frame to which this dialog belongs
+	 */
 	public HelpDialog(JFrame f) {
 		super(f);
 
@@ -26,10 +38,6 @@ public class HelpDialog extends JDialog
 		setResizable(false);
 		setModal(true);
 		setLayout(new BorderLayout());
-
-		//		setPreferredSize(new Dimension(200, 100));
-		//		setMinimumSize(this.getPreferredSize());
-		//		setMaximumSize(this.getPreferredSize());
 
 		JPanel p = new JPanel(new GridBagLayout());
 		add(p, BorderLayout.CENTER);

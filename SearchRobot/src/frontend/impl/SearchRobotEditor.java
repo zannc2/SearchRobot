@@ -46,12 +46,15 @@ import robot.impl.RobotController;
 
 public class SearchRobotEditor {
 
-	/** The name of the Programm */
+	/** The title of the Programm */
 	private final String PROGRAM_TITLE = "Search Robot";
+	/** The initial size of the field */
 	private Size field_size = new Size(800, 500);
+	/** The robot size */
 	private final Size ROBOT_SIZE = new Size(10, 10);
+	
+	/** The initial size of the field */
 	private int robotSpeed = 10;
-
 	private JButton addRobot, addFinish, addLine, addCircle, startButton, selection, remove;
 	private JMenuBar menuBar;
 	private JMenu fileMenu, editMenu, helpMenu;
@@ -69,10 +72,16 @@ public class SearchRobotEditor {
 	private final Color BUTTON_COLOR = new Color(238,238,238);
 	private final Color BUTTON_PRESSED_COLOR = Color.LIGHT_GRAY;
 
+	/**
+	 * Constructor of the Editor, it will initialize the components
+	 */
 	public SearchRobotEditor() {
 		initComponents();
 	}
 
+	/**
+	 * Initializes all the components for this program
+	 */
 	private void initComponents() {
 		frame = new JFrame(PROGRAM_TITLE);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -97,7 +106,7 @@ public class SearchRobotEditor {
 				NewDialog neu = new NewDialog(frame);
 				neu.setLocationRelativeTo(frame);
 				neu.setVisible(true);
-				Size newFieldSize = neu.getChoosedSize();
+				Size newFieldSize = neu.getChosenSize();
 
 				if(newFieldSize != null)
 				{
@@ -213,13 +222,11 @@ public class SearchRobotEditor {
 				sd.setLocationRelativeTo(frame);
 				sd.setVisible(true);
 				
-				robotSpeed = sd.getChoosedSpeed();
+				robotSpeed = sd.getChosenSpeed();
 				showGrid = sd.isShowGrid();
 				setJLabelText();
 			}
 		});
-
-		//TODO: Add Menu Items
 
 
 		/************ Help Menu *************/
@@ -242,7 +249,6 @@ public class SearchRobotEditor {
 		frame.setJMenuBar(menuBar);
 
 		/****************************** Main Panel ***********************/
-
 		// Create draw panel
 		view = new View(field_size, ROBOT_SIZE, Color.BLACK);
 		view.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -260,19 +266,13 @@ public class SearchRobotEditor {
 		setJLabelText();		
 		toolBar.add(jl);
 
-
-
 		/******************* Draw Area *******************/
-		//scrollPane = new JScrollPane(view, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-
-
 		gc.gridx = 0;
 		gc.gridy = 0;
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		gc.fill = GridBagConstraints.HORIZONTAL;
 		mainPanel.add(toolBar, gc);
-
-
+		
 		gc.gridx = 0;
 		gc.gridy = 1;
 		gc.weightx = 1;
@@ -280,6 +280,7 @@ public class SearchRobotEditor {
 		gc.fill = GridBagConstraints.NONE;
 		mainPanel.add(view, gc);
 
+		
 		frame.getContentPane().add(mainPanel, BorderLayout.CENTER);
 		frame.validate();
 		frame.pack();
@@ -287,6 +288,11 @@ public class SearchRobotEditor {
 	}
 
 
+	/**
+	 * Creates and adds the tool buttons
+	 * 
+	 * @param toolBar The toolbar component
+	 */
 	private void addButtons(JToolBar toolBar) {
 
 		// Button Selection
@@ -326,7 +332,6 @@ public class SearchRobotEditor {
 		toolBar.add(addCircle);
 		addCircle.setBackground(BUTTON_COLOR);
 		tools.add(new CircleTool(view.getField()));
-
 		toolBar.addSeparator(new Dimension(20,0));
 
 		// Button Start
@@ -335,7 +340,16 @@ public class SearchRobotEditor {
 		toolBar.add(startButton);
 	}
 
-	protected JButton makeNavigationButton(String imageName,
+	/**
+	 * Creates the tool buttons
+	 * 
+	 * @param imageName Name of the button image
+	 * @param toolTipText Tool tip text
+	 * @param altText Alternative text if the resource could not be loaded
+	 * @param size Dimension of the button
+	 * @return The created button
+	 */
+	private JButton makeNavigationButton(String imageName,
 			String toolTipText,
 			String altText,
 			Dimension size) {
@@ -351,19 +365,22 @@ public class SearchRobotEditor {
 
 		if (imageURL != null) {                      //image found
 			button.setIcon(new ImageIcon(imageURL, altText));
-//			button.setSelectedIcon(new ImageIcon(getClass().getResource("resources/remove_s.png")));
 		} else {                                     //no image found
 			button.setText(altText);
 			System.err.println("Resource not found: " + imgLocation);
 		}
 
 		button.setPreferredSize(size);
-
 		return button;
 	}
 
+	/**
+	 * This class manages all the button events
+	 * 
+	 * @author zannc2 & gfels4
+	 *
+	 */
 	private class ButtonEvent implements ActionListener {
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			view.clearSelection();
@@ -410,6 +427,11 @@ public class SearchRobotEditor {
 			}
 		}
 
+		/**
+		 * Changes the color of the selected button
+		 * 
+		 * @param selected The number of the button which should be selected
+		 */
 		private void setSelected(int selected)
 		{
 			addRobot.setBackground(BUTTON_COLOR);			
@@ -444,7 +466,7 @@ public class SearchRobotEditor {
 
 
 	/**
-	 * Stops the robot
+	 * Stops the robot search
 	 */
 	public void stopSearch(){
 
@@ -474,7 +496,7 @@ public class SearchRobotEditor {
 	}
 
 	/**
-	 * Starts the robot
+	 * Starts the robot search
 	 */
 	public void startSearch()
 	{
@@ -503,6 +525,9 @@ public class SearchRobotEditor {
 		}
 	}
 
+	/**
+	 * Creates the text on the top with the field size and the robot speed
+	 */
 	private void setJLabelText()
 	{
 		jl.setText("Zeichenfläche: " + field_size.getWidth()+ " x " + field_size.getHeight() + " / Robotergeschwindigkeit: " + 1000 / robotSpeed + " Pixel/Sekunde");
@@ -523,10 +548,12 @@ public class SearchRobotEditor {
 		new SearchRobotEditor();
 	}
 
+	/**
+	 * Returns if the user can see what the robot sees or not (the robot view setting)
+	 * 
+	 * @return true if the robot view is enabled
+	 */
 	public boolean isShowGrid() {
 		return showGrid;
 	}	
-
-
-
 }

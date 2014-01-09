@@ -26,6 +26,18 @@ import frontend.interfaces.ItemHandler;
 import frontend.interfaces.StateFactory;
 import frontend.interfaces.Tool;
 
+/**
+ * This Class extends JPanel and controls the mouse events to draw, select or remove items.
+ * If the user clicks or releases the mouse button or moves the mouse over this panel, 
+ * the events would be redirected to the selected tool. (e.g. a mouse click if the line tool
+ * is selected would create a new line, move would resize the line and release fix the
+ * size and position of the line)
+ * 
+ * If items were deleted, added or changed, this class will be informed and repaints
+ * 
+ * @author zannc2 & gfels4
+ *
+ */
 public class View extends JPanel {
 	
 	
@@ -41,6 +53,12 @@ public class View extends JPanel {
 	private ViewFieldChangedListener l = new ViewFieldChangedListener();
 	private Color itemColor;
 
+	/**
+	 * Inner class to handle changes on the field
+	 * 
+	 * @author zannc2 & gfels4
+	 *
+	 */
 	private class ViewFieldChangedListener implements FieldChangedListener {
 
 		/**

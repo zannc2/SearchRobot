@@ -12,6 +12,15 @@ import java.util.List;
 import frontend.impl.items.AbstractItem;
 import frontend.interfaces.ItemHandler;
 
+/**
+ * This is the class to represent a pixel(10x10px) item to show the user what the 
+ * robot can see while the search. It can have different colors.
+ * 
+ * It extends the {@link AbstractItem} class
+ * 
+ * @author zannc2 & gfels4
+ *
+ */
 public class Pixel extends AbstractItem {
 
 	/**
@@ -23,6 +32,12 @@ public class Pixel extends AbstractItem {
 	private Size size;
 	private Color color;
 
+	/**
+	 * Constructor defines its position, size and color and these values could not change
+	 * 
+	 * @param p
+	 * @param c
+	 */
 	public Pixel(Position p, Color c) {
 		this.position = p;
 		this.size = new Size(10, 10);
