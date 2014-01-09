@@ -242,8 +242,6 @@ public class SearchRobotEditor {
 				HelpDialog help = new HelpDialog(frame);
 				help.setLocationRelativeTo(frame);
 				help.setVisible(true);
-
-				// TODO: help class design
 			}
 		});
 		frame.setJMenuBar(menuBar);

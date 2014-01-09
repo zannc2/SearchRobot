@@ -209,4 +209,39 @@ public class SelectionToolTest {
     	//reset Selection
     	this.selectionTool.clearSelection();
     }
+    
+    //Test Drag Hanlder
+    @Test
+    public void testDragHandler() {
+    	//select item
+    	this.selectionTool.mouseDown(new Position(30, 40));
+    	this.selectionTool.mouseUp(new Position(30,40));
+    	
+    	//mouseDown on origin Handler
+    	this.selectionTool.mouseDown(new Position(30, 30));
+    	
+    	//mouse drag should resize the item
+    	this.selectionTool.mouseDrag(new Position(30, 20));
+    	assertEquals(this.item.getSize(), new Size(0, 60));
+    	
+    	//mouse up should resize the item again
+    	this.selectionTool.mouseUp(new Position(30, 30));
+    	assertEquals(this.item.getSize(), new Size(0, 50));
+    }
+    
+    /**
+     * test if mouse down on empty are removes all items from selection
+     */
+    @Test
+    public void testEmptyArea() {
+    	//select item
+    	this.selectionTool.mouseDown(new Position(30, 40));
+    	this.selectionTool.mouseUp(new Position(30,40));
+    	
+    	assertTrue(this.selectionTool.getSelection().contains(this.item));
+    	
+    	//mouse down on empty area should remove item from selection
+    	this.selectionTool.mouseDown(new Position(10, 10));
+    	assertFalse(this.selectionTool.getSelection().contains(this.item));
+    }
 }

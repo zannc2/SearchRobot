@@ -57,7 +57,7 @@ public class Pixel extends AbstractItem {
 
 	@Override
 	public void setPosition(Position position) {
-		// TODO Auto-generated method stub
+		//not used 
 
 	}
 
@@ -68,8 +68,7 @@ public class Pixel extends AbstractItem {
 
 	@Override
 	public void setSize(Size size) {
-		// TODO Auto-generated method stub
-
+		//not used
 	}
 
 	@Override
@@ -79,19 +78,18 @@ public class Pixel extends AbstractItem {
 
 	@Override
 	public void move(Vector delta) {
-		// TODO Auto-generated method stub
-
+		//not used
 	}
 
 	@Override
 	public boolean contains(Position p) {
-		// TODO Auto-generated method stub
+		//not used
 		return false;
 	}
 
 	@Override
 	public List<ItemHandler> getItemHandler() {
-		// TODO Auto-generated method stub
+		//not used
 		return null;
 	}
 

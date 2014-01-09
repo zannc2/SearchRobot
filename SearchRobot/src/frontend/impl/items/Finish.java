@@ -22,10 +22,7 @@ import javax.imageio.ImageIO;
  *
  */
 public class Finish extends AbstractItem {
-	
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 8323053597903637271L;
 	
 	private Position position;
@@ -81,9 +78,6 @@ public class Finish extends AbstractItem {
 		setPosition(new Position(x, y));
 		
 		notifyItemChangedListeners();
-
-		//TODO
-		/* set handles */
 	}
 
 	@Override

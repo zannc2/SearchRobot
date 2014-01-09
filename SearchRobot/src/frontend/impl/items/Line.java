@@ -74,7 +74,6 @@ public class Line extends AbstractItem {
 		
 		this.position = new Position(x, y);
 
-		//TODO
 		/* set handles */
 		this.itemHandlers.get(0).setPosition(this.position);
 

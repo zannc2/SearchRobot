@@ -105,9 +105,6 @@ public class Robot extends AbstractItem{
 		setPosition(new Position(x, y));
 		
 		notifyItemChangedListeners();
-
-		//TODO
-		/* set handles */
 	}
 
 	@Override
