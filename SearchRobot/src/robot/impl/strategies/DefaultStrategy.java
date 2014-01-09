@@ -14,21 +14,37 @@ import robot.interfaces.Strategy;
 
 public class DefaultStrategy implements Strategy{
 
+	// current field
+	private Field field;
+	// field size
 	private Size fieldSize;
 	// field values
 	private final int UNKNOWN = 0;
 	private final int ITEM = 1;
 	private final int FINISH = 2;
-
-	private Field field;
-	private int [][] visited;
-	private FieldMatrix foundMatrix;
-	private int shortestWay;
-	private List<Position> returnList;
-	private boolean unknownFieldExist;
 	private RobotController robotController;
+	// the martix which saves the memory of the robot
+	private FieldMatrix foundMatrix;
+	// matrix to mark the already visited fields while the search
+	private int [][] visited;
+	// saves the value of the shortest way found to an unknown position
+	private int shortestWay;
+	// saves a list with the positions of the path to the next unknown field or the finish
+	private List<Position> returnList;
+	// true if there is an unknown field reachable for the robot
+	private boolean unknownFieldExist;
+	// true if the search found a way to the finish
 	private boolean finishAcessible;
 
+	
+	/**
+	 * Constructor of this Class
+	 * 
+	 * @param robotController The robot controller which uses this strategy
+	 * @param foundMatrix	the matrix of the field, filled with the memory of the robot
+	 * @param fieldSize the size of the current field
+	 * @param field	the current field
+	 */
 	public DefaultStrategy(RobotController robotController, FieldMatrix foundMatrix, Size fieldSize, Field field) {
 		this.foundMatrix = foundMatrix;
 		this.fieldSize = fieldSize;
@@ -36,6 +52,14 @@ public class DefaultStrategy implements Strategy{
 		this.robotController = robotController;
 	}
 
+	/**
+	 * This strategy computes the shortest path to an unknown position in the given foundMatrix.
+	 * The returned List contains all Positions step by step to the unknown field. Each position
+	 * in will be a neighbor position in north, east, west or south of the next position 
+	 * in the list
+	 * 
+	 * @return The path to the next unknown field
+	 */
 	@Override
 	public List<Position> computePath() {
 		// get the robot position
@@ -71,13 +95,13 @@ public class DefaultStrategy implements Strategy{
 	}
 
 	/**
-	 * This is a recursiv method to find the shortest way from the reobot position to its next unknown position
+	 * This is a recursive method to find the shortest way from the robot position to its next unknown position
 	 * 
-	 * @param p the position of the next position (in "pixles/10")
-	 * @param depth the depth of this position in the tree
+	 * @param p the position of the next position (in "pixels/10")
+	 * @param depth the depth of position p in the tree
 	 */
 	private void computePath(Position p, int depth) {
-		// if position p was already visited in a less deep recursion OR 
+		// if position p was already visited in a less deep recursion OR there is already a shorter way to an unknown field 
 		if ((visited[p.getOriginX()][p.getOriginY()] != 0 && 
 				visited[p.getOriginX()][p.getOriginY()] <= depth) || depth > shortestWay)
 		{
@@ -136,6 +160,16 @@ public class DefaultStrategy implements Strategy{
 		}
 	}
 
+	/**
+	 * If the finish position is known, it computes the shortest path to the finish in the given foundMatrix.
+	 * The returned List contains all Positions step by step to the finish. Each position
+	 * in will be a neighbor position in north, east, west or south of the next position 
+	 * in the list
+	 * 
+	 * If there is no way to the finish the method will call the normal computePath() method
+	 * 
+	 * @return The path to the finish or if not accessible and unknown positions exists -> to the next unknown field
+	 */
 	@Override
 	public List<Position> computePathToFinish() {
 		// get the robot position
@@ -153,13 +187,13 @@ public class DefaultStrategy implements Strategy{
 		// compute the path, start with the robot position
 		computePathToFinish(new Position(robot.getOriginX(), robot.getOriginY()), 0);
 		
-		// if the method found an unknown field
+		// if the method found a way to the finish
 		if(finishAcessible)
 		{
 			Collections.reverse(returnList);
 			this.robotController.setFinished(true);
 		}
-		else // if all reachable fields are discovered -> the finish is unreachable
+		else // if the finish is not accessible
 		{
 			returnList.clear();
 			computePath();
@@ -167,8 +201,14 @@ public class DefaultStrategy implements Strategy{
 		return returnList;
 	}
 	
+	/**
+	 * This is a recursive method to find the shortest way from the robot position to the finish
+	 * 
+	 * @param p the position of the next position (in "pixels/10")
+	 * @param depth the depth of position p in the tree
+	 */
 	private void computePathToFinish(Position p, int depth) {
-		// if position p was already visited in a less deep recursion OR 
+		// if position p was already visited in a less deep recursion OR there is already a shorter way to the finish
 		if ((visited[p.getOriginX()][p.getOriginY()] != 0 && 
 				visited[p.getOriginX()][p.getOriginY()] <= depth) || depth > shortestWay)
 		{
