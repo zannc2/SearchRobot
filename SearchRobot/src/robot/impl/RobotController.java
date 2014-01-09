@@ -15,13 +15,22 @@ import javax.swing.JOptionPane;
 import robot.impl.strategies.DefaultStrategy;
 import robot.interfaces.Strategy;
 
+/**
+ * This is the controller class for the robot search. It implements the
+ * runnable interface and search started by a thread. The run
+ * method repeats the 3 steps "scanning of the field", "calculate the next path" and "move
+ * over the next path" until the robot reaches the finish, the user cancels the
+ * search or the finish is fully encircled by items and nor reachable.
+ * 
+ * @author zannc2 & gfels4
+ *
+ */
 public class RobotController implements Runnable {
 	private final int MOVE_SPEED;
 	private final Position startPosition;
 	//size of steps
 	private final int EPSILON = 5;
 	// field values
-	private final int UNKNOWN = 0;
 	private final int ITEM = 1;
 	private final int FINISH = 2;
 	private final int FREE = 3;
@@ -36,19 +45,38 @@ public class RobotController implements Runnable {
 	private Position finish;
 	private boolean unreachable, isFinished;
 	private Strategy strategy;
+	private SearchRobotEditor editor;
+	
+	/**
+	 * It will be true if the last calculation of the path goes to the finish 
+	 * 
+	 * @return true if the robot is finished
+	 */
 	public boolean isFinished() {
 		return isFinished;
 	}
 
-
+	/**
+	 * Setter for the isFinished variable, which shows if the path to the finish is found
+	 * 
+	 * @param isFinished true if the way to the finish is found
+	 */
 	public void setFinished(boolean isFinished) {
 		this.isFinished = isFinished;
 	}
 
-
-	private SearchRobotEditor editor;
-
-
+	/**
+	 * Constructor sets the editor, the field and the robot speed and creates a matrix filled
+	 * with the items on the field and a second empty matrix which is the robots brain. The 
+	 * second matrix is filled while the search, because the robot knows nothing about the field
+	 * and the obstacles on it at the beginning.
+	 * For more informations about the matrix see {@link FieldMatrix}
+	 * 
+	 * 
+	 * @param editor The actual editor
+	 * @param f	The field
+	 * @param robotSpeed The speed of the robot
+	 */
 	public RobotController(SearchRobotEditor editor, Field f, int robotSpeed) {
 		this.field = f;
 		this.fieldSize = f.getFieldSize();
@@ -62,7 +90,9 @@ public class RobotController implements Runnable {
 		setDetaultStrategie();
 	}
 
-
+	/**
+	 * Starts the run method
+	 */
 	public synchronized void start(){
 		if (thread == null){
 			thread = new Thread(this);
@@ -70,11 +100,18 @@ public class RobotController implements Runnable {
 		}
 	}
 
+	/**
+	 * Stops the run method
+	 */
 	public synchronized void stop(){
 		if (thread != null)
 			thread = null;	
 	}
 
+	/**
+	 * Scanning of +/- 90° from the robot position in the direction that he looks
+	 * 
+	 */
 	private void scanField() {
 		this.foundMatrix.set(new Position(this.field.getRobotPosition().getOriginX()/10, this.field.getRobotPosition().getOriginY()/10), this.FREE);
 		if(editor.isShowGrid())
@@ -118,27 +155,35 @@ public class RobotController implements Runnable {
 
 		// degrees Between 0 and 180
 		for(double i = minDegree; i <= maxDegree; i=i+1) {
+			// if the thread is stopped, cancel the scan
 			if(thread == null) return;
 			boolean whileB = true;
 			int factor = 1;
+			
+			// calculate sinus & cosinus
 			double x = Math.cos(Math.toRadians(i)) * this.EPSILON;
 			double y = Math.sin(Math.toRadians(i)) * this.EPSILON;
 
 			while(whileB){
+				// if the thread is stopped, cancel the scan
 				if(thread == null) return;
-
-
+				
+				// Calculate the next position to check
 				Position p = new Position((int)(eyePosition.getOriginX() + (factor * x)), (int)(eyePosition.getOriginY() + (factor * y)));
+				
+				// if position is outside of the field
 				if(p.getOriginX() >= this.fieldSize.getWidth() || 
 						p.getOriginY() >= this.fieldSize.getHeight() || 
 						p.getOriginX() < 0 || 
 						p.getOriginY() < 0) {
 					break;
 				}
-				else{
+				else
+				{ // position is inside the field
+					
 					Position pixelP = new Position((p.getOriginX()/10)*10, (p.getOriginY()/10)*10);
 
-					//check if not allready checked
+					//check if not already checked
 					int foundMatrixFound = this.foundMatrix.contains(new Position(pixelP.getOriginX()/10, pixelP.getOriginY()/10));
 					if(foundMatrixFound == this.ITEM || foundMatrixFound == this.FINISH) whileB = false;
 					if(foundMatrixFound == 0){					
@@ -159,13 +204,6 @@ public class RobotController implements Runnable {
 						}
 						else { // If the position is free
 							if(editor.isShowGrid()) field.addItem(new Pixel(pixelP, Color.green));
-//							try {
-//								Thread.sleep(20);
-//							} catch (InterruptedException e) {
-//								// TODO Auto-generated catch block
-//								e.printStackTrace();
-//							}
-							//fill foundMatrix
 							this.foundMatrix.set(new Position(pixelP.getOriginX()/10, pixelP.getOriginY()/10), this.FREE);
 						}
 					}
@@ -191,54 +229,56 @@ public class RobotController implements Runnable {
 			scanField();
 			this.field.setRobotDirection(Direction.WEST);
 			scanField();
-
-			List<Position> movePath;
 			
+			
+			List<Position> movePath;
+			// if the finish position is unknown
 			if(!foundFinish)
 			{
 				movePath = this.strategy.computePath();
 			}
-			else
+			else // if the finish position is known
 			{
 				movePath = this.strategy.computePathToFinish();
-
 			}
+			
 			//move to new Position with given movePath
 			move(movePath);
 
-//			{// calculation of time for scanning, just for testing
-//				long thisRound = System.currentTimeMillis();
-//				float timeSinceLastRound = ((float)(thisRound-lastRound)/1000f);
-//				lastRound = thisRound;
-//			}
-
+			// if the finish is not reachable, show a message and cancel the search
 			if(isUnreachable()) 
 			{
 				JOptionPane.showMessageDialog(null, "Das Ziel kann leider nicht angesteuert werden!");
 				editor.stopSearch();
 				System.out.println("Can not reach the Finish!");
 			}
+			// if the robot is in the finish show a success message and cancel the search
 			else if (isFinished() && thread != null)
 			{
 				long endTime = System.currentTimeMillis();
 				float time = ((float)(endTime-startTime)/1000f);
 				JOptionPane.showMessageDialog(null, "Der Roboter hat das Ziel nach " + time + " Sekunden erreicht!");
 				editor.stopSearch();
-				System.out.println("Finish!!!");
 			}
 		}
+		
+		// set the robot back to the start position
 		this.field.setRobotPosition(startPosition);
 		
 	}
 	
 	/**
 	 * define the Default Strategie
-	 * @return
 	 */
 	private void setDetaultStrategie(){
 		this.strategy = new DefaultStrategy(this, this.foundMatrix, this.fieldSize, this.field);
 	}
 
+	/**
+	 * This is the method which moves the robot over the path calculated by the strategy
+	 * 
+	 * @param pl list with positions, calculated by the strategy
+	 */
 	private void move(List<Position> pl) {
 		Iterator<Position> i = pl.listIterator();
 		Position lastP = null;
@@ -302,79 +342,29 @@ public class RobotController implements Runnable {
 		}
 	}
 
-
-//	private void move(List<Position> pl) {
-//		// bsp
-//		Position lastP = this.field.getRobotPosition();
-//		Iterator<Position> i = pl.listIterator();
-//		while(i.hasNext())
-//		{
-//			Position p = i.next();
-//			// move east
-//			if(p.getOriginX() > lastP.getOriginX())
-//			{
-//				this.field.setRobotDirection(Direction.EAST);
-//				int step = 1;
-//				while(step < 11)
-//				{
-//					this.field.setRobotPosition(new Position(lastP.getOriginX()+step, lastP.getOriginY()));
-//					step++;
-//					try { Thread.sleep(MOVE_SPEED); } 
-//					catch (InterruptedException e) { e.printStackTrace(); }
-//				}
-//			}
-//			// move west
-//			else if(p.getOriginX() < lastP.getOriginX())
-//			{
-//				this.field.setRobotDirection(Direction.WEST);
-//				int step = 1;
-//				while(step < 11)
-//				{
-//					this.field.setRobotPosition(new Position(lastP.getOriginX()-step, lastP.getOriginY()));
-//					step++;
-//					try { Thread.sleep(MOVE_SPEED); } 
-//					catch (InterruptedException e) { e.printStackTrace(); }
-//				}
-//			}
-//			//move south
-//			else if(p.getOriginY() > lastP.getOriginY())
-//			{
-//				this.field.setRobotDirection(Direction.SOUTH);
-//				int step = 1;
-//				while(step < 11)
-//				{
-//					this.field.setRobotPosition(new Position(lastP.getOriginX(), lastP.getOriginY()+step));
-//					step++;
-//					try { Thread.sleep(MOVE_SPEED); } 
-//					catch (InterruptedException e) { e.printStackTrace(); }
-//				}
-//			}
-//			else // move north
-//			{
-//				this.field.setRobotDirection(Direction.NORTH);
-//				int step = 1;
-//				while(step < 11)
-//				{
-//					this.field.setRobotPosition(new Position(lastP.getOriginX(), lastP.getOriginY()-step));
-//					step++;
-//					try { Thread.sleep(MOVE_SPEED); } 
-//					catch (InterruptedException e) { e.printStackTrace(); }
-//				}
-//			}
-//			lastP = p;
-//		}
-//	}
-	
-
+	/**
+	 * Returns the status of the finish
+	 * 
+	 * @return true if the finish is unreachable
+	 */
 	public boolean isUnreachable() {
 		return unreachable;
 	}
 
-
+	/**
+	 * Set the status of the finish
+	 * 
+	 * @param unreachable set true if the finish is nor reachable
+	 */
 	public void setUnreachable(boolean unreachable) {
 		this.unreachable = unreachable;
 	}
 
+	/**
+	 * Getter of the found matrix
+	 * 
+	 * @return the foundmatrix
+	 */
 	public FieldMatrix getFoundMatrix() {
 		return this.foundMatrix;
 	}
