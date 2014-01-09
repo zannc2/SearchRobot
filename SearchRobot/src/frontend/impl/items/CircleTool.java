@@ -17,9 +17,6 @@ import frontend.interfaces.Item;
  */
 public class CircleTool extends AbstractTool {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -6764244882541005519L;
 
 	/**

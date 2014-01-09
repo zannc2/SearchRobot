@@ -16,9 +16,6 @@ import frontend.interfaces.Item;
  */
 public class FinishTool extends AbstractTool {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -4987041765338470637L;
 
 	/**

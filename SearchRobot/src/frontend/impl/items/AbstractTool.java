@@ -13,9 +13,6 @@ import frontend.interfaces.Tool;
  */
 public abstract class AbstractTool implements Tool {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -7143795048863567172L;
 	
 	private Field field;

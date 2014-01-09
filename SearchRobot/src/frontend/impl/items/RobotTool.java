@@ -16,9 +16,6 @@ import frontend.interfaces.Item;
  */
 public class RobotTool extends AbstractTool {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1939680774689013637L;
 
 	private Size size;

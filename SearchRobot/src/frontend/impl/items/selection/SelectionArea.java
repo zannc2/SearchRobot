@@ -15,17 +15,24 @@ import java.util.List;
 import frontend.impl.items.AbstractItem;
 import frontend.interfaces.ItemHandler;
 
+/**
+ * This is the implementation of the Selection Area. It extends the Abstract Item. 
+ * The SelectionArea is used to draw a selection of items. 
+ * @author zannc2 & gfels4
+ *
+ */
 public class SelectionArea extends AbstractItem {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 940976930726769873L;
 	
 	private Position position;
 	private Size size;
 	private Color penColor;
 	
+	/**
+	 * Constructor which defines the Position of the SelectionArea.
+	 * @param p Position of the SelectionArea
+	 */
 	public SelectionArea(Position p) {
 		this.position = p;
 		this.size = new Size(0,0);
@@ -81,7 +88,7 @@ public class SelectionArea extends AbstractItem {
 		return null;
 	}
 	
-	public Rectangle getAWTRectangle() {
+	private Rectangle getAWTRectangle() {
 		int width = this.size.getWidth();
 		int height = this.size.getHeight();
 		Rectangle r = null;

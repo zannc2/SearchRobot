@@ -14,9 +14,6 @@ import frontend.interfaces.Item;
  */
 public class LineTool extends AbstractTool {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -6532113494936543327L;
 	private Item item;
 
