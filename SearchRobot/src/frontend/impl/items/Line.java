@@ -15,7 +15,12 @@ import java.awt.RenderingHints;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * This is the class for a line item and extends the {@link AbstractItem} class
+ * 
+ * @author zannc2 & gfels4
+ *
+ */
 public class Line extends AbstractItem {
 
 	/**
@@ -30,6 +35,12 @@ public class Line extends AbstractItem {
 	
 	private List<ItemHandler> itemHandlers = new ArrayList<ItemHandler>();
 	
+	/**
+	 * Constructor defines field, position of the line and creates the handlers for the line
+	 * 
+	 * @param p Position of the 
+	 * @param field the field which contains the line
+	 */
 	public Line(Position p, Field f) {
 		this.field = f;
 		this.position = p;
@@ -111,13 +122,6 @@ public class Line extends AbstractItem {
 
 	@Override
 	public boolean contains(Position p) {
-		return isCloseToLine(p, 5);
-	}
-	
-
-
-	@Override
-	public boolean contains(Position p, int epsilon) {
 		return isCloseToLine(p, 5);
 	}
 	

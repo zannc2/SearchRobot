@@ -19,7 +19,12 @@ import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * This is the class for a circle Item and extends the {@link AbstractItem} class
+ * 
+ * @author zannc2 & gfels4
+ *
+ */
 public class Circle extends AbstractItem {
 
 	/**
@@ -30,9 +35,14 @@ public class Circle extends AbstractItem {
 	private Position position;
 	private Size size;
 	private Field field;
-
 	private List<ItemHandler> itemHandlers = new ArrayList<ItemHandler>();
 
+	/**
+	 * Constructor defines field, position of the circle and creates the handlers for the circle
+	 * 
+	 * @param p Position of the 
+	 * @param field the field which contains the circle
+	 */
 	public Circle(Position p, Field field) {
 		this.field = field;
 		this.position = p;
@@ -56,10 +66,9 @@ public class Circle extends AbstractItem {
 		Rectangle r = Size.getAWTRectangle(this.size, this.position);
 		g2.fill(new Ellipse2D.Double(r.getX(), r.getY(),
 				r.getWidth(), r.getHeight()));
-//		g2.fill(new Ellipse2D.Double(this.position.getOriginX(), this.position.getOriginY(),
-//				this.size.getWidth(), this.size.getHeight()));
 	}
 
+	
 	@Override
 	public void setPosition(Position position) {
 		this.position = position;
@@ -76,24 +85,12 @@ public class Circle extends AbstractItem {
 	public boolean contains(Position p) {
 		Ellipse2D.Double ellipse = new Ellipse2D.Double(this.position.getOriginX(), this.position.getOriginY(),
 				this.size.getWidth(), this.size.getHeight());
-//		System.out.println("ellipse: " + ellipse);
 		boolean rt = ellipse.contains(new Point(p.getOriginX(), p.getOriginY()));
-//		System.out.println("contains: " + rt);
 		return rt;
 
 	}
 
-	@Override
-	public boolean contains(Position p, int epsilon) {
-		Ellipse2D.Double ellipse = new Ellipse2D.Double(this.position.getOriginX() - epsilon, 
-				this.position.getOriginY() - epsilon,
-				this.size.getWidth() + epsilon, this.size.getHeight() + epsilon);
-//		System.out.println("ellipse: " + ellipse);
-		boolean rt = ellipse.contains(new Point(p.getOriginX(), p.getOriginY()));
-//		System.out.println("contains: " + rt);
-		return rt;
-	}
-
+	
 	@Override
 	public List<ItemHandler> getItemHandler() {
 		return this.itemHandlers;	
@@ -133,18 +130,8 @@ public class Circle extends AbstractItem {
 
 	@Override
 	public void setSize(Size size) {
-		
 		this.size = size;
-		// calculate positive Values
-		//java.awt.Rectangle r = getAWTRectangle();
-		
-//		System.out.println("new Rectangle: " + r);
-		
-		// set new Size and Position with positive Values
-//		this.size = new Size((int) r.getWidth(), (int) r.getHeight());
-//		this.position = new Position((int) r.getX(), (int) r.getY());
 		notifyItemChangedListeners();
-		
 		// set Handlers
 		Rectangle r = Size.getAWTRectangle(this.size, this.position);
 		Position topLeft = new Position((int)r.getX(), (int)r.getY());
@@ -155,7 +142,6 @@ public class Circle extends AbstractItem {
 		this.itemHandlers.get(2).setPosition(bottomLeft);;
 		Position bottomRight = new Position((int)(r.getX()+r.getWidth()), (int)(r.getY()+r.getHeight()));	
 		this.itemHandlers.get(3).setPosition(bottomRight);
-//		System.out.println("Set Size");
 	}
 
 	@Override

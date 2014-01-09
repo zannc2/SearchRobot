@@ -4,6 +4,13 @@ import helper.Position;
 
 import java.util.List;
 
+/**
+ * 
+ * The interface for search strategies for the robot
+ * 
+ * @author zannc2 & gfells4
+ *
+ */
 public interface Strategy {
 	
 	/**

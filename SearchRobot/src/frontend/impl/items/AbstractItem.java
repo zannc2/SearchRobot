@@ -9,7 +9,7 @@ import frontend.interfaces.ItemChangedListener;
 
 /**
  * Implements the common methods and variables of all Items
- * @author zannc2 & gfells4
+ * @author zannc2 & gfels4
  *
  */
 public abstract class AbstractItem implements Item {

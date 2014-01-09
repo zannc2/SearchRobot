@@ -5,16 +5,26 @@ import helper.Size;
 import frontend.impl.view.Field;
 import frontend.interfaces.Item;
 
-
+/**
+ * This is the class for the line tool, which creates the line items
+ * It extends the {@link AbstractTool} class
+ * 
+ * @author zannc2 & gfels4
+ *
+ */
 public class LineTool extends AbstractTool {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -6532113494936543327L;
-	
 	private Item item;
 
+	/**
+	 * Constructor sets the field in the super class
+	 * 
+	 * @param field the field which this tool belongs
+	 */
 	public LineTool(Field field) {
 		super(field);
 	}

@@ -75,12 +75,6 @@ public class Pixel extends AbstractItem {
 	}
 
 	@Override
-	public boolean contains(Position p, int epsilon) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public List<ItemHandler> getItemHandler() {
 		// TODO Auto-generated method stub
 		return null;

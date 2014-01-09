@@ -18,6 +18,12 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+/**
+ * This is the class for the robot item and extends the {@link AbstractItem} class
+ * 
+ * @author zannc2 & gfels4
+ *
+ */
 public class Robot extends AbstractItem{
 
 	/**
@@ -33,12 +39,16 @@ public class Robot extends AbstractItem{
 
 	private Field field;
 
+	/**
+	 * Constructor defines field and position of the robot
+	 * 
+	 * @param p Position of the 
+	 * @param field the field which contains the robot
+	 */
 	public Robot(Position p, Size s, Field field) {
 		this.position = p;
 		this.size = s;
 		this.field = field;
-		
-		//TODO create hanlder
 	}
 	
 	@Override
@@ -127,11 +137,6 @@ public class Robot extends AbstractItem{
 	public List<ItemHandler> getItemHandler() {
 		//not used here
 		return null;
-	}
-
-	@Override
-	public boolean contains(Position p, int epsilon) {
-		return contains(p);
 	}
 
 	public Direction getDirection() {

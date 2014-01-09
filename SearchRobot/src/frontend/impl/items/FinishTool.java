@@ -7,6 +7,13 @@ import java.util.List;
 import frontend.impl.view.Field;
 import frontend.interfaces.Item;
 
+/**
+ * This is the class for the robot tool, which creates the finish item
+ * It extends the {@link AbstractTool} class
+ * 
+ * @author zannc2 & gfels4
+ *
+ */
 public class FinishTool extends AbstractTool {
 
 	/**
@@ -14,6 +21,11 @@ public class FinishTool extends AbstractTool {
 	 */
 	private static final long serialVersionUID = -4987041765338470637L;
 
+	/**
+	 * Constructor sets the field in the super class
+	 * 
+	 * @param field the field which this tool belongs
+	 */
 	public FinishTool(Field field) {
 		super(field);
 	}

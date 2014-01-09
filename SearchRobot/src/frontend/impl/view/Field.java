@@ -132,21 +132,6 @@ public class Field implements Serializable{
 	}
 	
 	/**
-	 * Tests whether an item touches position p 
-	 * @param p position to test
-	 * @param epsilon 
-	 * @return true if an item touches the position p
-	 */
-	public boolean contains(Position p, int epsilon) {
-		for(Item i : this.items) {
-			if(i.contains(p, epsilon)) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	/**
 	 * getter for the robot position
 	 * @return returns the robot position
 	 */

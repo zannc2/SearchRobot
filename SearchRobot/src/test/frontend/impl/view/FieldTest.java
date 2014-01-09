@@ -165,15 +165,6 @@ public class FieldTest {
 	}
 	
 	/**
-	 * test Contains Function
-	 */
-	@Test 
-	public void testContains() {
-		assertTrue(this.field.contains(this.robotPosition, 10));
-		assertFalse(this.field.contains(new Position(5, 5), 10));
-	}
-	
-	/**
 	 * test check Function
 	 * chekIfPositionFree and checkMoveItem
 	 */

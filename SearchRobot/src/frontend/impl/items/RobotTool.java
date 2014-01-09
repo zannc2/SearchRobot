@@ -7,6 +7,13 @@ import helper.Size;
 import frontend.impl.view.Field;
 import frontend.interfaces.Item;
 
+/**
+ * This is the class for the robot tool, which creates the robot items
+ * It extends the {@link AbstractTool} class
+ * 
+ * @author zannc2 & gfels4
+ *
+ */
 public class RobotTool extends AbstractTool {
 
 	/**
@@ -17,12 +24,16 @@ public class RobotTool extends AbstractTool {
 	private Size size;
 	private Item item;
 
+	/**
+	 * Constructor sets the field in the super class and the size of the robot
+	 * 
+	 * @param field the field which this tool belongs
+	 * @param s the size of the robot
+	 */
 	public RobotTool(Field field, Size s) {
 		super(field);
 		this.size = s;
 	}
-
-
 
 	@Override
 	public void mouseDown(Position p) {

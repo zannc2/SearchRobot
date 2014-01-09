@@ -15,6 +15,12 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+/**
+ * This is the class for the Finish Item and extends the {@link AbstractItem} class
+ * 
+ * @author zannc2 & gfels4
+ *
+ */
 public class Finish extends AbstractItem {
 	
 	/**
@@ -24,16 +30,18 @@ public class Finish extends AbstractItem {
 	
 	private Position position;
 	private Size size = new Size(20, 20);
-	
 	private Field field;
 	
+	/**
+	 * Constructor defines field and position of the finish
+	 * 
+	 * @param p Position of the 
+	 * @param field the field which contains the finish
+	 */
 	public Finish(Position p, Field field) {
 		this.position = p;
 		this.field = field;
-		
-
 		notifyItemChangedListeners();
-		//TODO create handler
 	}
 
 	@Override
@@ -80,7 +88,19 @@ public class Finish extends AbstractItem {
 
 	@Override
 	public boolean contains(Position p) {
-		return contains(p, 0);
+		boolean containsX = false;
+		boolean containsY = false;
+		// test x Coordinate
+		if(p.getOriginX() >= this.position.getOriginX() && 
+				p.getOriginX() <= (this.position.getOriginX() + this.size.getWidth()))
+			containsX = true;
+			
+		//test y Coordinate
+		if(p.getOriginY() >= this.position.getOriginY() &&
+				p.getOriginY() <= (this.position.getOriginY() + this.size.getHeight()))
+			containsY = true;
+		if(containsX && containsY) return true;
+		return false;
 	}
 
 	@Override
@@ -104,22 +124,4 @@ public class Finish extends AbstractItem {
 	public Size getSize() {
 		return this.size;
 	}
-
-	@Override
-	public boolean contains(Position p, int epsilon) {
-		boolean containsX = false;
-		boolean containsY = false;
-		// test x Coordinate
-		if(p.getOriginX() >= this.position.getOriginX() && 
-				p.getOriginX() <= (this.position.getOriginX() + this.size.getWidth()))
-			containsX = true;
-			
-		//test y Coordinate
-		if(p.getOriginY() >= this.position.getOriginY() &&
-				p.getOriginY() <= (this.position.getOriginY() + this.size.getHeight()))
-			containsY = true;
-		if(containsX && containsY) return true;
-		return false;
-	}
-
 }

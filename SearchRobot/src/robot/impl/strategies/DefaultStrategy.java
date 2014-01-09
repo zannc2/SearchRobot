@@ -12,6 +12,14 @@ import robot.impl.FieldMatrix;
 import robot.impl.RobotController;
 import robot.interfaces.Strategy;
 
+/**
+ * Our default strategy for the robot to find a way to the finish.
+ * It searches always the shortest path to the next unknown position until the finish is reached.
+ * 
+ * @author zannc2 & gfells4
+ *
+ */
+
 public class DefaultStrategy implements Strategy{
 
 	// current field

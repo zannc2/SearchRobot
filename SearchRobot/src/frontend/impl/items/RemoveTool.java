@@ -7,6 +7,13 @@ import helper.Position;
 import java.awt.Cursor;
 import java.util.List;
 
+/**
+ * This is the class for the remove tool, which can remove items
+ * It extends the {@link AbstractTool} class
+ * 
+ * @author zannc2 & gfels4
+ *
+ */
 public class RemoveTool extends AbstractTool {
 
 	/**
@@ -14,6 +21,11 @@ public class RemoveTool extends AbstractTool {
 	 */
 	private static final long serialVersionUID = 4615825827692046264L;
 
+	/**
+	 * Constructor sets the field in the super class
+	 * 
+	 * @param field the field which this tool belongs
+	 */
 	public RemoveTool(Field field) {
 		super(field);
 	}

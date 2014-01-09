@@ -8,6 +8,13 @@ import java.awt.Rectangle;
 import frontend.impl.view.Field;
 import frontend.interfaces.Item;
 
+/**
+ * This is the class for the circle tool, which creates the circle items
+ * It extends the {@link AbstractTool} class
+ * 
+ * @author zannc2 & gfels4
+ *
+ */
 public class CircleTool extends AbstractTool {
 
 	/**
@@ -15,6 +22,11 @@ public class CircleTool extends AbstractTool {
 	 */
 	private static final long serialVersionUID = -6764244882541005519L;
 
+	/**
+	 * Constructor sets the field in the super class
+	 * 
+	 * @param field the field which this tool belongs
+	 */
 	public CircleTool(Field field) {
 		super(field);
 	}
