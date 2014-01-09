@@ -286,7 +286,7 @@ public abstract class AbstractState implements Serializable {
 	 * @param cur
 	 */
 	final protected void setItemHandleCursor(Cursor cur) {
-		getContext().doSetItemeHandleCursor(cur);
+		getContext().doSetItemHandleCursor(cur);
 	}
 	
 	/**

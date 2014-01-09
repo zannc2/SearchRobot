@@ -15,18 +15,25 @@ import frontend.interfaces.Item;
 import frontend.interfaces.ItemHandler;
 import frontend.interfaces.StateFactory;
 
+/**
+ * This is the class for the selection tool, which creates the selection tool
+ * It extends the {@link AbstractTool} class
+ * 
+ * @author zannc2 & gfels4
+ *
+ */
 public class SelectionTool extends AbstractTool {
-
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 5585838914067568255L;
 
+	/**
+	 * Constructor which defines the field where the selection tool belongs to
+	 * @param field Field
+	 */
 	public SelectionTool(Field field) {
 		super(field);
 		this.factory = field.getView().getStateFactory();
 		setToolState(this.factory.createInitState(this));
-//		System.out.println("create selection tool");
 	}
 	
 	private StateFactory factory;
@@ -42,30 +49,42 @@ public class SelectionTool extends AbstractTool {
 	private Vector previousDelta;
 	private Map<Object,Object> originalPositions =new HashMap<Object, Object>();
 
+	@Override
 	public void mouseDown(Position p) 
 	{
 		this.previousMouseDownPosition = p;
 		this.state.mouseDown(p);
 	}
-
+	
+	@Override
 	public void mouseDrag(Position p) {		
 		this.state.mouseDrag(p);
 		this.previousMouseDownPosition = p;
 			
 	}
 	
+	@Override
 	public void mouseOver(Position p) {
 		this.state.mouseOver(p);
 	}
 
+	@Override
 	public void mouseUp(Position p) {
 		this.state.mouseUp(p);
 	}
 	
+	/**
+	 * Sets a new State
+	 * @param s AbstractState
+	 */
 	public void setToolState(AbstractState s) {
 		this.state = s;
 	}
 	
+	/**
+	 * Moves the selection are to a new position
+	 * @param p new position
+	 */
 	public void doSetSelectionAreaTo(Position p) {
 		if (this.selectionArea != null) {
 			Position origP = this.selectionArea.getPosition();
@@ -74,10 +93,19 @@ public class SelectionTool extends AbstractTool {
 		}
 	}
 	
+	/**
+	 * returns the state factory
+	 * @return StateFactory
+	 */
 	public StateFactory getStateFactory() {
 		return this.factory;
 	}
 	
+	/**
+	 * Helper method which gets the Item on the Position asked
+	 * @param p Position asked
+	 * @return Item on this position
+	 */
 	public Item getItemByPosition(Position p) {
 		// iterate over reverse stacking order
 		for (int i = getItems().size() - 1; i >= 0; i--) {
@@ -89,10 +117,17 @@ public class SelectionTool extends AbstractTool {
 		return null;
 	}
 	
+	/**
+	 * returns the List of all selected items
+	 * @return List of selected items
+	 */
 	public List<Item> getSelection() {
 		return getField().getView().getSelection();
 	}
 	
+	/**
+	 * Adds every non-selected shape fully contained within the selection area
+	 */
 	public void doAdjustSelections() {
 		for (Item i : getItems()) {
 			if (i != this.selectionArea) { 
@@ -109,6 +144,9 @@ public class SelectionTool extends AbstractTool {
 		}
 	}
 	
+	/**
+	 * removes the selection area from the field
+	 */
 	public void doDiscardSelectionArea() {
 		if (this.selectionArea != null) {
 			getField().removeItem(this.selectionArea);
@@ -116,6 +154,11 @@ public class SelectionTool extends AbstractTool {
 		this.selectionArea = null;
 	}
 	
+	/**
+	 * helper method to check if the item is contained in the selection area
+	 * @param i asked Item
+	 * @return true if the item is contained in the selection area
+	 */
 	private boolean isItemInSeletionArea(Item i) {
 		if (this.selectionArea != null) {
 			Position itemPosition = i.getPosition();
@@ -132,22 +175,40 @@ public class SelectionTool extends AbstractTool {
 		}
 	}
 	
+	/**
+	 * returns the current selected handler
+	 * @return ItemHandler
+	 */
 	public ItemHandler getCurrentHandle() {
 		return this.currentHandle;
 	}
 	
+	/**
+	 * sets the current selected handler
+	 * @param h ItemHandler
+	 */
 	public void setCurrentHandle(ItemHandler h) {
 		this.currentHandle = h;
 	}
 
+	/**
+	 * removes all Items from selection
+	 */
 	public void clearSelection() {
 		getField().getView().clearSelection();
 	}
 
+	/**
+	 * adds a new item to selection
+	 * @param i new selected item
+	 */
 	public void doAddToSelection(Item i) {
 		getField().getView().addToSelection(i);
 	}
 
+	/**
+	 * sets the move cursor to current cursor
+	 */
 	public void doSetMoveCursor() {
 		setCursor(MOVE_CURSOR);
 	}
@@ -155,10 +216,16 @@ public class SelectionTool extends AbstractTool {
 	final private void setCursor(Cursor cur) {
 		getField().getView().setCursor(cur);
 	}
+	
 	final private List<ItemHandler> getSelectionHandles() {
 		return getField().getView().getSelectionHandles();
 	}
 
+	/**
+	 * Helper method to check if position is on an item handler
+	 * @param p asked position
+	 * @return true if the position is on an item handler
+	 */
 	public boolean isOnItemHandle(Position p) {
 		for (ItemHandler h : getSelectionHandles()) {
 			if (h.contains(p)) {
@@ -168,6 +235,11 @@ public class SelectionTool extends AbstractTool {
 		return false;
 	}
 
+	/**
+	 * Helper method that returns the item handler by a given position
+	 * @param p asked position
+	 * @return item handler on this position
+	 */
 	public ItemHandler getItemHandlerByPosition(Position p) {
 		for (ItemHandler h : getSelectionHandles()) {
 			if (h.contains(p)) {
@@ -177,10 +249,19 @@ public class SelectionTool extends AbstractTool {
 		return null;
 	}
 
-	public void doSetItemeHandleCursor(Cursor cursor) {
+	/**
+	 * Sets the item handler cursor
+	 * @param cursor item handler cursor
+	 */
+	public void doSetItemHandleCursor(Cursor cursor) {
 		setCursor(cursor);
 	}
 
+	/**
+	 * helper method that checks if the position is on a selected item
+	 * @param p asked position
+	 * @return true if the position is on a selected item
+	 */
 	public boolean isOnSelectedItem(Position p) {
 		for (Item i : getSelection()) {
 			if (i.contains(p)) {
@@ -190,6 +271,11 @@ public class SelectionTool extends AbstractTool {
 		return false;
 	}
 
+	/**
+	 * helper method that checks if the position is on a unselected item
+	 * @param p asked position
+	 * @return true if the position is on a unselected item
+	 */
 	public boolean isOnUnselectedItem(Position p) {
 		// iterate over reverse stacking order
 		for (int i = getItems().size() - 1; i >= 0; i--) {
@@ -205,6 +291,11 @@ public class SelectionTool extends AbstractTool {
 		return false;
 	}
 
+	/**
+	 * helper method that checks if the position is on empty area (not on a item)
+	 * @param p asked position
+	 * @return true if position is on empty area
+	 */
 	public boolean isOnEmptyArea(Position p) {
 		for (Item i : getItems()) {
 			if (i.contains(p)) {
@@ -214,20 +305,36 @@ public class SelectionTool extends AbstractTool {
 		return true;
 	}
 
+	/**
+	 * creates a new selection area at the given position
+	 * @param p position of the created selection area
+	 */
 	public void doInitSelectionArea(Position p) {
 		this.selectionArea = new SelectionArea(p);
 		getField().addItem(this.selectionArea);
 	}
 
+	/**
+	 * sets the cursor back to default
+	 */
 	public void doSetDefaultCursor() {
 		setCursor(Cursor.getDefaultCursor());
 		
 	}
 	
+	/**
+	 * gets the previous position before dragging
+	 * @return previous position
+	 */
 	public Position getPreviousMouseDragPosition() {
 		return this.previousMouseDownPosition;
 	}
 	
+	/**
+	 * move all selected items to given position by calculating a delta with the previous 
+	 * drag position
+	 * @param p new position
+	 */
 	public void doMoveSelectedItems(Position p) {
 		
 		if(this.originalPositions.isEmpty()) {
@@ -247,6 +354,11 @@ public class SelectionTool extends AbstractTool {
 		}
 	}
 	
+	/**
+	 * ends the moving of the selected items and checks if the new position is free, that 
+	 * means circle and line cann't be over the robot or the finish
+	 * @param p
+	 */
 	public void endMoveSelectedItems(Position p){		
 		doMoveSelectedItems(p);
 		boolean undo = false;
