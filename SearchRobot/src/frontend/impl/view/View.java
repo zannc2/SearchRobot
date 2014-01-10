@@ -52,6 +52,7 @@ public class View extends JPanel {
 	private List<ItemHandler> handlers = new LinkedList<ItemHandler>();
 	private ViewFieldChangedListener l = new ViewFieldChangedListener();
 	private Color itemColor;
+	private boolean started;
 
 	/**
 	 * Inner class to handle changes on the field
@@ -163,12 +164,12 @@ public class View extends JPanel {
 
 		@Override
 		public void mouseDragged(MouseEvent e) {
-			getTool().mouseDrag(new Position(e.getX(), e.getY()));
+			if(!isStarted()) getTool().mouseDrag(new Position(e.getX(), e.getY()));
 		}
 
 		@Override
 		public void mouseMoved(MouseEvent e) {
-			getTool().mouseOver(new Position(e.getX(), e.getY()));
+			if(!isStarted()) getTool().mouseOver(new Position(e.getX(), e.getY()));
 		}
 	}
 
@@ -191,12 +192,12 @@ public class View extends JPanel {
 
 		@Override
 		public void mousePressed(MouseEvent e) {
-			getTool().mouseDown(new Position(e.getX(), e.getY()));
+			if(!isStarted()) getTool().mouseDown(new Position(e.getX(), e.getY()));
 		}
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			getTool().mouseUp(new Position(e.getX(), e.getY()));
+			if(!isStarted()) getTool().mouseUp(new Position(e.getX(), e.getY()));
 		}
 
 	}
@@ -336,6 +337,15 @@ public class View extends JPanel {
 
 		if(robot && finish) return true;
 		else return false;
+	}
+
+	public void setStarted(boolean b) {
+				started = b;
+	}
+	
+	public boolean isStarted()
+	{
+		return started;
 	}
 }
 

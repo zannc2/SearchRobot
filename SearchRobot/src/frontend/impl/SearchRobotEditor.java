@@ -490,6 +490,7 @@ public class SearchRobotEditor {
 			view.setField(items, field_size);
 
 			isStarted = false;
+			view.setStarted(false);
 		}
 	}
 
@@ -516,6 +517,7 @@ public class SearchRobotEditor {
 			src = new RobotController(this, view.getField(), robotSpeed);
 			src.start();
 			isStarted = true;
+			view.setStarted(true);
 		}
 		else
 		{
