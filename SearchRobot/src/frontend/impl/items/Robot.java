@@ -116,7 +116,7 @@ public class Robot extends AbstractItem{
 	 * calculations if Position is in line
 	 * @param p Position
 	 * @param epsilon 
-	 * @return
+	 * @return true if it's close to line
 	 */
 	private boolean isCloseToLine(Position p, int epsilon) {
 		boolean rval = false;

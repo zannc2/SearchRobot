@@ -28,7 +28,8 @@ public interface Item extends Serializable {
 	
 	/**
 	 * returns the Position of the Item
-	 * @return
+	 * 
+	 * @return the position of the item
 	 */
 	public abstract Position getPosition();
 	
@@ -40,7 +41,7 @@ public interface Item extends Serializable {
 	
 	/**
 	 * returns the Size of the Item
-	 * @return
+	 * @return the size of the item
 	 */
 	public abstract Size getSize();
 	
@@ -74,7 +75,7 @@ public interface Item extends Serializable {
 	/**
 	 * Remove a ItemChangedListener
 	 * @param listener
-	 * @return
+	 * @return true if removed successful
 	 */
 	public boolean removeItemChangedListener(ItemChangedListener listener);
 

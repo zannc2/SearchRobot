@@ -39,7 +39,7 @@ public class Line extends AbstractItem {
 	 * Constructor defines field, position of the line and creates the handlers for the line
 	 * 
 	 * @param p Position of the 
-	 * @param field the field which contains the line
+	 * @param f the field which contains the line
 	 */
 	public Line(Position p, Field f) {
 		this.field = f;
@@ -128,7 +128,7 @@ public class Line extends AbstractItem {
 	 * calculations if Position is in line
 	 * @param p Position
 	 * @param epsilon 
-	 * @return
+	 * @return true if its close to line
 	 */
 	private boolean isCloseToLine(Position p, int epsilon) {
 		int p1 = (int)Math.sqrt(Math.pow(this.position.getOriginX()-p.getOriginX(), 2) + Math.pow(this.position.getOriginY()-p.getOriginY(), 2));
