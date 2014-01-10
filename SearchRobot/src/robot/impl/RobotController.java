@@ -250,7 +250,6 @@ public class RobotController implements Runnable {
 			{
 				JOptionPane.showMessageDialog(null, "Das Ziel kann leider nicht angesteuert werden!");
 				editor.stopSearch();
-				System.out.println("Can not reach the Finish!");
 			}
 			// if the robot is in the finish show a success message and cancel the search
 			else if (isFinished() && thread != null)

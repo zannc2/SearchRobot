@@ -365,7 +365,6 @@ public class SearchRobotEditor {
 			button.setIcon(new ImageIcon(imageURL, altText));
 		} else {                                     //no image found
 			button.setText(altText);
-			System.err.println("Resource not found: " + imgLocation);
 		}
 
 		button.setPreferredSize(size);

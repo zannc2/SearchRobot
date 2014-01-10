@@ -28,7 +28,6 @@ public class MyStateFactoryTest {
 
     @Test
     public void testCreateDragAreaState() throws Exception {
-        System.out.println(this.myStateFactory.createDragAreaState(this.selectionTool));
         assertTrue(this.myStateFactory.createDragAreaState(this.selectionTool) instanceof DragArea);
     }
 
