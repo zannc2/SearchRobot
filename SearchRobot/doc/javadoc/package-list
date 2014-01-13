@@ -8,10 +8,3 @@ helper
 robot.impl
 robot.impl.strategies
 robot.interfaces
-test.frontend.impl.items
-test.frontend.impl.items.handler
-test.frontend.impl.items.selection
-test.frontend.impl.view
-test.helper
-test.robot
-test.robot.impl

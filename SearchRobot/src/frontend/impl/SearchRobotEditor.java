@@ -44,6 +44,13 @@ import javax.swing.UIManager;
 
 import robot.impl.RobotController;
 
+/**
+ * This is start class of the Search Robot. It builds the frame and initializes all
+ * components.
+ * 
+ * @author zannc2 & gfels4
+ *
+ */
 public class SearchRobotEditor {
 
 	/** The title of the Programm */

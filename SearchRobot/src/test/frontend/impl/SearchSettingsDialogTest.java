@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import frontend.impl.SearchSettingsDialog;
 
-public class testSearchSettingsDialog {
+public class SearchSettingsDialogTest {
 
 	@Test
 	public void testGetChosenSpeed() {

@@ -30,11 +30,11 @@ public class Robot extends AbstractItem{
 	 * 
 	 */
 	private static final long serialVersionUID = -1654749892286238788L;
-	
+
 	private Position position;
 	private Size size;
 	private Direction direction = Direction.WEST;
-	
+
 	public int testV;
 
 	private Field field;
@@ -50,21 +50,20 @@ public class Robot extends AbstractItem{
 		this.size = s;
 		this.field = field;
 	}
-	
+
 	@Override
 	public void draw(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setStroke(new BasicStroke(1));
 		BufferedImage robot;
 		try {
-            //robot = ImageIO.read(new File("src/frontend/impl/resources/draw_robot1.png"));
-            robot = ImageIO.read(getClass().getResource("/draw_robot.png"));
-            AffineTransform tx = AffineTransform.getRotateInstance(direction.getDirection(), 5, 5);
-            AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
-            g2.drawImage(op.filter(robot, null), this.position.getOriginX(), this.position.getOriginY(), null);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }		
+			robot = ImageIO.read(getClass().getResource("/draw_robot.png"));
+			AffineTransform tx = AffineTransform.getRotateInstance(direction.getDirection(), 5, 5);
+			AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+			g2.drawImage(op.filter(robot, null), this.position.getOriginX(), this.position.getOriginY(), null);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}		
 	}
 
 	@Override
@@ -97,13 +96,13 @@ public class Robot extends AbstractItem{
 		/* origin cordinates*/
 		int x = this.position.getOriginX();
 		int y = this.position.getOriginY();
-		
+
 		/* Move */
 		x = x + delta.getXComponent();
 		y = y + delta.getYComponent();
-		
+
 		setPosition(new Position(x, y));
-		
+
 		notifyItemChangedListeners();
 	}
 
@@ -111,7 +110,7 @@ public class Robot extends AbstractItem{
 	public boolean contains(Position p) {
 		return isCloseToLine(p, 2);
 	}
-	
+
 	/**
 	 * calculations if Position is in line
 	 * @param p Position
