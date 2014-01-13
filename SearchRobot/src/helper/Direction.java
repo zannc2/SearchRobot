@@ -1,10 +1,12 @@
 package helper;
 
+/**
+ * Class which defines the directions of the robot
+ * 
+ * @author zannc2 & gfels4
+ *
+ */
 public enum Direction {
-	NORTHWEST(Math.toRadians(225)),
-	NORTHEAST(Math.toRadians(315)),
-	SOUTHWEST(Math.toRadians(135)),
-	SOUTHEAST(Math.toRadians(45)),
 	NORTH(Math.toRadians(270)),
 	EAST(Math.toRadians(0)),
 	SOUTH(Math.toRadians(90)),
@@ -16,6 +18,10 @@ public enum Direction {
 		this.direction = d;
 	}
 
+	/**
+	 * Getter for the actual direction
+	 * @return the direction
+	 */
 	public double getDirection() {
 		return direction;
 	}

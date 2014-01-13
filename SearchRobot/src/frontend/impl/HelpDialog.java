@@ -1,15 +1,9 @@
 package frontend.impl;
 
-import helper.Size;
-
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.io.IOException;
@@ -38,9 +32,7 @@ public class HelpDialog extends JDialog
 	 * 
 	 */
 	private static final long serialVersionUID = 56835094942683956L;
-	private Size choosedSize;
 	private Image finish, selection, line, circle, robot, remove;
-	private JPanel picPanel;
 	
 	/**
 	 * Constructor builds the help dialog
@@ -156,9 +148,5 @@ public class HelpDialog extends JDialog
 		selectionF.setWrapStyleWord(true);
 		selectionF.setOpaque(false);
 		mainPanel.add(selectionF, gc);
-		}
-
-		public Size getChoosedSize() {
-			return choosedSize;
 		}
 	}

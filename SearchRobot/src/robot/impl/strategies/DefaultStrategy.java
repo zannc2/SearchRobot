@@ -109,37 +109,35 @@ public class DefaultStrategy implements Strategy{
 	 * @param depth the depth of position p in the tree
 	 */
 	private void computePath(Position p, int depth) {
-		// if position p was already visited in a less deep recursion OR there is already a shorter way to an unknown field 
+		// if position p was already visited in a less deeper recursion OR there is already a shorter way to an unknown field -> return
 		if ((visited[p.getOriginX()][p.getOriginY()] != 0 && 
 				visited[p.getOriginX()][p.getOriginY()] <= depth) || depth > shortestWay)
 		{
 			return;
 		}
-
-		// if the position is visited the first time or the last time was in a deeper recursion
-		else
+		else // if the position is visited the first time or the last time was in a deeper recursion
 		{
 			// set visited in this depth
 			visited[p.getOriginX()][p.getOriginY()] = depth;
 			// get the value of this position
 			int fieldValue = foundMatrix.contains(p);
 
-			// if the value of position p is UNKNOWN & the its the less deepest unknown position till now
+			// if the value of position p is UNKNOWN & its the less deepest unknown position till now
 			if(fieldValue == UNKNOWN && depth < shortestWay)
 			{
 				// set unknown as true, its important to find out if there is still an unknown field or not
 				unknownFieldExist = true;
-				// set the shortest way and create a new list from here
+				// set the shortest way and create a new list from here tor return
 				shortestWay = depth;
 				returnList.clear();
-				return;// returnList;
+				return;
 			}
 			// if the value of this position is unknown or its an item -> return without changes
 			else if(fieldValue == UNKNOWN || fieldValue == ITEM)
 			{
 				return;
 			}
-			else // we go one step deeper
+			else // go one step deeper
 			{
 				depth += 1;
 				// north
@@ -155,6 +153,7 @@ public class DefaultStrategy implements Strategy{
 				if(p.getOriginX() < (fieldSize.getWidth()/10)-1)
 					computePath(new Position(p.getOriginX()+1, p.getOriginY()), depth);
 
+				// if the current position is irrelevant return, else add the position to the return list and return
 				if(depth+returnList.size() > shortestWay)
 				{
 					return;				
@@ -195,7 +194,7 @@ public class DefaultStrategy implements Strategy{
 		// compute the path, start with the robot position
 		computePathToFinish(new Position(robot.getOriginX(), robot.getOriginY()), 0);
 		
-		// if the method found a way to the finish
+		// if the computePathToFinish() found a way to the finish
 		if(finishAcessible)
 		{
 			Collections.reverse(returnList);
@@ -263,6 +262,7 @@ public class DefaultStrategy implements Strategy{
 				if(p.getOriginX() < (fieldSize.getWidth()/10)-1)
 					computePathToFinish(new Position(p.getOriginX()+1, p.getOriginY()), depth);
 				
+				// if the current position is irrelevant return, else add the position to the return list and return
 				if(depth+returnList.size() > shortestWay+1)
 				{
 					return;				

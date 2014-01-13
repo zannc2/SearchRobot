@@ -1,11 +1,13 @@
 package test.frontend.impl.items.selection;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import helper.Position;
 import helper.Size;
 
 import java.awt.Color;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +19,6 @@ import frontend.impl.items.selection.Init;
 import frontend.impl.items.selection.MyStateFactory;
 import frontend.impl.items.selection.SelectionArea;
 import frontend.impl.items.selection.SelectionTool;
-import frontend.impl.items.selection.AbstractState;
 import frontend.impl.view.Field;
 import frontend.impl.view.View;
 import frontend.interfaces.Item;

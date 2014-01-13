@@ -42,7 +42,6 @@ public class RobotController implements Runnable {
 	private Size robotSize;
 	private Thread thread = null;
 	private boolean foundFinish;
-	private Position finish;
 	private boolean unreachable, isFinished;
 	private Strategy strategy;
 	private SearchRobotEditor editor;
@@ -200,7 +199,6 @@ public class RobotController implements Runnable {
 							//fill foundMatrix
 							this.foundMatrix.set(new Position(pixelP.getOriginX()/10, pixelP.getOriginY()/10), this.FINISH);
 							foundFinish = true;
-							finish = new Position(pixelP.getOriginX(), pixelP.getOriginY());
 						}
 						else { // If the position is free
 							if(editor.isShowGrid()) field.addItem(new Pixel(pixelP, Color.green));

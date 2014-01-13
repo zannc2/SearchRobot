@@ -40,13 +40,11 @@ public class SelectionTool extends AbstractTool {
 	private AbstractState state = null;
 
 	private Item selectionArea;
-	private Position lastP;
 	
 	private Position previousMouseDownPosition;
 	public static final Cursor MOVE_CURSOR = new Cursor(Cursor.HAND_CURSOR);
 
 	private ItemHandler currentHandle;
-	private Vector previousDelta;
 	private Map<Object,Object> originalPositions =new HashMap<Object, Object>();
 
 	@Override
@@ -348,7 +346,6 @@ public class SelectionTool extends AbstractTool {
 		}
 		Vector delta = new Vector(p.getOriginX() - cPrevious.getOriginX(),
 				p.getOriginY() - cPrevious.getOriginY());
-		this.previousDelta = delta;
 		for (Item i : getSelection()) {
 			i.move(delta);
 		}

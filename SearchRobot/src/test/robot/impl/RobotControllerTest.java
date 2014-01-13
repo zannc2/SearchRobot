@@ -1,9 +1,7 @@
 package test.robot.impl;
 
-import frontend.impl.SearchRobotEditor;
-import frontend.impl.items.Robot;
-import frontend.impl.view.Field;
-import frontend.interfaces.Item;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import helper.Position;
 import helper.Size;
 
@@ -11,13 +9,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import robot.impl.RobotController;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import frontend.impl.SearchRobotEditor;
+import frontend.impl.items.Robot;
+import frontend.impl.view.Field;
+import frontend.interfaces.Item;
 
 /**
  * Created by ca-za on 11.12.13.
