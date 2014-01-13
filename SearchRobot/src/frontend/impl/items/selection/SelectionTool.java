@@ -363,11 +363,11 @@ public class SelectionTool extends AbstractTool {
 			if(!getField().checkIfPositionFree(i)) undo = true;
 		}
 		
-		if(undo) {
-			for (Item i : getSelection()) {
+		for (Item i : getSelection()) {
+			if(undo) {
 				i.setPosition((Position) this.originalPositions.get(i));
-				this.originalPositions.remove(i);
 			}
+			this.originalPositions.remove(i);
 		}
 		
 	}
