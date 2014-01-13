@@ -49,7 +49,7 @@ public class SearchRobotEditor {
 	/** The title of the Programm */
 	private final String PROGRAM_TITLE = "Search Robot";
 	/** The initial size of the field */
-	private Size field_size = new Size(800, 500);
+	private Size field_size = new Size(900, 400);
 	/** The robot size */
 	private final Size ROBOT_SIZE = new Size(10, 10);
 	

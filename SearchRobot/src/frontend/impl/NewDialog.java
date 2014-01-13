@@ -31,7 +31,7 @@ public class NewDialog extends JDialog
 	private static final long serialVersionUID = 56835094942683956L;
 	
 	private Size choosedSize;
-	private String[] size = {"800 x 400", "800 x 500", "1000 x 500", "1000 x 600"};
+	private String[] size = {"900 x 400", "900 x 600", "1000 x 400", "1000 x 600"};
 	private JComboBox<String> jcb;
 	
 	/**
@@ -59,15 +59,15 @@ public class NewDialog extends JDialog
 			public void actionPerformed(ActionEvent e) {
 				if (size[0].equals(jcb.getSelectedItem() ))
 				{
-					choosedSize = new Size(800,400);
+					choosedSize = new Size(900,400);
 				}
 				else if (size[1].equals(jcb.getSelectedItem() ))
 				{
-					choosedSize = new Size(800,500);
+					choosedSize = new Size(900,600);
 				}
 				else if (size[2].equals(jcb.getSelectedItem() ))
 				{
-					choosedSize = new Size(1000,500);
+					choosedSize = new Size(1000,400);
 				} 
 				else if (size[3].equals(jcb.getSelectedItem() ))
 				{
